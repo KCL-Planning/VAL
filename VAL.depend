@@ -591,3 +591,177 @@
 	"FlexLexer.h"
 	"TypedAnalyser.h"
 
+1406295841 source:c:\users\maria\desktop\val\src\robustanalyse.cpp
+	"RobustAnalyse.h"
+	"Utils.h"
+	"LaTeXSupport.h"
+	"tDistribution.h"
+	"random.h"
+	"Validator.h"
+
+1406295840 c:\users\maria\desktop\val\include\robustanalyse.h
+	<vector>
+	<map>
+	"ptree.h"
+
+1406295840 c:\users\maria\desktop\val\include\ptree.h
+	<list>
+	<memory>
+	<map>
+	<string>
+	"sStack.h"
+	"macros.h"
+	"parse_error.h"
+	<iostream>
+
+1406295840 c:\users\maria\desktop\val\include\sstack.h
+	<deque>
+
+1406295840 c:\users\maria\desktop\val\include\macros.h
+
+1406295840 c:\users\maria\desktop\val\include\parse_error.h
+	<string>
+	<cstdio>
+	<iostream>
+	"ptree.h"
+
+1406295840 c:\users\maria\desktop\val\include\utils.h
+	<sstream>
+	<string>
+
+1406295840 c:\users\maria\desktop\val\include\latexsupport.h
+	<vector>
+	<string>
+	<iostream>
+	"Utils.h"
+	"main.h"
+	"Validator.h"
+
+1406295840 c:\users\maria\desktop\val\include\main.h
+	<iostream>
+
+1406295840 c:\users\maria\desktop\val\include\validator.h
+	<vector>
+	<string>
+	<sstream>
+	<map>
+	"Action.h"
+	"Plan.h"
+	"State.h"
+	"Polynomial.h"
+	"Events.h"
+	"typecheck.h"
+	"RepairAdvice.h"
+	"TrajectoryConstraints.h"
+
+1406295840 c:\users\maria\desktop\val\include\action.h
+	"ptree.h"
+	"Proposition.h"
+	"main.h"
+	<iostream>
+	<algorithm>
+	<iterator>
+	<string>
+	<set>
+
+1406295840 c:\users\maria\desktop\val\include\proposition.h
+	"ptree.h"
+	<iostream>
+	<set>
+	"Environment.h"
+	"Ownership.h"
+	"Polynomial.h"
+
+1406295840 c:\users\maria\desktop\val\include\environment.h
+	<map>
+	<vector>
+
+1406295840 c:\users\maria\desktop\val\include\ownership.h
+	<map>
+	"ptree.h"
+
+1406295840 c:\users\maria\desktop\val\include\polynomial.h
+	<map>
+	<iostream>
+	<vector>
+	<utility>
+
+1406295840 c:\users\maria\desktop\val\include\plan.h
+	<vector>
+	<functional>
+	<algorithm>
+	<map>
+	<iostream>
+	"ptree.h"
+	"Exceptions.h"
+	"main.h"
+	"Ownership.h"
+	"Polynomial.h"
+	"State.h"
+
+1406295840 c:\users\maria\desktop\val\include\exceptions.h
+	<exception>
+
+1406295840 c:\users\maria\desktop\val\include\state.h
+	"Proposition.h"
+	"FuncExp.h"
+	"StateObserver.h"
+	<set>
+
+1406295840 c:\users\maria\desktop\val\include\funcexp.h
+	<iostream>
+	<stdlib.h>
+	"ptree.h"
+	"Environment.h"
+	"Utils.h"
+
+1406295840 c:\users\maria\desktop\val\include\stateobserver.h
+
+1406295840 c:\users\maria\desktop\val\include\events.h
+	"ptree.h"
+	"State.h"
+	"Action.h"
+	"Plan.h"
+	<vector>
+
+1406295840 c:\users\maria\desktop\val\include\typecheck.h
+	"ptree.h"
+	<set>
+	<vector>
+
+1406295840 c:\users\maria\desktop\val\include\repairadvice.h
+	"Action.h"
+	"State.h"
+	<memory>
+
+1406295840 c:\users\maria\desktop\val\include\trajectoryconstraints.h
+	"ptree.h"
+	"Proposition.h"
+	<set>
+
+1406295840 c:\users\maria\desktop\val\include\tdistribution.h
+
+1406295840 c:\users\maria\desktop\val\include\random.h
+	<cmath>
+	<ctime>
+
+1406295841 source:c:\users\maria\desktop\val\src\state.cpp
+	"State.h"
+	"Plan.h"
+	"main.h"
+	"Validator.h"
+	"Proposition.h"
+	"Exceptions.h"
+	"LaTeXSupport.h"
+	"RobustAnalyse.h"
+	<sstream>
+
+1406295841 source:c:\users\maria\desktop\val\src\trajectoryconstraints.cpp
+	"TrajectoryConstraints.h"
+	"Proposition.h"
+	"VisitController.h"
+	"Validator.h"
+
+1406295840 c:\users\maria\desktop\val\include\visitcontroller.h
+	"ptree.h"
+
