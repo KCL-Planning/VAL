@@ -1,7 +1,7 @@
 (define (domain sleepingbeauty2)
 (:requirements :fluents :continuous-effects :negative-preconditions :time)
 (:predicates (windowclosed) (windowopen) (magnetoperational) (freshair) (circuit) (alarmdisabled) (alarmenabled) (voltage) (ringing) (almostawake) (deeplyasleep) (awake) )
-(:functions (capacitance) (resistance) (ringtime) )
+(:functions (ringtime) )
 
 (:action openwindow
 :parameters ( )
