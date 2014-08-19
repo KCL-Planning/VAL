@@ -1,2 +1,2 @@
 0: (openwindow)
-5: (closewindow)
+9.999: (closewindow)

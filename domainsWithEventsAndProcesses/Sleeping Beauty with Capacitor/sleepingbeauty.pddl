@@ -21,16 +21,28 @@
 :effect (and (circuit))
 )
 
+(:event breakcircuit
+:parameters ( )
+:precondition (and (magnetoperational) (circuit))
+:effect (and (not (circuit)) (assign (capacitance) 0))
+)
+
 (:event alarmtriggered
 :parameters ( )
 :precondition (and (circuit) (alarmdisabled) (voltage))
 :effect (and (alarmenabled) (not (alarmdisabled)) (ringing))
 )
 
+(:event alarmdisabled
+:parameters ( )
+:precondition (and (not (circuit)) (alarmenabled) (ringing))
+:effect (and (not (alarmenabled)) (not (ringing)) (alarmdisabled) (assign (ringtime) 0))
+)
+
 
 (:event voltageavailable
 :parameters ( )
-:precondition (>= (capacitance) 5)
+:precondition (and (>= (capacitance) 5) (not (voltage)))
 :effect (and (voltage))
 )
 
