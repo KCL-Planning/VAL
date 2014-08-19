@@ -1,7 +1,7 @@
 (define (problem sleepingbeauty-problem)
 (:domain sleepingbeauty)
 (:objects )
-(:init (= (capacitance) 0)
+(:init (= (charge) 0)
 	(= (resistance) 2)
 	(= (ringtime) 0)
 	(windowclosed)

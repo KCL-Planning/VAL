@@ -1,7 +1,7 @@
 (define (domain sleepingbeauty)
 (:requirements :fluents :continuous-effects :negative-preconditions :time)
 (:predicates (windowclosed) (windowopen) (magnetoperational) (freshair) (circuit) (alarmdisabled) (alarmenabled) (voltage) (ringing) (almostawake) (deeplyasleep) (awake))
-(:functions (capacitance) (resistance) (ringtime) )
+(:functions (charge) (resistance) (ringtime) )
 
 (:action openwindow
 :parameters ( )
@@ -24,7 +24,7 @@
 (:event breakcircuit
 :parameters ( )
 :precondition (and (magnetoperational) (circuit))
-:effect (and (not (circuit)) (assign (capacitance) 0))
+:effect (and (not (circuit)) (assign (charge) 0))
 )
 
 (:event alarmtriggered
@@ -42,7 +42,7 @@
 
 (:event voltageavailable
 :parameters ( )
-:precondition (and (>= (capacitance) 5) (not (voltage)))
+:precondition (and (>= (charge) 5) (not (voltage)))
 :effect (and (voltage))
 )
 
@@ -68,7 +68,9 @@
 (:process chargecapacitor
 :parameters ( )
 :precondition (and (circuit) (not (voltage)))
-:effect (and (increase (capacitance) (* #t (/ 1 (resistance)))))
+:effect (and (increase (charge) (* #t (/ 1 (resistance))))) 
+   ;assuming capacitance is chosen to make this linear
+   ;approximation reasonable.
 )
 
 )

@@ -1,7 +1,7 @@
 (define (problem sleepingbeauty-problem)
 (:domain sleepingbeauty)
 (:objects )
-(:init (= (capacitance) 0)
+(:init (= (charge) 0)
 	(= (resistance) 2) ;; Resistance of 1 is just small enough to
 		;; avoid the rousing event, but smaller than this will
 		;; cause the alarm to wake her up!
