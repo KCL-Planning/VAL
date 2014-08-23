@@ -74,7 +74,7 @@ class Action;
 class InvariantAction;
 class CtsEffectAction;
 class CondCommunicationAction;
-class ExecutionContext;
+struct ExecutionContext;
 
 
 class Update {
@@ -137,8 +137,8 @@ private:
 	bool afterPlan;
 
 public:
-	friend class ExecutionContext;
-	friend class ActiveCtsEffects;
+	friend struct ExecutionContext;
+	friend struct ActiveCtsEffects;
 
 private:
 	template<typename X> struct select2nd {

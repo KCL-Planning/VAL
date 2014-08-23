@@ -62,7 +62,7 @@ extern TypeChecker * theTC;
 
 class holding_pred_symbol;
 class extended_pred_symbol;
-class Environment;
+struct Environment;
 class Associater;
 
 void cwrite(const parameter_symbol * p,ostream & o);

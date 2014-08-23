@@ -28,7 +28,7 @@ CPPFLAGS =
 
 # C compiler
 
-CC     := gcc
+CC     ?= gcc
 CFLAGS  = ${DEPENDFLAGS}
 
 %.o : %.c
@@ -36,7 +36,7 @@ CFLAGS  = ${DEPENDFLAGS}
 
 # C++ compiler
 
-CXX      := g++
+CXX      ?= g++
 CXXFLAGS  = ${DEPENDFLAGS} -ansi -Wall
 
 %.o : %.cc

@@ -2398,7 +2398,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 273 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_domain)=static_cast<domain*>(NULL);
+    {yyerrok; (yyval.t_domain)=static_cast<domain*>(0);
        	log_error(E_FATAL,"Syntax error in domain"); ;}
     break;
 
@@ -2568,7 +2568,7 @@ yyreduce:
     {yyerrok;
         // hope someone makes this error someday
         log_error(E_FATAL,"Syntax error in predicate declaration.");
-	(yyval.t_pred_decl)= static_cast<pred_decl*>(NULL); ;}
+	(yyval.t_pred_decl)= static_cast<pred_decl*>(0); ;}
     break;
 
   case 29:
@@ -2630,21 +2630,21 @@ yyreduce:
 #line 377 "src/Parser/pddl+.yacc"
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in functor declaration.");
-	 (yyval.t_func_decl)= (int) NULL; ;}
+	 (yyval.t_func_decl)= 0; ;}
     break;
 
   case 37:
 
 /* Line 1464 of yacc.c  */
 #line 383 "src/Parser/pddl+.yacc"
-    {(yyval.t_dummy) = (int) NULL;;}
+    {(yyval.t_dummy) = 0;;}
     break;
 
   case 38:
 
 /* Line 1464 of yacc.c  */
 #line 383 "src/Parser/pddl+.yacc"
-    {(yyval.t_dummy)= (int) NULL;;}
+    {(yyval.t_dummy)= 0;;}
     break;
 
   case 39:
@@ -3096,7 +3096,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 634 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_effect_lists)=NULL;
+    {yyerrok; (yyval.t_effect_lists)=0;
 	 log_error(E_FATAL,"Syntax error in (and ...)");
 	;}
     break;
@@ -3205,7 +3205,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 689 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_timed_effect)=NULL;
+    {yyerrok; (yyval.t_timed_effect)=0;
 	log_error(E_FATAL,"Syntax error in timed effect"); ;}
     break;
 
@@ -3231,7 +3231,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 703 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_timed_effect)=NULL;
+    {yyerrok; (yyval.t_timed_effect)=0;
 	log_error(E_FATAL,"Syntax error in conditional continuous effect"); ;}
     break;
 
@@ -3994,7 +3994,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1056 "src/Parser/pddl+.yacc"
-    {(yyval.t_con_goal) = new constraint_goal(E_WITHIN,(yyvsp[(4) - (5)].t_goal),NULL,(yyvsp[(3) - (5)].t_num_expression)->double_value(),0.0);delete (yyvsp[(3) - (5)].t_num_expression);;}
+    {(yyval.t_con_goal) = new constraint_goal(E_WITHIN,(yyvsp[(4) - (5)].t_goal),0,(yyvsp[(3) - (5)].t_num_expression)->double_value(),0.0);delete (yyvsp[(3) - (5)].t_num_expression);;}
     break;
 
   case 216:
@@ -4029,14 +4029,14 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1066 "src/Parser/pddl+.yacc"
-    {(yyval.t_con_goal) = new constraint_goal(E_HOLDDURING,(yyvsp[(5) - (6)].t_goal),NULL,(yyvsp[(4) - (6)].t_num_expression)->double_value(),(yyvsp[(3) - (6)].t_num_expression)->double_value());delete (yyvsp[(3) - (6)].t_num_expression);delete (yyvsp[(4) - (6)].t_num_expression);;}
+    {(yyval.t_con_goal) = new constraint_goal(E_HOLDDURING,(yyvsp[(5) - (6)].t_goal),0,(yyvsp[(4) - (6)].t_num_expression)->double_value(),(yyvsp[(3) - (6)].t_num_expression)->double_value());delete (yyvsp[(3) - (6)].t_num_expression);delete (yyvsp[(4) - (6)].t_num_expression);;}
     break;
 
   case 221:
 
 /* Line 1464 of yacc.c  */
 #line 1068 "src/Parser/pddl+.yacc"
-    {(yyval.t_con_goal) = new constraint_goal(E_HOLDAFTER,(yyvsp[(4) - (5)].t_goal),NULL,0.0,(yyvsp[(3) - (5)].t_num_expression)->double_value());delete (yyvsp[(3) - (5)].t_num_expression);;}
+    {(yyval.t_con_goal) = new constraint_goal(E_HOLDAFTER,(yyvsp[(4) - (5)].t_goal),0,0.0,(yyvsp[(3) - (5)].t_num_expression)->double_value());delete (yyvsp[(3) - (5)].t_num_expression);;}
     break;
 
   case 222:
@@ -4178,7 +4178,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1149 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_pred_decl_list)=NULL;
+    {yyerrok; (yyval.t_pred_decl_list)=0;
 	 log_error(E_FATAL,"Syntax error in (:predicates ...)");
 	;}
     break;
@@ -4194,7 +4194,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1158 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_func_decl_list)=NULL;
+    {yyerrok; (yyval.t_func_decl_list)=0;
 	 log_error(E_FATAL,"Syntax error in (:functions ...)");
 	;}
     break;
@@ -4210,7 +4210,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1167 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_con_goal)=NULL;
+    {yyerrok; (yyval.t_con_goal)=0;
       log_error(E_FATAL,"Syntax error in (:constraints ...)");
       ;}
     break;
@@ -4226,7 +4226,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1176 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_con_goal)=NULL;
+    {yyerrok; (yyval.t_con_goal)=0;
       log_error(E_FATAL,"Syntax error in (:constraints ...)");
       ;}
     break;
@@ -4325,7 +4325,7 @@ yyreduce:
 #line 1231 "src/Parser/pddl+.yacc"
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in action declaration.");
-	 (yyval.t_action_def)= NULL; ;}
+	 (yyval.t_action_def)= 0; ;}
     break;
 
   case 260:
@@ -4343,7 +4343,7 @@ yyreduce:
 #line 1249 "src/Parser/pddl+.yacc"
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in event declaration.");
-	 (yyval.t_event_def)= NULL; ;}
+	 (yyval.t_event_def)= 0; ;}
     break;
 
   case 262:
@@ -4361,7 +4361,7 @@ yyreduce:
 #line 1265 "src/Parser/pddl+.yacc"
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in process declaration.");
-	 (yyval.t_process_def)= NULL; ;}
+	 (yyval.t_process_def)= 0; ;}
     break;
 
   case 264:
@@ -4383,7 +4383,7 @@ yyreduce:
 #line 1286 "src/Parser/pddl+.yacc"
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in durative-action declaration.");
-	 (yyval.t_durative_action_def)= NULL; ;}
+	 (yyval.t_durative_action_def)= 0; ;}
     break;
 
   case 266:
@@ -4690,7 +4690,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 1412 "src/Parser/pddl+.yacc"
-    {yyerrok; (yyval.t_problem)=NULL;
+    {yyerrok; (yyval.t_problem)=0;
        	log_error(E_FATAL,"Syntax error in problem definition."); ;}
     break;
 
@@ -4792,7 +4792,7 @@ yyreduce:
 #line 1446 "src/Parser/pddl+.yacc"
     {yyerrok;
         log_error(E_FATAL,"Syntax error in metric declaration.");
-        (yyval.t_metric)= NULL; ;}
+        (yyval.t_metric)= 0; ;}
     break;
 
   case 321:
