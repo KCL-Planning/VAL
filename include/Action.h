@@ -65,8 +65,8 @@ class State;
 class Ownership;
 class EffectsRecord;
 class Validator;
-class ExecutionContext;
-class ActiveCtsEffects;
+struct ExecutionContext;
+struct ActiveCtsEffects;
 class StartAction;
 class EndAction;
 
@@ -125,8 +125,8 @@ protected:
 			};
 		};
 
-	friend class FAEhandler;
-	friend class ActiveCtsEffects;
+	friend struct FAEhandler;
+	friend struct ActiveCtsEffects;
 	
 public:
 	Action(Validator * v,const operator_ * a,const const_symbol_list* bs);
@@ -220,12 +220,9 @@ private:
 	const Proposition * initPre;
 	conj_goal * gli;
 	const Proposition * invPre;
-	goal * gle;			// Will actually be a conj_goal *, but it's not important.
 
 	effect_lists * els;
-	effect_lists * ele;
 
-	Environment * vars;
 
 public:
 	CondCommunicationAction(Validator * v,const durative_action * a,const const_symbol_list * bs,

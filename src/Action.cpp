@@ -754,8 +754,7 @@ CondCommunicationAction::CondCommunicationAction(Validator * v,const durative_ac
 	initPre(gs->empty()?0:vld->pf.buildProposition(gls,bindings)),
 	gli(new conj_goal(const_cast<goal_list*>(gi))), 
 	invPre(gi->empty()?0:vld->pf.buildProposition(gli,bindings)),
-	gle(act->precondition),
-	els(es), ele(el), vars(0) {};
+	els(es) {};
 
 
 CondCommunicationAction::CondCommunicationAction(Validator * v,const durative_action * a,const const_symbol_list * bs,
@@ -767,8 +766,7 @@ CondCommunicationAction::CondCommunicationAction(Validator * v,const durative_ac
 //	initPre(gs->empty()?0:vld->pf.buildProposition(gls,bindings)),
 	gli(new conj_goal(const_cast<goal_list*>(gi))), 
 //	invPre(gi->empty()?0:vld->pf.buildProposition(gli,bindings)),
-	gle(act->precondition),
-	els(es), ele(el), vars(vs) 
+	els(es)
 {
 	cout << "I have a real forall CCA to build for variables: ";
 	

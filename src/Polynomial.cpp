@@ -567,9 +567,13 @@ bool Polynomial::operator==(const Polynomial & p) const
 {
 	if(getDegree() != p.getDegree()) return false;
 
-	for(unsigned int i = getDegree(); i >= 0; --i)
+	for(unsigned int i = getDegree(); ; --i)
 	{
 		if(getCoeff(i) != p.getCoeff(i)) return false;
+
+		if (i == 0) {
+			break;
+		}
 	};
 
 	return true;
@@ -1471,14 +1475,14 @@ Intervals NumericalSolution::getIntervals(const Comparison * comp, const State* 
 	{
 
       startPt = make_pair(0,true);
-      CoScalar lastPoint = j->second;
+      //CoScalar lastPoint = j->second; // set but never used
       double lastTime = j->first;
       j++;
-      lastPoint = lastPoint;
+//      lastPoint = lastPoint; // why was this line of code here?
       while( j != points.end())
       {
           if( j->second != offSet) break;
-          lastPoint = j->second;
+          //lastPoint = j->second;
           lastTime = j->first;
           j++;
       };
@@ -1605,7 +1609,7 @@ bool Polynomial::checkInvariant(const Comparison * comp, const State* s,CoScalar
       			return false;
       		};
 
-      		if( (degree == 1))
+      		if(degree == 1)
       		{
 //      		cout << "WE HAVE " << evaluate(0) << " AND " << evaluate(t) << "\n";
       			if( (evaluate(0) > - accuracy) && (evaluate(t) > - accuracy))

@@ -70,7 +70,7 @@ class Action;
 
 
 
-class ActiveCtsEffects;
+struct ActiveCtsEffects;
 class DerivedGoal;
 class AdviceProposition;
 
@@ -298,11 +298,10 @@ public:
 
 class ConjGoal : public Proposition {
 private:
-	const conj_goal * cg;
 	const vector<const Proposition *> gs;
 public:
 	ConjGoal(const conj_goal * c,const vector<const Proposition*> & g,const Environment & bs) :
-		Proposition(bs), cg(c), gs(g) 
+		Proposition(bs), gs(g) 
 	{};
 	bool evaluate(const State *,vector<const DerivedGoal*> = vector<const DerivedGoal*>()) const;
 	Intervals getIntervals(const State* s) const;
@@ -328,11 +327,10 @@ public:
 
 class DisjGoal : public Proposition {
 private:
-	const disj_goal * dg;
 	const vector<const Proposition *> gs;
 public:
 	DisjGoal(const disj_goal * d,const vector<const Proposition *> & g,const Environment & bs) :
-		Proposition(bs), dg(d), gs(g)
+		Proposition(bs), gs(g)
 	{};
 	bool evaluate(const State *,vector<const DerivedGoal*> = vector<const DerivedGoal*>()) const;
 	Intervals getIntervals(const State* s) const;
@@ -357,13 +355,12 @@ public:
 
 class ImplyGoal : public Proposition {
 private:
-	const imply_goal * ig;
 	const Proposition * ant;
 	const Proposition * cons;
 public:
 	ImplyGoal(const imply_goal * i,const Proposition * a,const Proposition * c,
 					const Environment & bs) :
-			Proposition(bs), ig(i), ant(a), cons(c)
+			Proposition(bs), ant(a), cons(c)
 	{};
 	bool evaluate(const State *,vector<const DerivedGoal*> = vector<const DerivedGoal*>()) const;
 	Intervals getIntervals(const State* s) const;
@@ -386,11 +383,10 @@ public:
 
 class NegGoal : public Proposition {
 private:
-	const neg_goal * ng;
 	const Proposition * p;
 public:
 	NegGoal(const neg_goal * n,const Proposition * pp,const Environment & bs) :
-		Proposition(bs), ng(n), p(pp) 
+		Proposition(bs), p(pp) 
 	{};
 	bool evaluate(const State *,vector<const DerivedGoal*> = vector<const DerivedGoal*>()) const;
 	Intervals getIntervals(const State* s) const;
