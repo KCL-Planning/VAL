@@ -475,27 +475,27 @@ src/PingusTranslator.o:
 
 src/PlanRec.o: 
 
-src/Polynomial.o: /usr/include/math.h
+src/Polynomial.o: 
 
 src/Relax.o: 
 
 src/TIM.o: 
 
-src/TimSupport.o: /usr/include/assert.h
+src/TimSupport.o:
 
 src/TypeStrip.o: 
 
 src/TypedAnalysis.o: 
 
-src/Validator.o: /usr/include/math.h
+src/Validator.o: 
 
 src/dynaMain.o: 
 
-src/instantiation.o:  /usr/include/assert.h
+src/instantiation.o:  
 
 src/instantiationMain.o: 
 
-src/main.o:  /usr/include/time.h
+src/main.o: 
 
 src/parse.o: 
 
