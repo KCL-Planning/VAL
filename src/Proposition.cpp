@@ -60,7 +60,7 @@
 using std::make_pair;
 
 namespace VAL {
-  
+
 template<class T> T max(T & t1,T & t2) {return t1>t2?t1:t2;};
 
 //using std::max;
@@ -99,7 +99,7 @@ ostream & operator <<(ostream & o,const Proposition & p)
 bool isPointInInterval(CoScalar p, const vector< pair<intervalEnd,intervalEnd> > & ints)
 {
 
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints.begin(); i != ints.end();++i) 
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints.begin(); i != ints.end();++i)
 	{
 		if( (p >= i->first.first) && (p <= i->second.first) )
 		{
@@ -127,7 +127,7 @@ bool isPointInInterval(CoScalar p, const vector< pair<intervalEnd,intervalEnd> >
 	vector< pair<intervalEnd,intervalEnd> > someIntervals(ints);
 	someIntervals.erase(std::remove(someIntervals.begin(),someIntervals.end(),int1),someIntervals.end());
 
-	
+
 	return isPointInInterval(p,someIntervals);
 };
 
@@ -138,12 +138,12 @@ pair<intervalEnd,intervalEnd> getIntervalFromPt(intervalEnd p, const vector< pai
 	unsigned int size = someIntervals.size();
 	someIntervals.erase(std::remove(someIntervals.begin(),someIntervals.end(),int1),someIntervals.end());
 	if(someIntervals.size() != size - 1) someIntervals.push_back(int1); //if repeated make sure not all occurances are deleted
-	
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = someIntervals.begin(); i != someIntervals.end();++i) 
+
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = someIntervals.begin(); i != someIntervals.end();++i)
 	{
 		if( (p.first >= i->first.first) && (p.first <= i->second.first) )
 		{
-	
+
 			//check point is not at end of interval where end is open(assuming point is at start of interval)
 			if( !(( (p.first == i->first.first) && (!(i->first.second)) && (p.second) ) ||
 				  ( (p.first == i->second.first) && (!(i->second.second)) && (p.second)) ||
@@ -168,15 +168,15 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 {
 	Intervals theUnion;
 	vector<pair<intervalEnd,intervalEnd> > theIntervals;
-	CoScalar progress = 0, upperLimit =0; 
+	CoScalar progress = 0, upperLimit =0;
 	intervalEnd startPt,endPt;
 	pair<intervalEnd,intervalEnd> aInterval;
-	
 
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints1.intervals.begin(); i != ints1.intervals.end();++i) 
+
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints1.intervals.begin(); i != ints1.intervals.end();++i)
 		theIntervals.push_back(*i);
 
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i1 = ints2.intervals.begin(); i1 != ints2.intervals.end();++i1) 
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i1 = ints2.intervals.begin(); i1 != ints2.intervals.end();++i1)
 		theIntervals.push_back(*i1);
 
 	//find upper limit
@@ -184,7 +184,7 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 	{
 		if(upperLimit < i2->second.first) upperLimit = i2->second.first + 1;
 	};
-	 
+
 
 
 
@@ -196,22 +196,22 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 
 		//find smallest start point after 'progress'
 		startPt = make_pair(upperLimit,false);
-		
+
 		for(vector< pair<intervalEnd,intervalEnd> >::iterator i = theIntervals.begin(); i != theIntervals.end();++i)
 		{
 			if((i->first.first >= progress) && (i->first.first <= startPt.first ))
 			{
 				if(!((i->second.first == aInterval.second.first) && (aInterval.second.second) )) //check new interval is adding anything (ie not a point at a closed end)
 				{
-					startPt.first = i->first.first;	
+					startPt.first = i->first.first;
 					endPt = i->second;
 				};
-				
-				
+
+
 			};
 
 		};
-	
+
 		if(startPt.first == upperLimit) break;
 
 		//set closure of start point
@@ -222,7 +222,7 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 
 		};
 
-		
+
 
 
 
@@ -233,11 +233,11 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 		{
 			for(vector< pair<intervalEnd,intervalEnd> >::iterator i = theIntervals.begin(); i != theIntervals.end();++i)
 			{
-				if( ( (isPointInInterval(i->first.first,aInterval) && !( (i->first.first == aInterval.second.first) &&  !(i->first.second) && !(aInterval.second.second) )  )|| 
+				if( ( (isPointInInterval(i->first.first,aInterval) && !( (i->first.first == aInterval.second.first) &&  !(i->first.second) && !(aInterval.second.second) )  )||
 						( (i->first.first == aInterval.second.first) && ( i->first.second || aInterval.second.second ) ) )
 					&& (i->second.first >= endPt.first ) )
 				{
-					endPt.first = i->second.first;	
+					endPt.first = i->second.first;
 					endPt.second = i->second.second;
 
 				};
@@ -245,9 +245,9 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 			};
 
 			if(aInterval.second == endPt) break;
-			
+
 			aInterval = make_pair(startPt,endPt);
-		
+
 		};
 
 		//set closure of end point, if nec
@@ -255,12 +255,12 @@ Intervals setUnion(const Intervals & ints1,const Intervals & ints2)
 		{
 			if( (endPt.first == i2->second.first) && (i2->second.second)) {endPt.second = true; aInterval = make_pair(startPt,endPt);}; //make end pt closed
 		};
-		
+
 		progress = endPt.first;
 
 		theUnion.intervals.push_back(aInterval);
 	};
-	
+
 	return Intervals(theUnion);
 };
 
@@ -272,11 +272,11 @@ Intervals setIntersect(const Intervals & ints1,const Intervals & ints2)
 	CoScalar progress = -1, upperLimit =0;//set progress to some number less than 0
 	intervalEnd startPt,endPt;
 	pair<intervalEnd,intervalEnd> aInterval,tempInterval;
-	
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints1.intervals.begin(); i != ints1.intervals.end();++i) 
+
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints1.intervals.begin(); i != ints1.intervals.end();++i)
 		theIntervals.push_back(*i);
 
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i1 = ints2.intervals.begin(); i1 != ints2.intervals.end();++i1) 
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i1 = ints2.intervals.begin(); i1 != ints2.intervals.end();++i1)
 		theIntervals.push_back(*i1);
 
 
@@ -288,14 +288,14 @@ Intervals setIntersect(const Intervals & ints1,const Intervals & ints2)
 	{
 		if(upperLimit < i2->second.first) upperLimit = i2->second.first + 1;
 	};
-	 
+
 	//build intersection by adding each interval in turn based on the collection of given intervals
 	for(unsigned int count=0; count != theIntervals.size(); ++count)
 	{
 
 		//find smallest start point after 'progress' that is in another interval except its own interval
 		startPt = make_pair(upperLimit,true);
-		
+
 
 		for(vector< pair<intervalEnd,intervalEnd> >::iterator i = theIntervals.begin(); i != theIntervals.end();++i)
 		{
@@ -309,7 +309,7 @@ Intervals setIntersect(const Intervals & ints1,const Intervals & ints2)
 					{
 						startPt.first = i->first.first;
 						if(!(i->first.second)) startPt.second = false; //make end pt open
-						
+
 						//make end point minimum of the two intervals
 						if(i->second.first < tempInterval.second.first)
 							endPt = i->second;
@@ -330,7 +330,7 @@ Intervals setIntersect(const Intervals & ints1,const Intervals & ints2)
 							};
 					};
 				};
-				
+
 			};
 
 		};
@@ -338,15 +338,15 @@ Intervals setIntersect(const Intervals & ints1,const Intervals & ints2)
 		if(startPt.first == upperLimit) break;
 
 		aInterval = make_pair(startPt,endPt);
-			
+
 
 		progress = endPt.first;
 
 		theIntersect.intervals.push_back(aInterval);
-	
-		
+
+
 	};
-	
+
 		    //cout << "intersect of "<<ints1 << " and "<< ints2 << " is "<<theIntersect<<"\n";
 	return theIntersect;
 };
@@ -356,23 +356,23 @@ Intervals setComplement(const Intervals & ints,double endPoint)
 
 	Intervals theComplement;
 	intervalEnd startPt,endPt;
-  
+
    if( ints.intervals.size() == 0 )
    {
     theComplement.intervals.push_back(make_pair( make_pair(0,true) , make_pair(endPoint, true)));
     return theComplement;
    };
-   
+
 	vector< pair<intervalEnd,intervalEnd> >::const_iterator i = ints.intervals.begin();
-	
+
 	if(i->first.first != 0 || ( i->first.first == 0 && !(i->first.second)))
 	{
 		startPt = make_pair(0,true);
 		endPt = make_pair(i->first.first,!(i->first.second));
 		theComplement.intervals.push_back(make_pair(startPt,endPt));
-	}; 
-	
-	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i1 = ints.intervals.begin(); i1 != ints.intervals.end();++i1) 
+	};
+
+	for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i1 = ints.intervals.begin(); i1 != ints.intervals.end();++i1)
 
 	{
 
@@ -392,10 +392,10 @@ Intervals setComplement(const Intervals & ints,double endPoint)
 				endPt = make_pair(endPoint,true);
 			};
 
-			
+
 			theComplement.intervals.push_back(make_pair(startPt,endPt));
 		};
-	};	
+	};
 
 	return theComplement;
 };
@@ -442,12 +442,12 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 	};
 
 
-	
+
 	if(dynamic_cast<const conj_goal *>(g))
 	{
-	 
+
 		const conj_goal * cg = dynamic_cast<const conj_goal *>(g);
-	
+
 		bool existsDP = false;
 		bool existsComp = false;
 		for(goal_list::const_iterator i = cg->getGoals()->begin(); i != cg->getGoals()->end(); ++i)
@@ -464,7 +464,7 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 		      if(existsDP) break;
 
 		    };
-		  }; 
+		  };
 		return make_pair(existsDP,existsComp);
 	};
 
@@ -474,14 +474,14 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 	if(dynamic_cast<const disj_goal*>(g))
 	{
 	 	const disj_goal * dg = dynamic_cast<const disj_goal *>(g);
-	
+
 		bool existsDP = false;
 		bool existsComp = false;
 		for(goal_list::const_iterator i = dg->getGoals()->begin(); i != dg->getGoals()->end(); ++i)
 		  {
 		    if(hasDP(*i,env,vld,dp,comp).first)
 		    {
-		      existsDP = true;   
+		      existsDP = true;
 		    };
 
 		     if(hasDP(*i,env,vld,dp,comp).second)
@@ -491,7 +491,7 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 
 
 		    };
-		  }; 
+		  };
 		return make_pair(existsDP,existsComp);
 	};
 
@@ -504,7 +504,7 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 	if(dynamic_cast<const imply_goal*>(g))
 	{
 		const imply_goal * ig = dynamic_cast<const imply_goal*>(g);
-		
+
 		pair<bool,bool> ant = hasDP(ig->getAntecedent(),env,vld,dp,comp);
 
 		pair<bool,bool> cons = hasDP(ig->getConsequent(),env,vld,dp,comp);
@@ -516,8 +516,8 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 		const simple_goal * sg = dynamic_cast<const simple_goal*>(g);
 
 		map<string,pair<const goal *,const var_symbol_table *> > derivPreds = vld->getDerivRules()->getDerivPreds();
-	
-	
+
+
 		for(map<string,pair<const goal *,const var_symbol_table *> >::const_iterator i = derivPreds.begin(); i != derivPreds.end(); ++i)
 
 		{
@@ -528,8 +528,8 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 			};
 
 
-		}; 
-		
+		};
+
 	};
 
 
@@ -539,7 +539,7 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 		return hasDP(qg->getGoal(),env,vld,dp,comp);
 
 	};
-	
+
 	return make_pair(dp,comp);
 };
 
@@ -548,12 +548,12 @@ pair<bool,bool> hasDP(const goal * g,Environment * env,const Validator * vld,boo
 struct compareCond {
 
 	compareCond() {};
-	
+
 	bool operator()(const Proposition * p1,const Proposition * p2) const
 	{
 		pair<int,int> rnk1 = p1->rank();
 		pair<int,int> rnk2 = p2->rank();
-		
+
 		if(rnk1.second == -1 && rnk2.second != -1)
 		  return false;
 
@@ -571,7 +571,7 @@ struct compareCond {
 		}
 		else
 			return false;
-		
+
 		return true;
 	};
 };
@@ -581,13 +581,13 @@ struct compareCond2 {
 	compareCond2() {};
 
 
-	
+
 	bool operator()(const Proposition * p1,const Proposition * p2) const
 	{
 		pair<int,int> rnk1 = p1->rank();
 		pair<int,int> rnk2 = p2->rank();
-		
-		
+
+
 		if(rnk1.second > rnk2.second)
 			return true;
 		else if(rnk1.second == rnk2.second)
@@ -600,7 +600,7 @@ struct compareCond2 {
 		}
 		else
 			return false;
-		
+
 		return true;
 	};
 };
@@ -613,7 +613,7 @@ ConjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();++i)
 		conditions.push_back(*i);
-	 
+
 	pair<int,int> rnk = rank();
 	//in the case of derived predicates and simple props only
 	if(rnk.second == -1)
@@ -622,18 +622,18 @@ ConjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
   }
 	else
 	  std::sort( conditions.begin() ,  conditions.end(), compareCond());
-			
+
 	for(vector<const Proposition *>::const_iterator i1 = conditions.begin();i1 != conditions.end();++i1)
 	{          //cout << **i1 <<" conj\n";
 		if(!(*i1)->evaluate(s,DPs)) return false;
 	};
 
-		
+
 	return true;
 
 };
 
-bool 
+bool
 
 ConjGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
@@ -681,12 +681,12 @@ pair<int,int> ConstraintGoal::rank() const
 {
 	int count = 0;
 	int maxDegree = 0;
-	
+
 	pair<int,int> rnk = requirement->rank();
 	count += rnk.first;
 	if(rnk.second > maxDegree || (maxDegree == 0 && rnk.second == -1)) maxDegree = rnk.second;
 
-	if(trigger) 
+	if(trigger)
 	{
 		rnk = trigger->rank();
 		count += rnk.first;
@@ -732,7 +732,7 @@ void ConstraintGoal::write(ostream & o) const
 			o << "sometime " << *(getRequirement());
 			break;
 		case E_WITHIN:
-			o << "within " << getDeadline() << " " 
+			o << "within " << getDeadline() << " "
 					<< *(getRequirement());
 			break;
 		case E_ATMOSTONCE:
@@ -747,7 +747,7 @@ void ConstraintGoal::write(ostream & o) const
 									<< *(getRequirement());
 			break;
 		case E_ALWAYSWITHIN:
-			o << "always-within " << (getDeadline()) << " " 
+			o << "always-within " << (getDeadline()) << " "
 					<< *(getTrigger()) << " "
 					<< *(getRequirement());
 			break;
@@ -771,7 +771,7 @@ void ConstraintGoal::write(ostream & o) const
 bool PreferenceGoal::evaluate(const State * s,vector<const DerivedGoal *> DPs) const
 {
 	bool b = thePref->evaluate(s,DPs);
-	if(!b) 
+	if(!b)
 	{
 // Have to be careful, here. We want to ensure we count a violation for each instance
 // of a preference, but only one for each instance (in particular, an over all condition
@@ -798,18 +798,18 @@ DisjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
         if((*i)->evaluate(s,DPs))  return true;
       };
 
-			
+
 		return false;
 	};
 
 
-   
+
 	//reorder conditions in order of complexity, simplest first
 	vector<const Proposition *> conditions;
 
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();++i)
 		conditions.push_back(*i);
-		
+
 
 	//in the case of derived predicates and simple props only
 	if(rnk.second == -1)
@@ -819,12 +819,12 @@ DisjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 
 		for(vector<const Proposition *>::const_iterator i =  conditions.begin();i !=  conditions.end();++i)
 		   if((*i)->evaluate(s,DPs))  return true;
-			
+
 		return false;
 	};
-	
+
 	std::sort( conditions.begin() ,  conditions.end(), compareCond());
-	
+
 	Intervals theAns;
 
 	try
@@ -832,7 +832,7 @@ DisjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 		for(vector<const Proposition *>::const_iterator i =  conditions.begin();i !=  conditions.end();++i)
 		{
 			theAns = setUnion(theAns,(*i)->getIntervals(s));
-			
+
 			if( (theAns.intervals.size() == 1) && (theAns.intervals.begin()->first.first == 0) && (theAns.intervals.begin()->second.first == endOfInterval))
 				return true;
 		};
@@ -840,7 +840,7 @@ DisjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 	catch(InvariantDisjError ide)
 	{
 		if(InvariantWarnings)
-		{			
+		{
 			if(LaTeX)
 				s->getValidator()->addInvariantWarning(getPropString(s)+",   for values of $t$ in $( 0 , "+toString(endOfInterval)+" )$\\\\\n");
 			else
@@ -857,17 +857,17 @@ DisjGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 				*report << "\\\\\n \\> \\listrow{Invariant: "+getPropString(s)+", $t \\in ( 0 , "+toString(endOfInterval)+" )$}\\\\\n";
 			else
 				cout << "\nInvariant: "+getPropString(s)+", t in ( 0 , "+toString(endOfInterval)+" )\n";
-				
+
 			InvariantError ie;
 			throw ie;
 		};
-		
+
 	};
-	   
-	return false;		
+
+	return false;
 };
 
-bool 
+bool
 DisjGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();++i)
@@ -908,31 +908,31 @@ bool evaluateEquality(const proposition * prop,const Environment & bindings)
 //cout << "Equality test " << s1 << " " << s2 << "\n";
  if(s1 ==  s2) return true;
  else return false;
-  
+
 };
 
 bool
 SimpleProposition::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 {
-        
+
     if(prop->head->getName() == "=")// && prop->args.size() == 2 )
-	  {          
-       return evaluateEquality(prop,bindings);          
+	  {
+       return evaluateEquality(prop,bindings);
     };
-    
+
     bool ans = s->evaluate(this);
     //cout << *this << " is "<< ans << "\n";
 	return ans;
 };
 
 
-bool 
+bool
 SimpleProposition::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
 	return o.markOwnedPrecondition(a,this,w);
 };
 
-bool 
+bool
 DerivedGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
  string dpName = getDPName();
@@ -955,9 +955,9 @@ DerivedGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) 
 //evaluate comparison at a single point
 bool
 Comparison::evaluateAtPoint(const State * s) const
-{                     
-      		double lhs = s->evaluate(comp->getLHS(),bindings); 
-      		double rhs = s->evaluate(comp->getRHS(),bindings);              
+{
+      		double lhs = s->evaluate(comp->getLHS(),bindings);
+      		double rhs = s->evaluate(comp->getRHS(),bindings);
 
       		switch(comp->getOp())
       		{
@@ -979,7 +979,7 @@ Comparison::evaluateAtPoint(const State * s) const
       			default:
       				return false;
       		};
-  
+
 };
 
 //evaluate comparison at a single point, but if it is within a certain error then that is OK
@@ -988,7 +988,7 @@ Comparison::evaluateAtPointError(const State * s) const
 {
       double eval = s->evaluate(comp->getLHS(),bindings)  - s->evaluate(comp->getRHS(),bindings);
       double tooSmall = 0.0001;
-                  
+
       		switch(comp->getOp())
       		{
       			case E_GREATER:
@@ -1009,12 +1009,12 @@ Comparison::evaluateAtPointError(const State * s) const
 
       			default:
       				return false;
-      		}; 
+      		};
 };
 
 bool Proposition::evaluateAtPointWithinError(const State* s,vector<const DerivedGoal*> DPs) const
 {
-   return evaluate(s,DPs);  
+   return evaluate(s,DPs);
 };
 
 bool Comparison::evaluateAtPointWithinError(const State* s,vector<const DerivedGoal*> DPs) const
@@ -1022,15 +1022,15 @@ bool Comparison::evaluateAtPointWithinError(const State* s,vector<const DerivedG
    return evaluateAtPointError(s);
 };
 
-bool 
+bool
 Comparison::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 {
-    if(ctsFtn == 0)  return evaluateAtPoint(s); 
+    if(ctsFtn == 0)  return evaluateAtPoint(s);
     // RH proposed Error version here, but seems
     // wrong to me!
 //cout << "CHECK WITH " << rhsIntervalOpen << " " << endOfInterval << "\n";
     return ctsFtn->checkInvariant(this,s,endOfInterval,rhsIntervalOpen);
-   
+
      /*
    Intervals someIntervals = ctsFtn->getIntervals(this,s,endOfInterval);
 
@@ -1038,13 +1038,13 @@ Comparison::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
    return false;
    else return true;
        */
-	
+
 };
 
 
 
 
-bool 
+bool
 Comparison::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
 	return o.markOwnedPreconditionFEs(a,comp->getLHS(),bindings) &&
@@ -1057,7 +1057,7 @@ ImplyGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 {
 	bool b = !(ant->evaluate(s,DPs));
 //	cout << "Implication from " << b << "\n";
-//	if(b) 
+//	if(b)
 //	{
 //		cout << "Rest is: " << cons->evaluate(s,DPs) << "\n";
 //	};
@@ -1066,10 +1066,10 @@ ImplyGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 };
 
 
-bool 
+bool
 ImplyGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
-	return (ant->markOwnedPreconditions(a,o,E_PRE) && 
+	return (ant->markOwnedPreconditions(a,o,E_PRE) &&
 			cons->markOwnedPreconditions(a,o,E_PRE));
 };
 
@@ -1080,7 +1080,7 @@ NegGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 	return !(p->evaluate(s,DPs));
 };
 
-bool 
+bool
 NegGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 
 {
@@ -1095,10 +1095,10 @@ string ConjGoal::getPropString(const State* s) const
 {
 	string ans;
 	bool lots = gs.size() > 1;
-	
+
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();)
 	{
-		
+
 		if(lots)
 
 			ans += "("+(*i)->getPropString(s)+")";
@@ -1133,7 +1133,7 @@ string PreferenceGoal::getPropString(const State * s) const
 // Maybe this should just return an empty set - depends on why getLiterals is used.
 set<const SimpleProposition *> PreferenceGoal::getLiterals() const
 {
-   return thePref->getLiterals(); 
+   return thePref->getLiterals();
 };
 
 pair<int,int> PreferenceGoal::rank() const
@@ -1154,7 +1154,7 @@ string DisjGoal::getPropString(const State* s) const
 {
 	string ans;
 	bool lots = gs.size() > 1;
-	
+
 
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();)
 
@@ -1165,7 +1165,7 @@ string DisjGoal::getPropString(const State* s) const
 		else
 			ans += (*i)->getPropString(s);
 
-		
+
 		++i;
 
 		if(i!= gs.end())
@@ -1190,7 +1190,7 @@ string DisjGoal::getPropString(const State* s) const
 string SimpleProposition::getPropString(const State* s) const
 
 {
-		
+
 
 	if(evaluate(s))
 
@@ -1198,20 +1198,20 @@ string SimpleProposition::getPropString(const State* s) const
 
 	else
 		return "false";
-	
+
 };
 
 string DerivedGoal::getPropString(const State* s) const
 {
- 
+
  string dpName = getDPName();
- 
+
  map<string,string>::iterator i = propStrings.find(dpName);
 
 
  if(i != propStrings.end())
    {
-     if(i->second == noPropString) 
+     if(i->second == noPropString)
        return "("+dpName+")";
      else
        return i->second;
@@ -1258,10 +1258,10 @@ string Comparison::getPropString(const State* s) const
       double offSet = 0;
       if(const BatteryCharge * bc = dynamic_cast<const BatteryCharge *>(ctsFtn))
       {
-          offSet = bc->getOffSet();  
+          offSet = bc->getOffSet();
       };
 
-      
+
     	if(LaTeX)
     		{ans = "$"+toString(ctsFtn)+" "+op+" "+toString(offSet)+"$ for $t\\in$ (0,"+toString(endOfInterval);
             if(rhsIntervalOpen) ans += ")"; else ans += "]";
@@ -1316,28 +1316,28 @@ set<const SimpleProposition *> SimpleProposition::getLiterals() const
 
     set<const SimpleProposition *> literals;
     literals.insert(this);
-    return literals; 
+    return literals;
 };
 
 set<const SimpleProposition *> Comparison::getLiterals() const
 {
-    set<const SimpleProposition *> comps;    
+    set<const SimpleProposition *> comps;
     return comps;
 };
 
 set<const SimpleProposition *> ConjGoal::getLiterals() const
 {
     set<const SimpleProposition *> literalspnes;
-    
+
     for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end(); ++i)
 	{
     set<const SimpleProposition *> someLiteralsPNEs = (*i)->getLiterals();
-    
+
 
     for(set<const SimpleProposition *>::const_iterator j =  someLiteralsPNEs.begin(); j != someLiteralsPNEs.end(); ++j)
-        literalspnes.insert(*j);      
+        literalspnes.insert(*j);
     };
-    
+
     return literalspnes;
 };
 
@@ -1360,7 +1360,7 @@ set<const SimpleProposition *> DisjGoal::getLiterals() const
 set<const SimpleProposition *> NegGoal::getLiterals() const
 {
     set<const SimpleProposition *> literalspnes = p->getLiterals();
-   
+
     return literalspnes;
 };
 
@@ -1390,7 +1390,7 @@ set<const SimpleProposition *> ImplyGoal::getLiterals() const
 
     for(set<const SimpleProposition *>::const_iterator j =  someLiterals.begin(); j != someLiterals.end(); ++j)
         literalspnes.insert(*j);
-             
+
     return literalspnes;
 };
 
@@ -1426,7 +1426,7 @@ Intervals ConjGoal::getIntervals(const State* s) const
 	{
 		return (*i1)->getIntervals(s);
 	};
-	
+
 	std::sort( conditions.begin() ,  conditions.end(), compareCond());
 
 	theAns = (*i1)->getIntervals(s);
@@ -1437,7 +1437,7 @@ Intervals ConjGoal::getIntervals(const State* s) const
 		theAns = setIntersect(theAns,(*i1)->getIntervals(s));
 		if(theAns.intervals.size() == 0) return theAns;
 	};
-	
+
 	return theAns;
 };
 
@@ -1450,16 +1450,16 @@ Intervals DisjGoal::getIntervals(const State* s) const
 
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();++i)
 		conditions.push_back(*i);
-		
+
 	std::sort( conditions.begin() ,  conditions.end(), compareCond());
-	
+
 	for(vector<const Proposition *>::const_iterator i1 =  conditions.begin();i1 !=  conditions.end();++i1)
 	{
 		theAns = setUnion(theAns,(*i1)->getIntervals(s));
 		if( (theAns.intervals.size() == 1) && (theAns.intervals.begin()->first.first == 0) && (theAns.intervals.begin()->second.first == endOfInterval))
 			return theAns;
 	};
-	
+
 	return theAns;
 };
 
@@ -1472,22 +1472,22 @@ Intervals SimpleProposition::getIntervals(const State* s) const
 	{
 		theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(endOfInterval, true)));
 	};
-	
+
 
 	return theAns;
 };
 
 Intervals DerivedGoal::getIntervals(const State* s) const
 {
- 
+
 
  string dpName = getDPName();
- 
+
  map<string, Intervals >::iterator i = intervals.find(dpName);
 
  if(i != intervals.end())
    {
-     if(i->second == noIntervals) 
+     if(i->second == noIntervals)
 	 {
 	   Intervals noInts;
 	   return noInts;
@@ -1544,16 +1544,16 @@ Intervals Comparison::getIntervals(const State* s) const
 		if( (poly->getDegree() == 0) && (poly->getCoeff(0) == 0))
 		{
 			theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(endOfInterval, true)));
-		};	
-		
+		};
+
 		return theAns;
 	};
-	
+
 	bool strict = (comp->getOp() == E_GREATER) || (comp->getOp() == E_LESS);
-	
-	vector<CoScalar> roots = getRootsForIntervals(s,endOfInterval); 
+
+	vector<CoScalar> roots = getRootsForIntervals(s,endOfInterval);
 	std::sort(roots.begin(),roots.end());
-	
+
 	pair<CoScalar,bool> startPt,endPt;
 
 	if(roots.size() == 0)
@@ -1562,11 +1562,11 @@ Intervals Comparison::getIntervals(const State* s) const
 		if( poly->evaluate(endOfInterval/2) > 0 )
 		{
 			theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(endOfInterval, true)));
-		};	
-		
+		};
+
 		return theAns;
 	};
-	
+
 	//determine if starting satisfied or not
 	Intervals aInt;
 	vector< CoScalar >::const_iterator i = roots.begin();
@@ -1581,7 +1581,7 @@ Intervals Comparison::getIntervals(const State* s) const
 	{
 
 		bool greaterZero;
-		
+
 		if( (i+1) != roots.end())
 		{
 			greaterZero = (poly->evaluate( *(i+1) / 2 ) > 0);
@@ -1590,13 +1590,13 @@ Intervals Comparison::getIntervals(const State* s) const
 		{
 			greaterZero = (poly->evaluate( endOfInterval / 2)  > 0);
 		};
-		
-	
-		
+
+
+
 	};
 
-	
-	for(; i != roots.end();++i) 
+
+	for(; i != roots.end();++i)
 	{
 
 
@@ -1607,7 +1607,7 @@ Intervals Comparison::getIntervals(const State* s) const
 
 			if((i+1) != roots.end())
 			{
-				endPt = make_pair(*(i+1),!(strict));		
+				endPt = make_pair(*(i+1),!(strict));
 			}
 			else
 			{
@@ -1627,9 +1627,9 @@ Intervals Comparison::getIntervals(const State* s) const
 				aInt.intervals.push_back(make_pair(startPt,startPt));
 				theAns = setUnion(theAns,aInt);
 			};
-			
+
 		};
-		
+
 	};	*/
 	//cout << " \\\\ \\> The ctsFtn $"<<*ctsFtn<<"$ is satisfied on "<<theAns<<" until "<<endOfInterval<<"\\\\\n";
 	return theAns;
@@ -1652,7 +1652,7 @@ vector<CoScalar> Comparison::getRoots(const State* s,CoScalar t) const
 
 
 		if(InvariantWarnings)
-		{			
+		{
 			if(LaTeX)
 				s->getValidator()->addInvariantWarning(getPropString(s)+",   for values of $t$ in $( 0 , "+toString(endOfInterval)+" )$\\\\\n");
 			else
@@ -1667,7 +1667,7 @@ vector<CoScalar> Comparison::getRoots(const State* s,CoScalar t) const
 				*report << "\\\\\n \\> Invariant: "+getPropString(s)+", $t \\in ( 0 , "+toString(endOfInterval)+" )$\\\\\n";
 			else
 				cout << "\nInvariant: "+getPropString(s)+", t in ( 0 , "+toString(endOfInterval)+" )\n";
-				
+
 			InvariantError ie;
 			throw ie;
 		};
@@ -1675,14 +1675,14 @@ vector<CoScalar> Comparison::getRoots(const State* s,CoScalar t) const
 
 	};
 
-	
-		
+
+
 	return roots;
 };
-  
+
 vector<CoScalar> Comparison::getRootsForIntervals(const State* s,CoScalar t) const
 {
-	
+
 	vector<CoScalar> roots;
 
 	try
@@ -1695,20 +1695,20 @@ vector<CoScalar> Comparison::getRootsForIntervals(const State* s,CoScalar t) con
 		if(LaTeX)
 				*report << "\\\\\nProblem with polynomial: cannot find roots. Assume it has none.\\\\\n";
 		else
-				cout << "\nProblem with polynomial: cannot find roots. Assume it has none.\n";		
+				cout << "\nProblem with polynomial: cannot find roots. Assume it has none.\n";
 		//throw pre;
 	};
-	  
+
 	return roots;
 };
-    
+
 Intervals ImplyGoal::getIntervals(const State* s) const
 {
 	return setUnion(setComplement(ant->getIntervals(s),endOfInterval),cons->getIntervals(s));
 };
 
 Intervals NegGoal::getIntervals(const State* s) const
-{	
+{
 	return setComplement(p->getIntervals(s),endOfInterval);
 };
 
@@ -1836,7 +1836,7 @@ bool isExpressionConstant(const expression * e,const ActiveCtsEffects * ace,cons
 
 		if(sp->getKind() == E_TOTAL_TIME)
 		{
-			
+
 			return true;
 		};
 
@@ -1885,17 +1885,17 @@ void Comparison::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
         }
         else if(const Exponential * exp = dynamic_cast<const Exponential *>(i->second->ctsFtn))
         {
-             expon = exp; fndefined  = true;       
+             expon = exp; fndefined  = true;
         };
 
         if(fndefined)
-        {                                 
+        {
              if(isExpressionConstant(comp->getRHS(),ace,bindings,endOfInterval))  //check is constant!
              {
-              constant = ace->vld->getState().evaluate(comp->getRHS(),bindings);  
+              constant = ace->vld->getState().evaluate(comp->getRHS(),bindings);
                defined  = true;
-              };    
-              
+              };
+
          };
       };
 
@@ -1909,7 +1909,7 @@ void Comparison::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
       {
         if(const BatteryCharge * bc = dynamic_cast<const BatteryCharge *>(i->second->ctsFtn))
         {
-            numSoln = bc; fndefined =true;      
+            numSoln = bc; fndefined =true;
         }
         else if(const Exponential * exp = dynamic_cast<const Exponential *>(i->second->ctsFtn))
         {
@@ -1917,14 +1917,14 @@ void Comparison::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
         };
 
         if(fndefined)
-        {        
+        {
             if(isExpressionConstant(comp->getLHS(),ace,bindings,endOfInterval))  //check is constant!
              {
               constant = ace->vld->getState().evaluate(comp->getLHS(),bindings);
                defined  = true;
-              };    
+              };
         };
-        
+
       };
 
 
@@ -1935,14 +1935,14 @@ void Comparison::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
     if(defined)
     {
      if(numSoln != 0)
-     {              
+     {
         BatteryCharge * numericalSolution = new BatteryCharge(*numSoln);
         numericalSolution->setOffSet(constant);
         ctsFtn = numericalSolution;
         return;
      }
      else if(expon != 0)
-     {   
+     {
         // cout << "exponential for inv = "<<*expon<<" with offset "<<constant<<"\n";
         Exponential * exponential;
         if((comp->getOp() ==  E_GREATER) || (comp->getOp() ==  E_GREATEQ) || (comp->getOp() ==  E_EQUALS))
@@ -1970,7 +1970,7 @@ void Comparison::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
 	{
 		thePoly = getPoly(comp->getRHS(),ace,bindings,endOfInterval) - getPoly(comp->getLHS(),ace,bindings,endOfInterval);
 	};
-   
+
 	ctsFtn = new Polynomial(thePoly);
 	//cout << TestingPNERobustness << " "<<JudderPNEs<<" \\\\\\>Invariant Poly = $"<< *ctsFtn <<"$ \\\\\n";
 
@@ -1995,7 +1995,7 @@ void NegGoal::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
 void QfiedGoal::setUpComparisons(const ActiveCtsEffects * ace,bool rhsOpen)
 {
         if(!pp) create();
-	
+
 	endOfInterval = ace->localUpdateTime;
 	const_cast<Proposition*>(pp)->setUpComparisons(ace,rhsOpen);
 };
@@ -2057,15 +2057,15 @@ ConjGoal:: rank() const
 {
 	int count = 0;
 	int maxDegree = 0;
-	
+
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();++i)
-	{       
+	{
 		pair<int,int> rnk = (*i)->rank();
 		count += rnk.first;
 		if(rnk.second > maxDegree || (maxDegree == 0 && rnk.second == -1)) maxDegree = rnk.second;
-	};	  
+	};
 	return make_pair( count, maxDegree );
-       
+
 };
 
 
@@ -2074,16 +2074,16 @@ DisjGoal::rank() const
 {
 	int count = 0;
 	int maxDegree = 0;
-	
+
 	for(vector<const Proposition *>::const_iterator i = gs.begin();i != gs.end();++i)
-	{             
+	{
 		pair<int,int> rnk = (*i)->rank();
 		count += rnk.first;
 		if(rnk.second > maxDegree || (maxDegree == 0 && rnk.second == -1) ) maxDegree = rnk.second;
 	};
-	             
+
 	return make_pair( count, maxDegree );
-	       
+
 };
 
 pair<int,int>
@@ -2095,7 +2095,7 @@ SimpleProposition::rank() const
 pair<int,int>
 DerivedGoal::rank() const
 {
-   return make_pair(0,-1); 
+   return make_pair(0,-1);
  /*string dpName = getDPName();
  //cout <<" ranking "<<*this<<"\n";
  map<string, pair<int,int> >::iterator i = ranks.find(dpName);
@@ -2103,7 +2103,7 @@ DerivedGoal::rank() const
  if(i != ranks.end())
    {
 
-     if(i->second == noRank) 
+     if(i->second == noRank)
        return make_pair(0,-1);
      else
        return i->second;
@@ -2127,7 +2127,7 @@ Comparison::rank() const
 
    if(const Polynomial* poly = dynamic_cast<const Polynomial*>(ctsFtn))
    {
-      return make_pair(1,poly->getDegree());	  
+      return make_pair(1,poly->getDegree());
    };
 	return make_pair(1,4);
 };
@@ -2147,7 +2147,7 @@ NegGoal::rank() const
 	return p->rank();
 };
 
-pair<int,int> QfiedGoal::rank() const 
+pair<int,int> QfiedGoal::rank() const
 {
   if(!pp)
     { //dont want to keep expanding if dps are involved
@@ -2163,7 +2163,7 @@ pair<int,int> QfiedGoal::rank() const
       if(createLiterals) return make_pair(0,0);
       create();
     };
- 
+
   return pp->rank();
 
 };
@@ -2192,7 +2192,7 @@ string getDPName(const simple_goal* sg,Environment * bs)
 {
 
  string propName = sg->getProp()->head->getName();
-	
+
  for(parameter_symbol_list::const_iterator i = sg->getProp()->args->begin();
 				i != sg->getProp()->args->end();++i)
  {
@@ -2218,7 +2218,7 @@ string DerivedGoal::getDPName() const
 {
 	string propName = prop->head->getName();
 
-	
+
 	for(parameter_symbol_list::const_iterator i = prop->args->begin();
 				i != prop->args->end();++i)
 	{
@@ -2232,7 +2232,7 @@ string DerivedGoal::getDPName() const
 			propName += dynamic_cast<const const_symbol*>(*i)->getName();
 		};
 	};
-	
+
 
 	return propName;
 };
@@ -2240,7 +2240,7 @@ string DerivedGoal::getDPName() const
 void DerivedGoal::resetLists(const State* s)
 {
 
-  //too much calculating if a changed literal affects a DP 
+  //too much calculating if a changed literal affects a DP
   //get changed literals and PNEs
  /* set<const FuncExp *> changedPNEs = s->getChangedPNEs();
   if(changedPNEs.size() > 0) evals.clear();
@@ -2274,7 +2274,7 @@ void DerivedGoal::resetLists(const State* s)
       };
   };
  */
-   evals.clear();  
+   evals.clear();
    intervals.clear();
    propStrings.clear();
    preCons.clear();
@@ -2283,9 +2283,9 @@ void DerivedGoal::resetLists(const State* s)
 bool
 
 DerivedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
-{    
+{
  string dpName = getDPName();
-     
+
  //setUp Comparisons
  if(ace != 0) const_cast<Proposition*>(deriveFormula)->setUpComparisons(ace,rhsOpen);
 
@@ -2294,7 +2294,7 @@ DerivedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
  map<string,bool>::iterator i = evals.find(dpName);
 
  if(i != evals.end())
-   {              
+   {
    //cout << "Found it and it is " << i->second << "\n";
      return i->second;
    };
@@ -2306,7 +2306,7 @@ DerivedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
     return false;
   };
 
-   
+
  addCalledDP(dpName);
 
  DPs.push_back(this);
@@ -2318,28 +2318,28 @@ DerivedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
  {
    evals[dpName] = ans;
  };
- 
+
  return ans;
 };
 
 bool FalseProposition::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
-{  
+{
     for(vector<const DerivedGoal*>::iterator i = DPs.begin(); i != DPs.end(); ++i) (*i)->setRevisit(true);
-      
+
     if(trueProp) return true;
     else
     return false;
 };
- 
+
 void removeCalledDP(string dp)
 {
- 
+
 	  for(vector<string>::iterator k = calledDPsCreate.begin(); k != calledDPsCreate.end(); ++k)
 	    {
 
 	      if(*k == dp)
 		{
-		 
+
 		  calledDPsCreate.erase(k);
 		  break;
 		};
@@ -2350,17 +2350,17 @@ void removeCalledDP(string dp)
 void addCalledDP(string dp)
 {
 
- 
+
   calledDPsCreate.push_back(dp);
 
-  
+
 };
 
 
 void DerivedGoal::removeCalledDP(string dp) const
 
 {
- 
+
 	  for(vector<string>::iterator k = calledDPsEval.begin(); k != calledDPsEval.end(); ++k)
 	    {
 	      if(*k == dp)
@@ -2379,7 +2379,7 @@ void DerivedGoal::addCalledDP(string dp) const
 
 bool DerivedGoal::visited(string dp) const
 {
-	
+
  //if DP has already been visited
  for(vector<string>::iterator j = calledDPsEval.begin(); j != calledDPsEval.end(); ++j)
    {
@@ -2402,7 +2402,7 @@ bool DerivedGoal::visited() const
 
 bool visited(string dp)
 {
-	
+
  //if DP has already been visited
  for(vector<string>::iterator j = calledDPsCreate.begin(); j != calledDPsCreate.end(); ++j)
    {
@@ -2417,12 +2417,12 @@ bool visited(string dp)
 };
 
 void QfiedGoal::create() const
-{ 
+{
 	if(i == qg->getVars()->end())
 	{
-	 	      	  
+
 	props.push_back(vld->pf.buildProposition(qg->getGoal(),*(env->copy(vld)),createLiterals,&vld->getState()));
-	
+
 
 	}
 	else
@@ -2430,7 +2430,7 @@ void QfiedGoal::create() const
 	  //cout << " Processing " << (*i)->getName() << "\\\\\n";
 		vector<const_symbol *> vals = vld->range(*i);
 		const var_symbol * v = *i;
-		
+
 		++i;
 		for(vector<const_symbol*>::iterator j = vals.begin();j != vals.end();++j)
 		{
@@ -2457,21 +2457,21 @@ void QfiedGoal::create() const
 void QfiedGoal::deletepp() const
 {
   props.clear();
-  
+
 
   delete pp;
   pp = 0;
-  
+
   i = qg->getVars()->begin();
 };
 
 
-bool QfiedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const 
+bool QfiedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 {
  /* if(!pp) create();
-  
+
   bool ans = pp->evaluate(s,DPs);
-  
+
   deletepp();
 
   return ans;*/
@@ -2481,7 +2481,7 @@ bool QfiedGoal::evaluate(const State * s,vector<const DerivedGoal*> DPs) const
 //create the Conjuncts/Disjuncts one at a time and evaluate as we go along
 bool QfiedGoal::evaluateQfiedGoal(const State * s,vector<const DerivedGoal*> DPs) const
 {
-     bool disjConjEval;    
+     bool disjConjEval;
      //get list of instansiated parameters for the qfied prop, so for forall(?z ?y), we have a grounded list for every z? and ?y
      set<var_symbol*> svs = getVariables(qg);
      vector<const_symbol_list*> constantsList = defineUndefinedParameters(newBlankConstSymbolList(const_cast<var_symbol_list*>(qg->getVars()),vld),const_cast<var_symbol_list*>(qg->getVars()),vld,svs);
@@ -2489,11 +2489,11 @@ bool QfiedGoal::evaluateQfiedGoal(const State * s,vector<const DerivedGoal*> DPs
      //now create a conjunction or disjunction with the qfied variables substituted
        //map<parameter_symbol*,parameter_symbol*> newvars;
        Environment & env = const_cast<Environment &>(bindings);
- 
+
        for(vector<const_symbol_list*>::iterator k = constantsList.begin(); k != constantsList.end(); ++k)
-       {                 
+       {
           //const goal * aGoal = copyGoal(qg->getGoal());
-                      
+
           //define mapping of parameter symbol to constant
           const_symbol_list::iterator consList = (*k)->begin();
           for(var_symbol_list::const_iterator i = qg->getVars()->begin(); i != qg->getVars()->end(); ++i)
@@ -2503,16 +2503,16 @@ bool QfiedGoal::evaluateQfiedGoal(const State * s,vector<const DerivedGoal*> DPs
              consList++;
            };
           //evaluate conjunct/disjunct with qfied variables substituted
-          //changeVars(const_cast<goal *>(aGoal),newvars);      
-          //cout << "Using " << *(qg->getGoal()) << "\n";   
-          const Proposition * propToCheck = vld->pf.buildProposition(qg->getGoal() /* aGoal */,bindings,false,s); //cout << *propToCheck <<" \n";  
+          //changeVars(const_cast<goal *>(aGoal),newvars);
+          //cout << "Using " << *(qg->getGoal()) << "\n";
+          const Proposition * propToCheck = vld->pf.buildProposition(qg->getGoal() /* aGoal */,bindings,false,s); //cout << *propToCheck <<" \n";
           //cout << "Here it is: " << *propToCheck << "\n";
           disjConjEval = propToCheck->evaluate(s,DPs);
           delete propToCheck;
-          //delete aGoal; 
-          
+          //delete aGoal;
+
           if(qg->getQuantifier()==E_FORALL && !disjConjEval) {deleteParameters(constantsList); return false;}
-          else if(qg->getQuantifier()!=E_FORALL && disjConjEval) {deleteParameters(constantsList); return true;};         
+          else if(qg->getQuantifier()!=E_FORALL && disjConjEval) {deleteParameters(constantsList); return true;};
        };
 
      deleteParameters(constantsList);
@@ -2523,11 +2523,11 @@ bool QfiedGoal::evaluateQfiedGoal(const State * s,vector<const DerivedGoal*> DPs
 bool QfiedGoal::markOwnedPreconditions(const Action * a,Ownership & o,ownership w) const
 {
   if(!pp) create();
- 
+
   bool ans = pp->markOwnedPreconditions(a,o,w);
-  
+
   deletepp();
- 
+
   return ans;
 };
 
@@ -2541,40 +2541,40 @@ const Environment buildBindings(const var_symbol_table * vst,const simple_goal *
 	//create new bindings from the subset of bindings that a derived predicate has based on the actions bindings
 
 	Environment bindings;
-	
+
 	var_symbol_table::const_iterator j = vst->begin();
 
 	for(parameter_symbol_list::const_iterator i = sg->getProp()->args->begin();
 				i != sg->getProp()->args->end();++i)
 	{
-	 
+
 		if(dynamic_cast<const var_symbol *>(*i))
 		{
 		  	bindings[j->second] = bs.find(dynamic_cast<const var_symbol*>(*i))->second;
-		
+
 		}
 		else
 		{
 		  bindings[j->second] = dynamic_cast<const const_symbol*>(*i);
 		};
-		
+
 		++j;
 	};
-	
+
 
 //Environment * e = new Environment(bindings);
 
 	return bindings;
 };
 
-const Proposition * 
+const Proposition *
 PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool buildNewLiterals,const State * state)
 {
 	if(const comparison * cmp = dynamic_cast<const comparison*>(g))
 	{
 		return new Comparison(cmp,bs);
 	};
-	
+
 	if(const conj_goal * cg = dynamic_cast<const conj_goal *>(g))
 	{
 		vector<const Proposition*> gs;
@@ -2582,7 +2582,7 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
 		std::transform(cg->getGoals()->begin(),
 			cg->getGoals()->end(),std::back_inserter(gs),
 						buildProp(this,bs,buildNewLiterals,state));
-		
+
 		return new ConjGoal(cg,gs,bs);
 	};
 
@@ -2614,10 +2614,10 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
 		const goal * dg = 0;
 		const var_symbol_table * vst = 0;
 		map<string,pair<const goal *,const var_symbol_table *> > derivPreds = vld->getDerivRules()->getDerivPreds();
-	
+
 
 		//check to see if simple goal is in fact a derived predicate
-	
+
 		for(map<string,pair<const goal *,const var_symbol_table *> >::const_iterator i = derivPreds.begin(); i != derivPreds.end(); ++i)
 		{
 
@@ -2628,15 +2628,15 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
 				break;
 
 			};
-		
-		}; 
-	
+
+		};
+
 		if(dg != 0)
 		{
 		  //check to see if derived predicate depends on itself
 
 		       string dpName = getDPName(sg,(const_cast<Environment *>(&bs)));
-		       
+
                        if(visited(dpName))
 			 {
             //map<string,const DerivedGoal*>::const_iterator dp = derivedPredicates.find(dpName);
@@ -2653,10 +2653,10 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
 			 };
 
 		       addCalledDP(dpName);
-              
+
 		       const Proposition * newProp;
 		       const DerivedGoal * newDP  =  new DerivedGoal(sg->getProp(),buildProposition(dg,*(buildBindings(vst,sg,bs).copy(vld)),buildNewLiterals,state),bs);
-                            
+
 			if(sg->getPolarity()==E_POS)
 			{
 				newProp =  newDP;
@@ -2670,12 +2670,12 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
 
 			removeCalledDP(dpName);
 
-            
-              
+
+
 		       return newProp;
 		};
     if(buildNewLiterals)
-    {         
+    {
       		if(sg->getPolarity()==E_POS)
       		{
       			return buildLiteral(sg->getProp(),bs);
@@ -2691,7 +2691,7 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
          BadAccessError bae;
          throw bae;
       };
-  
+
         //if we do not want to create literals create true or false literals - which is state dependent of course, so must be used immediatley
         bool literalisTrue = false; //closed world assumption
         if(sg->getProp()->head->getName() == "=")
@@ -2710,7 +2710,7 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
            if(i1 != literals.end()) literalisTrue = i1->second->evaluate(state);
        };
        if(sg->getPolarity()!=E_POS) literalisTrue = !literalisTrue;
-       
+
        if(literalisTrue)
        {
           return new FalseProposition(bs,true);
@@ -2730,8 +2730,8 @@ PropositionFactory::buildProposition(const goal * g,const Environment &bs,bool b
 	if(const preference * p = dynamic_cast<const preference*>(g))
 	{
 		return new PreferenceGoal(vld,p,buildProposition(p->getGoal(),bs,buildNewLiterals,state),bs);
-	}; 
-	
+	};
+
 	return 0;
 };
 /*
@@ -2759,10 +2759,10 @@ bool PropositionFactory::evaluate(const proposition * p,const Environment & bs,c
 		map<string,const SimpleProposition*>::const_iterator i1 = literals.find(s);
 		if(i1 != literals.end())
 			return i1->second->evaluate(state);
-		
+
 		return false;
 	};
-*/  
+*/
 string SimpleProposition::getParameter(int paraNo) const
 {
 
@@ -2784,7 +2784,7 @@ string SimpleProposition::getParameter(int paraNo) const
       };
       ++parameterNo;
 	};
-  
+
    return "";
 };
 
@@ -2792,12 +2792,12 @@ bool SimpleProposition::checkParametersConstantsMatch(parameter_symbol_list* psl
 {
   map<parameter_symbol*,const_symbol*> mapping;
   const_symbol * aConst;
-  
+
   parameter_symbol_list::const_iterator ps = psl->begin();   //from event
   	for(parameter_symbol_list::const_iterator i = prop->args->begin(); //from logstate
   				i != prop->args->end();++i)
   {
-    
+
      if(const var_symbol * aVariable = dynamic_cast<const var_symbol *>(*i))
      {
           aConst = const_cast<const_symbol*>(bindings.find(aVariable)->second);
@@ -2812,10 +2812,10 @@ bool SimpleProposition::checkParametersConstantsMatch(parameter_symbol_list* psl
      map<parameter_symbol*,const_symbol*>::const_iterator cs = mapping.find(*ps);
      if(cs != mapping.end())
      {
-       if(cs->second != aConst) return false;       
+       if(cs->second != aConst) return false;
      }
      else
-     {          
+     {
       if(dynamic_cast<const const_symbol*>(*ps) && *ps != aConst) return false;
       mapping[*ps] = aConst;
      };
@@ -2829,11 +2829,11 @@ bool SimpleProposition::checkParametersConstantsMatch(parameter_symbol_list* psl
 bool SimpleProposition::checkConstantsMatch(parameter_symbol_list* psl) const
 {
   const_symbol * aConst;
-            
+
   parameter_symbol_list::const_iterator ps = psl->begin();   //from event precondition
   	for(parameter_symbol_list::const_iterator i = prop->args->begin(); //from logstate
   				i != prop->args->end();++i)
-  {             
+  {
      if(dynamic_cast<const const_symbol*>(*ps))
      {
        if(const var_symbol * aVariable = dynamic_cast<const var_symbol *>(*i))
@@ -2842,10 +2842,10 @@ bool SimpleProposition::checkConstantsMatch(parameter_symbol_list* psl) const
        }
 
        else
-       {             
+       {
             aConst = const_cast<const_symbol*>(dynamic_cast<const const_symbol*>(*i));
        };
-       
+
        if(*ps != aConst) return false;
      };
 
@@ -2861,7 +2861,7 @@ const_symbol_list * SimpleProposition::getConstants(var_symbol_list* variables,p
   bool variableFound;
 
 
-  
+
 
   for(var_symbol_list::const_iterator vs = variables->begin(); vs != variables->end(); ++vs)
   {
@@ -2869,29 +2869,29 @@ const_symbol_list * SimpleProposition::getConstants(var_symbol_list* variables,p
       parameter_symbol_list::const_iterator ps = psl->begin();   //from event
     	for(parameter_symbol_list::const_iterator i = prop->args->begin(); //from logstate
     				(i != prop->args->end() && !variableFound) ;++i)
-    	{        
+    	{
         if(*ps == *vs)
         {
         		if(const var_symbol * aVariable = dynamic_cast<const var_symbol *>(*i))
         		{
-               theConstants->push_back(const_cast<const_symbol*>(bindings.find(aVariable)->second));                
+               theConstants->push_back(const_cast<const_symbol*>(bindings.find(aVariable)->second));
         		}
             else
             {
-               theConstants->push_back(const_cast<const_symbol*>(dynamic_cast<const const_symbol*>(*i)));              
+               theConstants->push_back(const_cast<const_symbol*>(dynamic_cast<const const_symbol*>(*i)));
             };
             variableFound = true;
 
          };
-        ++ps;   
+        ++ps;
     	};
 
-      if(!variableFound) 
+      if(!variableFound)
       {
-      	theConstants->push_back(vld->getAnalysis()->const_tab.symbol_get("")); 
+      	theConstants->push_back(0); //vld->getAnalysis()->const_tab.symbol_get(""));
 	  };
   };
-          
+
 
   return theConstants;
 
@@ -2930,7 +2930,7 @@ void DerivedGoal::write(ostream & o) const
 {
 	string propName = "(" + prop->head->getName();
 
-	
+
 	for(parameter_symbol_list::const_iterator i = prop->args->begin();
 				i != prop->args->end();++i)
 	{
@@ -2946,9 +2946,9 @@ void DerivedGoal::write(ostream & o) const
 
 	};
 
-	
+
 	if(LaTeX) latexString(propName);
-	
+
 	o << propName << ")";
 };
 
@@ -2959,7 +2959,7 @@ void ConjGoal::write(ostream & o) const
 
 	  {
 	    propName += toString(*i);
-	    if((i+1) != gs.end()) propName += " AND "; 
+	    if((i+1) != gs.end()) propName += " AND ";
 
 	  };
 	o<< propName + ")";
@@ -2973,14 +2973,14 @@ void DisjGoal::write(ostream & o) const
 
 	  {
 	    propName += toString(*i);
-	    if((i+1) != gs.end()) propName += " OR "; 
+	    if((i+1) != gs.end()) propName += " OR ";
 	  };
 	o<< propName + ")";
 };
 
 void ImplyGoal::write(ostream & o) const
 {
-  
+
   o << "(" <<*ant << " IMPLIES " << *cons <<")";
 
 };
@@ -3036,7 +3036,7 @@ string Comparison::getExprnString(const expression * e,const Environment & bs) c
 	{
      if(LaTeX) return "("+getExprnString(dynamic_cast<const mul_expression*>(e)->getLHS(),bs) + " $\\times$ "+
 				getExprnString(dynamic_cast<const mul_expression*>(e)->getRHS(),bs)+")";
-        
+
 		return "("+getExprnString(dynamic_cast<const mul_expression*>(e)->getLHS(),bs) + " * "+
 				getExprnString(dynamic_cast<const mul_expression*>(e)->getRHS(),bs)+")";
 	};
@@ -3073,7 +3073,7 @@ string Comparison::getExprnString(const expression * e,const Environment & bs) c
 		};
 		s += ")";
 
-	
+
       if(LaTeX) return "\\exprn{"+ s + "}";
 		return s;
 
@@ -3120,7 +3120,7 @@ string Comparison::getExprnString(const expression * e,const Environment & bs, c
 	{
      if(LaTeX) return "("+getExprnString(dynamic_cast<const mul_expression*>(e)->getLHS(),bs,s) + " $\\times$ "+
 				getExprnString(dynamic_cast<const mul_expression*>(e)->getRHS(),bs,s)+")";
-        
+
 		return "("+getExprnString(dynamic_cast<const mul_expression*>(e)->getLHS(),bs,s) + " * "+
 				getExprnString(dynamic_cast<const mul_expression*>(e)->getRHS(),bs,s)+")";
 	};
@@ -3248,7 +3248,7 @@ const AdviceProposition * SimpleProposition::getAdviceProp(const State* s)  cons
     AdvicePropositionLiteral * apl = new AdvicePropositionLiteral(false,0,false);
 
     if(!evaluate(s)) apl->changeAdvice(true,this,true);
-    
+
     return apl;
 };
 
@@ -3275,7 +3275,7 @@ const AdviceProposition * ConjGoal::getAdviceProp(const State* s)  const
 	  {
 	    if(!((*i)->evaluate(s))) apc->addAdviceProp((*i)->getAdviceProp(s));
 	  };
-    
+
     return apc;
 };
 
@@ -3306,21 +3306,21 @@ const AdviceProposition * ImplyGoal::getAdviceProp(const State* s) const
 
 const AdviceProposition * QfiedGoal::getAdviceProp(const State* s) const
 {
-    if(!pp) create(); 
-   
+    if(!pp) create();
+
    return pp->getAdviceProp(s);
 };
 
 const AdviceProposition * NegGoal::getAdviceProp(const State* s) const
 {
-  return p->getAdviceNegProp(s);  
+  return p->getAdviceNegProp(s);
 };
 
 
 const AdviceProposition * DerivedGoal::getAdviceProp(const State* s) const
 {
     AdvicePropositionDP * apdp = new AdvicePropositionDP(this, false);
-    
+
     return apdp;
 };
 
@@ -3329,7 +3329,7 @@ const AdviceProposition * Proposition::getAdviceNegProp(const State* s) const
    const AdvicePropositionConj * apc = new AdvicePropositionConj();
 
 
-   return apc;  
+   return apc;
 };
 
 
@@ -3340,7 +3340,7 @@ const AdviceProposition * SimpleProposition::getAdviceNegProp(const State* s)  c
     if(evaluate(s)) apl->changeAdvice(true,this,false);
 
 
-    return apl;   
+    return apl;
 
 };
 
@@ -3369,7 +3369,7 @@ const AdviceProposition * ConjGoal::getAdviceNegProp(const State* s)  const
 	    apd->addAdviceProp((*i)->getAdviceNegProp(s));
 	  };
 
-    return apd;    
+    return apd;
 };
 
 const AdviceProposition * DisjGoal::getAdviceNegProp(const State* s)  const
@@ -3382,7 +3382,7 @@ const AdviceProposition * DisjGoal::getAdviceNegProp(const State* s)  const
 
 	  };
 
-    return apc;   
+    return apc;
 };
 
 const AdviceProposition * ImplyGoal::getAdviceNegProp(const State* s) const
@@ -3394,7 +3394,7 @@ const AdviceProposition * ImplyGoal::getAdviceNegProp(const State* s) const
     if(cons->evaluate(s)) apc->addAdviceProp(cons->getAdviceNegProp(s));
 
 
-    return apc;   
+    return apc;
 
 
 };
@@ -3403,13 +3403,13 @@ const AdviceProposition * QfiedGoal::getAdviceNegProp(const State* s) const
 {
     if(!pp) create();
 
-   return pp->getAdviceNegProp(s);   
+   return pp->getAdviceNegProp(s);
 };
 
 
 const AdviceProposition * NegGoal::getAdviceNegProp(const State* s) const
 {
-    return p->getAdviceProp(s);   
+    return p->getAdviceProp(s);
 };
 
 const AdviceProposition * DerivedGoal::getAdviceNegProp(const State* s) const
@@ -3447,18 +3447,18 @@ void displayIndent(int indent)
 
 void AdvicePropositionConj::display(int indent) const
 {
- 
+
   if(adviceProps.size() == 0)
       {*report << "(No advice for conjunction!)\n"; return;}
   else if(adviceProps.size() == 1)
-      {    
+      {
           (*adviceProps.begin())->display(indent);
           return;
       };
 
   *report << "(Follow each of:\n";
- 
-  
+
+
   for(vector<const AdviceProposition *>::const_iterator i = adviceProps.begin(); i != adviceProps.end(); ++i)
   {
       if( i != adviceProps.begin())
@@ -3470,20 +3470,20 @@ void AdvicePropositionConj::display(int indent) const
           }
       else
           displayIndent(indent+4);
-          
+
       (*i)->display(indent+4);
-     
-      
+
+
   };
 
- 
+
   displayIndent(indent); *report << ")\n";
 };
 
 
 void AdvicePropositionDisj::display(int indent) const
 {
- 
+
   if(adviceProps.size() == 0)
       {*report << "(No advice for disjunction!)\n"; return;}
    else if(adviceProps.size() == 1)
@@ -3495,7 +3495,7 @@ void AdvicePropositionDisj::display(int indent) const
 
   *report << "(Follow one of:\n";
 
- 
+
   for(vector<const AdviceProposition *>::const_iterator i = adviceProps.begin(); i != adviceProps.end(); ++i)
   {
 
@@ -3512,7 +3512,7 @@ void AdvicePropositionDisj::display(int indent) const
 
   };
 
-  displayIndent(indent); 
+  displayIndent(indent);
   *report << ")\n";
 
 };
@@ -3521,7 +3521,7 @@ void AdvicePropositionLiteral::display(int indent) const
 {
   if(!thereIsAdvice)
       {*report << "(No advice for literal!)\n"; return;};
- 
+
   *report << "(Set " << *sp << " to ";
   if(advice == 1) *report << "true"; else *report << "false";
   *report <<")\n";
@@ -3553,7 +3553,7 @@ void AdvicePropositionConj::displayLaTeX(int depth) const
 {
    bool itemizing = true;
    if(depth > 3) itemizing = false;
-   
+
   if(adviceProps.size() == 0)
 
       {*report << "No advice for conjunction!\n"; return;}
@@ -3562,7 +3562,7 @@ void AdvicePropositionConj::displayLaTeX(int depth) const
           (*adviceProps.begin())->displayLaTeX(depth);
           return;
       };
-  if(!itemizing) *report << "("; 
+  if(!itemizing) *report << "(";
   *report << "Follow each of:\n";
     if(!itemizing) *report << "\\\\";
    else *report << "\\begin{itemize}";
@@ -3574,10 +3574,10 @@ void AdvicePropositionConj::displayLaTeX(int depth) const
       (*i)->displayLaTeX(depth+1);
       if(!itemizing && i+1 != adviceProps.end()) *report << " {\\em and}\\\\ ";
   };
-  
-  if(!itemizing) *report << ")"; 
+
+  if(!itemizing) *report << ")";
   else *report << "\\end{itemize}";
- 
+
 };
 
 
@@ -3585,7 +3585,7 @@ void AdvicePropositionDisj::displayLaTeX(int depth) const
 {
   bool itemizing = true;
    if(depth > 3) itemizing = false;
-     
+
   if(adviceProps.size() == 0)
       {*report << "No advice for disjunction!\n"; return;}
   else if(adviceProps.size() == 1)
@@ -3593,10 +3593,10 @@ void AdvicePropositionDisj::displayLaTeX(int depth) const
           (*adviceProps.begin())->displayLaTeX(depth);
           return;
       };
-      
-    if(!itemizing) *report << "("; 
+
+    if(!itemizing) *report << "(";
   *report << "Follow one of:\n";
-   if(!itemizing) *report << "\\\\"; 
+   if(!itemizing) *report << "\\\\";
    else *report << "\\begin{itemize}";
 
   for(vector<const AdviceProposition *>::const_iterator i = adviceProps.begin(); i != adviceProps.end(); ++i)
@@ -3606,12 +3606,12 @@ void AdvicePropositionDisj::displayLaTeX(int depth) const
       if(!itemizing && i+1 != adviceProps.end()) *report << " {\\em or}\\\\ ";
   };
 
-   if(!itemizing) *report << ")"; 
+   if(!itemizing) *report << ")";
    else *report << "\\end{itemize}";
 };
 
 void AdvicePropositionLiteral::displayLaTeX(int depth) const
-{           
+{
   if(!thereIsAdvice)
       {*report << "No advice for literal!\n"; return;};
 

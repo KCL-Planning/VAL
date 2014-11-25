@@ -582,7 +582,7 @@ const vector<const_symbol_list*> getParametersDiscreteFinal(goal * g,operator_ *
 
 const vector<const_symbol_list*> getParametersCtsFinal(goal * g,operator_ * op,Validator * v)
 {
-   const vector<const_symbol_list*> listOfParameters0 = getParametersCts(g,op,v);
+   const vector<const_symbol_list*> listOfParameters0 = getParametersCts(g,op,v,false,false);
    const vector<const_symbol_list*> listOfParameters00 = removeRepeatedParameters(listOfParameters0);
    const set<var_symbol*> svs = getVariables(op);
    return defineUndefinedParameters(listOfParameters00,op,v,svs);
@@ -1066,7 +1066,7 @@ const vector<const_symbol_list*> getParametersCts(goal * g,operator_ * op,Valida
   //Negation
 	if(dynamic_cast<const neg_goal *>(g))
 	{
-    return getParametersCts(const_cast<goal*>(dynamic_cast<const neg_goal *>(g)->getGoal()),op,v,!neg);
+    return getParametersCts(const_cast<goal*>(dynamic_cast<const neg_goal *>(g)->getGoal()),op,v,!neg,atAPoint);
 	};
 
     //Others
@@ -1102,10 +1102,10 @@ const vector<const_symbol_list*> getParameters(goal * g,operator_ * op,Validator
            if(discrete) someParameters = getParametersDiscrete(*i,op,v->getState(),neg);
            else someParameters = getParametersCts(*i,op,v,neg,atAPoint);
 
+
            //whittle down the list of parameters depending if they satisfy the rest of the conjunction
            vector<const_symbol_list*> alistOfparameters;
            if(!someParameters.empty()) alistOfparameters = getParametersList(g,op,v,someParameters,neg,discrete,atAPoint);
-
              deleteParameters(someParameters);
 
              for(vector<const_symbol_list*>::const_iterator l = alistOfparameters.begin(); l != alistOfparameters.end(); ++l)
@@ -1329,7 +1329,9 @@ const vector<const_symbol_list*> getParametersList(goal * g,operator_ * op,Valid
             if(i->second && (i->first->getPropName() == literalName))
             {
                 if(i->first->checkParametersConstantsMatch(sg->getProp()->args))
+                {
                     addToListOfParameters(listOfparameters,lop,i->first->getConstants(op->parameters,sg->getProp()->args,v));
+                }
             };
         };
       }
@@ -1345,7 +1347,6 @@ const vector<const_symbol_list*> getParametersList(goal * g,operator_ * op,Valid
          listOfparameters = defineUndefinedParametersPropVar(someParameters,op,v,g,isDerivedPred,neg,svs);
 
       };
-
       return listOfparameters;
   };
 
@@ -1611,7 +1612,7 @@ void addToListOfParameters(vector<const_symbol_list*> & vcsl,const vector<const_
        {
         if((*j))
         {
-             if(!(*k))
+            if(!(*k))
                  *l = *j;
              else if(*l != *j)
                  satisfied = false; //the literal(or other) is not satisfied by previously defined parameters so not add to list of parameters
@@ -1629,7 +1630,7 @@ void addToListOfParameters(vector<const_symbol_list*> & vcsl,const vector<const_
   delete csl;
 
       //test
-      /* cout << " results\n";
+ /*      cout << " results\n";
        for(vector<const_symbol_list*>::const_iterator k = vcsl.begin(); k != vcsl.end() ; ++k)
        {
           for(const_symbol_list::iterator l = (*k)->begin(); l != (*k)->end(); ++l)
@@ -1638,7 +1639,8 @@ void addToListOfParameters(vector<const_symbol_list*> & vcsl,const vector<const_
 
           };
           cout <<"\n";
-       }; */ //end test
+       }; */
+        //end test
 
 
 };
