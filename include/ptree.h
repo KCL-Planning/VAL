@@ -149,8 +149,8 @@ class parse_category;
 class var_symbol_table_stack;
 class analysis;
 
-class WriteController;
-class VisitController;
+struct WriteController;
+struct VisitController;
  class class_def;
  class class_symbol;
 

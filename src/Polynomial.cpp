@@ -60,7 +60,7 @@ using std::cout;
 //#define map std::map
 
 namespace VAL {
-  
+
 ostream & operator <<(ostream & o,const Intervals & i)
 {
 	i.write(o);
@@ -289,7 +289,7 @@ cout <<"Blown on terms...\n";
                ApproxPolyError ape;
                throw ape;
              };
-             
+
          	for(unsigned int i = 2; i <= noTerms; ++i)
          	{
               powPoly = (powPoly*(*poly))/i; //powPoly = poly^i
@@ -320,7 +320,7 @@ vector<CoScalar> Exponential::getRoots(CoScalar t) const
 void checkNum(CoScalar num)
 {
 	if( (2 * num == num && num != 0) || (!( num == num)) )
-	{            
+	{
 		NumError ne;
 		throw ne;
 	};
@@ -567,9 +567,13 @@ bool Polynomial::operator==(const Polynomial & p) const
 {
 	if(getDegree() != p.getDegree()) return false;
 
-	for(unsigned int i = getDegree(); i >= 0; --i)
+	for(unsigned int i = getDegree(); ; --i)
 	{
 		if(getCoeff(i) != p.getCoeff(i)) return false;
+
+		if (i == 0) {
+			break;
+		}
 	};
 
 	return true;
@@ -637,7 +641,7 @@ CoScalar newtonsMethod(const Polynomial & p,CoScalar startPt,CoScalar accuracy)
 
 
 		lastApproxRoot = approxRoot;
-		
+
 	};
 
 	if(i == limit)
@@ -672,7 +676,7 @@ vector<CoScalar> Polynomial::getRoots(CoScalar t) const
 		if( root > 0 && root < t) roots.push_back( root );
 	}
 	else if(testPoly.getDegree() == 2)
-	{                   
+	{
 		CoScalar a = testPoly.getCoeff(2);
 		CoScalar b = testPoly.getCoeff(1);
 		CoScalar c = testPoly.getCoeff(0);
@@ -711,7 +715,7 @@ vector<CoScalar> Polynomial::getRoots(CoScalar t) const
         if(*i > 0.01) roots.push_back(*i); //tolerance value
    };
    copyRoots.clear();
-   
+
 	return roots;
 };
 
@@ -979,7 +983,7 @@ Polynomial mapPkc(const Polynomial & p,CoScalar k,CoScalar c)
       aPoly.setCoeff(j, pow(2,(deg-i)*k) * p.getCoeff(i) * pow(c,i-j)*choose(i,j));
 
 		};*/
-    
+
 
        	for(unsigned int j = i; ; --j)
 		{
@@ -1008,12 +1012,12 @@ int sign(CoScalar a)
 };
 
 unsigned int descartesBound(const Polynomial & p)
-{                 
-	Polynomial testPoly = mapTc(mapR(p),1);    
+{
+	Polynomial testPoly = mapTc(mapR(p),1);
 
 	//testPoly.removeSmallCoeffs(); //may be dodgey- remove?
 	if(!testPoly.checkPolynomialCoeffs())
-	{           
+	{
 		PolyRootError pre;
 		throw pre;
 	};
@@ -1115,7 +1119,7 @@ CoScalar findRootUsingNewtonsMethod(const Polynomial & p,CoScalar intStart, CoSc
        {
          theRoot = newtonsMethod(p,(intEnd-intStart)*(pow(0.5,step) + j*pow(0.5,step+1))+intStart,accuracy);
        };
-                
+
        if(theRoot <= intStart || theRoot >= intEnd) theRoot = -1;
        step++;
     };
@@ -1125,7 +1129,7 @@ CoScalar findRootUsingNewtonsMethod(const Polynomial & p,CoScalar intStart, CoSc
 		PolyRootError pre;
 		throw pre;
 	};
-  
+
     return theRoot;
 };
 
@@ -1150,7 +1154,7 @@ pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > descartesAlg(cons
 		//get new node, (front of list)
 		map<unsigned int,pair<CoScalar,CoScalar> >::iterator i = searchTree.find(treeIter);
 		if(i == searchTree.end()) break;
-           
+
 		testPoly = mapPkc(p,i->second.first,i->second.second);
 
 		desBnd = descartesBound(testPoly);
@@ -1158,10 +1162,10 @@ pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > descartesAlg(cons
 
 		intStart = ((i->second.second) / (pow(2,i->second.first)));
 		intEnd = ((i->second.second + 1) / (pow(2,i->second.first)));
-                  
+
 		addToTree = false;
 		if(desBnd == 1)
-		{          
+		{
 			if( (accuracy == 0) || ( (intEnd - intStart) < accuracy) )
 			{
 				isol.push_back(make_pair(make_pair(intStart,false),make_pair(intEnd,false)));
@@ -1169,10 +1173,10 @@ pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > descartesAlg(cons
 			else
 			{
 				CoScalar theRoot = findRootUsingNewtonsMethod(testPoly,intStart,intEnd,accuracy);
-            exact.push_back(theRoot);   
+            exact.push_back(theRoot);
             //addToTree = true; //use this to use descartesAlg to find roots
 			};
-      
+
 		}
 		else if(desBnd > 1)
 		{
@@ -1248,7 +1252,7 @@ pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > Polynomial::isola
 bool Polynomial::rootsExist(CoScalar t) const
 {
    if(getDegree() < 3) {if(getRoots(t).size() > 0) return true; else return false;};
-   
+
 	pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isolExact;
 	bool ans = false;
 
@@ -1269,7 +1273,7 @@ Intervals getIntervalsFromRoots(vector<CoScalar> roots, const CtsFunction * ctsF
 {
     Intervals theAns;
 	std::sort(roots.begin(),roots.end());
- 
+
 	pair<CoScalar,bool> startPt,endPt;
 
 	if(roots.size() == 0)
@@ -1293,7 +1297,7 @@ Intervals getIntervalsFromRoots(vector<CoScalar> roots, const CtsFunction * ctsF
    {
      intStat = ctsFtn->evaluate((*i)/2.0) > 0;
    };
-   
+
 	if(intStat)
 	{
 		startPt = make_pair(0,true);
@@ -1337,7 +1341,7 @@ Intervals getIntervalsFromRoots(vector<CoScalar> roots, const CtsFunction * ctsF
 
 	//cout << " \\\\ \\> The poly $"<<*this<<"$ is satisfied on "<<theAns<<"\\\\\n";
 	return theAns;
-  
+
 };
 
 Intervals Polynomial::getIntervals(const Comparison * comp, const State* s,CoScalar t) const
@@ -1366,8 +1370,8 @@ Intervals Polynomial::getIntervals(const Comparison * comp, const State* s,CoSca
 	bool strict = (comp->getComparison()->getOp() == E_GREATER) || (comp->getComparison()->getOp() == E_LESS);
 
 
-	vector<CoScalar> roots = comp->getRootsForIntervals(s,t);  
-   theAns = getIntervalsFromRoots(roots,this,t,strict); 
+	vector<CoScalar> roots = comp->getRootsForIntervals(s,t);
+   theAns = getIntervalsFromRoots(roots,this,t,strict);
   return theAns;
 };
 
@@ -1376,44 +1380,44 @@ Intervals Exponential::getIntervals(const Comparison * comp, const State* s,CoSc
     //return getApproxPoly(t).getIntervals(comp,s,t);
    Intervals theAns;
   // pair<CoScalar,bool> startPt,endPt;
-                 
+
    bool rootsExist;
    bool strict = (comp->getComparison()->getOp() == E_GREATER) || (comp->getComparison()->getOp() == E_LESS);
    //bool greater = (comp->getComparison()->getOp() == E_GREATER) || (comp->getComparison()->getOp() == E_GREATEQ);
 
    if(comp->getComparison()->getOp() == E_EQUALS)
    {
-     if(K == 0 && offSet - c == 0) theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(t, true))); 
+     if(K == 0 && offSet - c == 0) theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(t, true)));
      return theAns;
    };
-                   
+
    vector<CoScalar> roots;
    if( ((offSet - c)/K) <= 0 ) rootsExist = false;
 
    else
    {
      Polynomial aPoly = *poly - log((offSet -c)/K);
-   
+
      try{roots = aPoly.getRoots(t);}
      catch(PolyRootError & pre){throw pre;};
-                     
-     rootsExist = (roots.size() > 0);     
+
+     rootsExist = (roots.size() > 0);
    };
-   
+
    if(!rootsExist)
    {
         if(comp->evaluateAtPoint(s))  //no roots so is either satisfied or not over whole interval - so just evaluate one pt
         {
-             theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(t, true)));                  
+             theAns.intervals.push_back(make_pair( make_pair(0,true) , make_pair(t, true)));
         };
         return theAns;
    };
-        
+
    //if(greater)
    //{
      const Exponential * aExp = new Exponential(K,new Polynomial(*poly),c-offSet);
      theAns = getIntervalsFromRoots(roots,aExp,t,strict);
-     delete aExp;   
+     delete aExp;
  /*  }
    else
    {
@@ -1428,10 +1432,10 @@ Intervals Exponential::getIntervals(const Comparison * comp, const State* s,CoSc
 Intervals NumericalSolution::getIntervals(const Comparison * comp, const State* s,CoScalar t) const
 {
    Intervals theAns;
-           
+
    bool strict = (comp->getComparison()->getOp() == E_GREATER) || (comp->getComparison()->getOp() == E_LESS);
    bool greater = (comp->getComparison()->getOp() == E_GREATER) || (comp->getComparison()->getOp() == E_GREATEQ);
-       
+
    pair<CoScalar,bool> startPt,endPt;
    //determine if starting satisfied or not
 	Intervals aInt;
@@ -1439,62 +1443,62 @@ Intervals NumericalSolution::getIntervals(const Comparison * comp, const State* 
 
   //initial interval comparison is satisfied on
 	if((j->second > offSet &&  greater) || (j->second < offSet && !greater))
-	{                     
+	{
 		startPt = make_pair(0,true);
 
       CoScalar lastPoint = j->second;
       double lastTime = j->first;
       bool positive = j->second > offSet;   //record sign of last non-zero point
       j++;
-                
+
       while( j != points.end())
-      {       
+      {
           if((positive && j->second < offSet) || (!positive && j->second > offSet) || (j->second == offSet && strict) ) break;
-               
+
           if(j->second < offSet) positive = false;
           else if(j->second > offSet) positive = true;
-          
+
           lastPoint = j->second;
           lastTime = j->first;
           j++;
       };
-            
+
        double endPoint;
        if(j != points.end()) endPoint = lastTime+(j->first - lastTime)*(fabs(lastPoint)/(fabs(lastPoint) + fabs(j->second)));
        else {endPoint = lastTime; strict = false;};
-           
+
 		endPt = make_pair(endPoint,!strict);
 		aInt.intervals.push_back(make_pair(startPt,endPt));
-		theAns = setUnion(theAns,aInt);    
+		theAns = setUnion(theAns,aInt);
 	}
 	else if(j->second == offSet && !strict)
 	{
 
       startPt = make_pair(0,true);
-      CoScalar lastPoint = j->second;
+      //CoScalar lastPoint = j->second; // set but never used
       double lastTime = j->first;
       j++;
-      lastPoint = lastPoint;
+//      lastPoint = lastPoint; // why was this line of code here?
       while( j != points.end())
       {
           if( j->second != offSet) break;
-          lastPoint = j->second;
+          //lastPoint = j->second;
           lastTime = j->first;
           j++;
       };
 
 		endPt = make_pair(lastTime,!strict);
 		aInt.intervals.push_back(make_pair(startPt,endPt));
-		theAns = setUnion(theAns,aInt);    
+		theAns = setUnion(theAns,aInt);
 	};
 
-                        
+
    //define other intervals now, when the points change sign the interval end points are formed,
    //care is needed for values that are zero depending on if comparison is strict
-   bool startPointDefined = false;    
+   bool startPointDefined = false;
 	while(j != points.end())
 	{                       //point at j is not satisfied to begin with
-     startPointDefined = false;             
+     startPointDefined = false;
      Intervals aInt;
      //firstly find starting point
      if(j->second == offSet && strict)
@@ -1508,20 +1512,20 @@ Intervals NumericalSolution::getIntervals(const Comparison * comp, const State* 
          startPointDefined = true;
        };
      };
-         
-    
-       
+
+
+
      if(!startPointDefined)
-     {                                
+     {
            CoScalar lastPoint = j->second;
            double lastTime = j->first;
            bool positive = j->second > offSet;   //record sign of last non-zero point
-           
+
           while( j != points.end())
           {
               if((positive && j->second < offSet) || (!positive && j->second > offSet) || (j->second == offSet && strict) )
               {
-                startPointDefined = true;             
+                startPointDefined = true;
                 break;
                 };
 
@@ -1532,12 +1536,12 @@ Intervals NumericalSolution::getIntervals(const Comparison * comp, const State* 
               lastTime = j->first;
               j++;
           };
-                                   
+
           if(startPointDefined) startPt = make_pair(lastTime + (j->first - lastTime)*(fabs(lastPoint)/(fabs(lastPoint) + fabs(j->second))),!(strict));
-            
-    
+
+
       };
-                    
+
        //find the end point now
        if(startPointDefined)
        {
@@ -1546,32 +1550,32 @@ Intervals NumericalSolution::getIntervals(const Comparison * comp, const State* 
              double theEndPoint;
              bool positive = j->second > offSet;   //record sign of last non-zero point
              j++;
-             
+
              while(true)
             {
                 if( j == points.end() ) {theEndPoint = lastTime; strict = false; break;};
                 if((positive && j->second < offSet) || (!positive && j->second > offSet) || (j->second == offSet && strict) )
                 {
                     theEndPoint = lastTime + (j->first - lastTime)*(fabs(lastPoint)/(fabs(lastPoint) + fabs(j->second)));
-                    break;  
+                    break;
                 };
 
                 if(j->second < offSet) positive = false;
                 else if(j->second > offSet) positive = true;
-                     
+
                 lastPoint = j->second;
                 lastTime = j->first;
-                j++;     
+                j++;
             };
 
             endPt = make_pair(theEndPoint,!(strict));
             aInt.intervals.push_back(make_pair(startPt,endPt));
-            theAns = setUnion(theAns,aInt); 
+            theAns = setUnion(theAns,aInt);
 
        };
 
 	};
-  
+
 
    return theAns;
 };
@@ -1605,9 +1609,9 @@ bool Polynomial::checkInvariant(const Comparison * comp, const State* s,CoScalar
       			return false;
       		};
 
-      		if( (degree == 1))
+      		if(degree == 1)
       		{
-      		cout << "WE HAVE " << evaluate(0) << " AND " << evaluate(t) << "\n";
+//      		cout << "WE HAVE " << evaluate(0) << " AND " << evaluate(t) << "\n";
       			if( (evaluate(0) > - accuracy) && (evaluate(t) > - accuracy))
       			{
       				return true;
@@ -1632,7 +1636,7 @@ bool Polynomial::checkInvariant(const Comparison * comp, const State* s,CoScalar
                     if(!rtsExist) return evaluate(t/2.0) > 0;
                     return !rtsExist;
                  };
-                 
+
       				pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isolExact = removeRepeatedRoots().isolateRoots(t);
 
       				vector<pair<intervalEnd,intervalEnd> >::iterator ints = isolExact.first.begin();
@@ -1689,7 +1693,7 @@ bool Polynomial::checkInvariant(const Comparison * comp, const State* s,CoScalar
       	};
 
       return false;
-  
+
 
 };
 
@@ -1706,7 +1710,7 @@ bool Exponential::rootsExist(CoScalar t) const //on open interval (0,t)
 
      return (roots.size() > 0);
    };
-  
+
 };
 
 bool Exponential::checkInvariant(const Comparison * comp, const State* s,CoScalar t,bool rhsIntervalOpen) const
@@ -1739,7 +1743,7 @@ bool Exponential::checkInvariant(const Comparison * comp, const State* s,CoScala
                bool rtsExist = rootsExist(t);
                if(!rtsExist) return evaluate(t/2.0)-offSet > 0;
                return !rtsExist;
-            }; 
+            };
 
             vector<CoScalar> roots;
             if( ((offSet - c)/K) <= 0 ) return true;
@@ -1779,29 +1783,29 @@ map<double,CoScalar>::const_iterator j = points.begin();
 if( (greater && (j->second - offSet < 0)) ||
       (!greater && (j->second - offSet > 0)) ) return false;
 
- 
+
 for( ; j != points.end(); )
 {
   ++j; if( j->first == t) break;
   if( ((greater && (j->second - offSet < 0)) || (j->second - offSet <= 0 && !strict)) ||
       ((!greater && (j->second - offSet > 0)) || (j->second - offSet >= 0 && !strict))) return false;
 
-     
+
 };
 //check end point
 if(j != points.end())
-{              
+{
 if( ((greater && (j->second - offSet < 0)) || (j->second - offSet <= 0 && !strict && !rhsIntervalOpen)) ||
       ((!greater && (j->second - offSet > 0)) || (j->second - offSet >= 0 && !strict && !rhsIntervalOpen))) return false;
 };
-      
+
 return true;
 
 };
-  
+
 //build points using Runge Kutta Fehlberg method
 void NumericalSolution::buildPoints(CoScalar a0,CoScalar b0,CoScalar y,CoScalar accuracy)
-{        
+{
     CoScalar a2 = 1.0/4.0;
     CoScalar b2 = 1.0/4.0;
     CoScalar a3 = 3.0/8.0;
@@ -1840,10 +1844,10 @@ void NumericalSolution::buildPoints(CoScalar a0,CoScalar b0,CoScalar y,CoScalar 
     CoScalar t = a0;
     CoScalar br = b0 - 0.00001*fabs(b0);
     CoScalar err, ynew,s;
-    
+
     //points.push_back(make_pair(double(a0),double(y))); //initial point
     points[double(a0)] = y;
-           
+
     while(t < b0)
     {
 
@@ -1857,7 +1861,7 @@ void NumericalSolution::buildPoints(CoScalar a0,CoScalar b0,CoScalar y,CoScalar 
 
       err = fabs(r1*k1 + r3*k3 + r4*k4 + r5*k5 + r6*k6);
       ynew = y + n1*k1 + n3*k3 + n4*k4 + n5*k5;
-             
+
       if( err < accuracy || h < 2* hmin)
       {
           if(t + h > br)
@@ -1882,30 +1886,30 @@ void NumericalSolution::buildPoints(CoScalar a0,CoScalar b0,CoScalar y,CoScalar 
       if(s > 4.0) s = 4.0;
 
       h = s*h;
-        
+
       if(h>hmax) h = hmax;
       else if(h < hmin) h = hmin;
-          
+
       //if(maxPoints == points.size()) break;
     };
-    
-   
-   
 
-  
+
+
+
+
 };
 
 CoScalar BatteryCharge::evaluateDiff(CoScalar t,CoScalar y)
 {
-    CoScalar dis = 0; 
+    CoScalar dis = 0;
     for(vector<pair<const CtsFunction *,bool> >::const_iterator i = discharge.begin(); i != discharge.end(); ++i)
     {
         if(i->second) dis += (*i).first->evaluate(t);
         else dis -= (*i).first->evaluate(t);
     };
-                         
+
     return ((poly->evaluate(t))* (m - y)) + dis;
-};  
+};
 
 void BatteryCharge::write(ostream & o) const
 {
@@ -1934,7 +1938,7 @@ vector<CoScalar> NumericalSolution::getRoots(CoScalar t) const
     vector<CoScalar> roots;
     NumError ne;
     throw ne;
-    return roots;  
+    return roots;
 };
 
 Polynomial NumericalSolution::getApproxPoly(CoScalar endInt) const
@@ -1943,7 +1947,7 @@ Polynomial NumericalSolution::getApproxPoly(CoScalar endInt) const
 
     ApproxPolyError ape;
     throw ape;
-    
+
       poly.setCoeff(0,1);
     return poly;
 };
@@ -1951,16 +1955,16 @@ Polynomial NumericalSolution::getApproxPoly(CoScalar endInt) const
 pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > NumericalSolution::isolateRoots(CoScalar t,CoScalar accuracy) const
 {
     pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isol;
-    
+
     NumError ne;
     throw ne;
 
-    return isol;  
+    return isol;
 };
 
 CoScalar NumericalSolution::evaluate(CoScalar t) const
 {
-    CoScalar ans =0;  
+    CoScalar ans =0;
     map<double,CoScalar>::const_iterator j = points.find(t);
     if(j != points.end()) return j->second;
     //else interpolate
@@ -1971,28 +1975,28 @@ CoScalar NumericalSolution::evaluate(CoScalar t) const
     ++i;
       //should only ever evaluate the end point which will be found above so the stuff below is OK
     for( ; i != points.end(); ++i)
-    {                        
+    {
       if( t <= i->first  && t >= lastTime)
       {
-       
+
         ans = lastPoint + ((i->second - lastPoint)/(i->first - lastTime))*(t - lastTime);
-       
+
         return ans;
       };
 
        lastTime = i->first;
        lastPoint = i->second;
     };
-          
+
     return ans;
-  
+
 };
 
 bool NumericalSolution::isLinear() const
 {
     if(points.size() > 2) return false;
 
-    return true;  
+    return true;
 };
 
 };

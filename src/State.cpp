@@ -93,7 +93,7 @@ void State::setNew(const effect_lists * is)
 			FEGraph * feg = getValidator()->getGraph(fe);
 
 			//setup initial value if nec
-			if( (feg->initialTime == -1) )
+			if(feg->initialTime == -1)
 			{
 					feg->initialTime = time;
 					feg->initialValue = feNewValue;
@@ -359,7 +359,7 @@ State::update(const FuncExp * fe,assign_op aop,FEScalar value)
 		feg = getValidator()->getGraph(fe);
 		
 		//setup initial value if nec
-		if( (feg->initialTime == -1) )
+		if(feg->initialTime == -1)
 		{
 			map<const FuncExp*,FEScalar>::const_iterator i = feValue.find(fe);
 

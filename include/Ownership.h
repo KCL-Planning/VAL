@@ -55,7 +55,7 @@ namespace VAL {
 class Validator;
 class Action;
 class FuncExp;
-class Environment;
+struct Environment;
 class SimpleProposition;
 class expression;
 
