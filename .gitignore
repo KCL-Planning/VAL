@@ -1,0 +1,11 @@
+# Git ignore file
+*.o
+
+# This file is generated
+src/pddl+.cpp
+
+
+Makefile
+parser
+validate
+tan
