@@ -1,0 +1,7 @@
+# Git ignore file
+*.o
+
+Makefile
+parser
+validate
+tan
