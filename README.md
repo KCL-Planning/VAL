@@ -3,7 +3,7 @@ VAL
 
 This repository contains the current version of the VAL plan validation code. 
 
-Compilation under Linux using g++ should be straightforward: use "make validate", "make parser" etc. The repository also contains a ".cbp" file which is a CodeBlocks project file. Using this, the code is set up to offer the targets listed below for compilation using mingw under Windows. We have a version of the VAL code that compiles with Visual Studio, but have not completed the merging with this repository. Windows executables are in bin/validate, bin/parser etc.
+Compilation under Linux using g++ should be straightforward: use "make validate", "make parser" etc. The repository also contains a ".cbp" file which is a CodeBlocks project file. Using this, the code is set up to offer the targets listed below for compilation using mingw under Windows. We have a version of the VAL code that compiles with Visual Studio, but have not completed the merging with this repository. Windows executables are in bin/validate, bin/parser etc. Mac executables are in bin/MacOSExecutables/. 
 
 The main difficulties we have experienced in the past in compiling tend to be in the flex/bison code. To avoid that, the code in this repository contains pddl+.cpp, which is the generated source, and does not require to be regenerated from the lex and yacc source files in src/Parser. 
 
