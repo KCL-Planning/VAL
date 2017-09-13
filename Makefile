@@ -20,7 +20,7 @@ SEARCHDIRS := -I${MYCODEDIR} -I${PARSER}
 
 # makemake variables
 
-DEPENDFLAGS := -g -Wall -Werror ${SEARCHDIRS}
+DEPENDFLAGS := -g -Wall ${SEARCHDIRS}
 
 # C preprocessor (C, C++, FORTRAN)
 
