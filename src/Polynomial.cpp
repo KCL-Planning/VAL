@@ -140,7 +140,7 @@ void Intervals::writeOffset(double t) const
 	}
 	else
 	{
-      if(LaTeX) *report << "$";
+		if(LaTeX) *report << "$";
 		for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = intervals.begin(); i != intervals.end();)
 		{
 
