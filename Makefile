@@ -462,6 +462,7 @@ jdepend:
 .PHONY : test
 test: all
 	issue-21/run.sh
+# issue-22/run.sh
 
 # DO NOT DELETE THIS LINE -- makemake depends on it.
 
