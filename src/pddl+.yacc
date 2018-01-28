@@ -630,6 +630,8 @@ c_p_effects :
 c_conj_effect :
     OPEN_BRAC AND c_effects CLOSE_BRAC
         { $$=$3; }
+|   OPEN_BRAC CLOSE_BRAC        /* emptyOr */
+        { $$=new effect_lists(); }
 |   OPEN_BRAC AND error CLOSE_BRAC
 	{yyerrok; $$=NULL;
 	 log_error(E_FATAL,"Syntax error in (and ...)");
@@ -1071,6 +1073,8 @@ c_constraint_goal :
 c_goal_descriptor :
    c_proposition
        {$$= new simple_goal($1,E_POS);}
+|  OPEN_BRAC CLOSE_BRAC         /* emptyOr(pre-GD) */
+       {$$= new conj_goal(new goal_list);}
 |  OPEN_BRAC NOT c_goal_descriptor CLOSE_BRAC
        {$$= new neg_goal($3);simple_goal * s = dynamic_cast<simple_goal *>($3);
        if(s && s->getProp()->head->getName()=="=") {requires(E_EQUALITY);}
@@ -1217,16 +1221,41 @@ c_derivation_rule :
 
 c_action_def :
     OPEN_BRAC
-    ACTION
-    NAME
-    c_args_head OPEN_BRAC c_typed_var_list
-    CLOSE_BRAC
-    PRE c_pre_goal_descriptor
-    EFFECTS c_effect
+      ACTION NAME                                       /* :action name */
+      c_args_head OPEN_BRAC c_typed_var_list CLOSE_BRAC /* :parameters (<typed list>) */
+      PRE c_pre_goal_descriptor                         /* :precondition ... */
+      EFFECTS c_effect                                  /* :effects ... */
     CLOSE_BRAC
     { $$= current_analysis->buildAction(current_analysis->op_tab.new_symbol_put($3),
 			$6,$9,$11,
 			current_analysis->var_tab_stack.pop()); delete [] $3; }
+|   OPEN_BRAC
+      ACTION NAME                                       /* :action name */
+      c_args_head OPEN_BRAC c_typed_var_list CLOSE_BRAC /* :parameters (<typed list>) */
+      /* PRE c_pre_goal_descriptor */                   /* :precondition could be missing */
+      EFFECTS c_effect                                  /* :effects ... */
+    CLOSE_BRAC
+    { $$= current_analysis->buildAction(current_analysis->op_tab.new_symbol_put($3),
+                                        $6,(new conj_goal(new goal_list)),$9,
+                                        current_analysis->var_tab_stack.pop()); delete [] $3; }
+|   OPEN_BRAC
+      ACTION NAME                                       /* :action name */
+      c_args_head OPEN_BRAC c_typed_var_list CLOSE_BRAC /* :parameters (<typed list>) */
+      PRE c_pre_goal_descriptor                         /* :precondition ... */
+      /* EFFECTS c_effect */                            /* :effects could be missing */
+    CLOSE_BRAC
+    { $$= current_analysis->buildAction(current_analysis->op_tab.new_symbol_put($3),
+                                        $6,$9,(new effect_lists),
+                                        current_analysis->var_tab_stack.pop()); delete [] $3; }
+|   OPEN_BRAC
+      ACTION NAME                                       /* :action name */
+      c_args_head OPEN_BRAC c_typed_var_list CLOSE_BRAC /* :parameters (<typed list>) */
+      /* PRE c_pre_goal_descriptor */
+      /* EFFECTS c_effect */                            /* both could be missing */
+    CLOSE_BRAC
+    { $$= current_analysis->buildAction(current_analysis->op_tab.new_symbol_put($3),
+                                        $6,(new conj_goal(new goal_list)),(new effect_lists),
+                                        current_analysis->var_tab_stack.pop()); delete [] $3; }
 |   OPEN_BRAC ACTION error CLOSE_BRAC
 	{yyerrok;
 	 log_error(E_FATAL,"Syntax error in action declaration.");
