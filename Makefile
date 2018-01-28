@@ -62,7 +62,7 @@ YACC	?= bison
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c $< -o $@
 
 %.cpp : %.yacc
-	${LEX} -+ src/Parser/pddl+.lex -o /src/Parser/lex.yy.cc; ${YACC} $< -o src/pddl+.cpp
+	${LEX} -+ src/Parser/pddl+.lex -o src/Parser/lex.yy.cc; ${YACC} $< -o src/pddl+.cpp
 
 # validate
 
@@ -462,37 +462,36 @@ jdepend:
 
 # DO NOT DELETE THIS LINE -- makemake depends on it.
 
-src/Analysis.o: 
+src/Analysis.o:
 
-src/DYNA.o: 
+src/DYNA.o:
 
-src/LPGP.o: 
+src/LPGP.o:
 
-src/PingusTranslator.o: 
+src/PingusTranslator.o:
 
-src/PlanRec.o: 
+src/PlanRec.o:
 
-src/Polynomial.o: 
+src/Polynomial.o:
 
-src/Relax.o: 
+src/Relax.o:
 
-src/TIM.o: 
+src/TIM.o:
 
 src/TimSupport.o:
 
-src/TypeStrip.o: 
+src/TypeStrip.o:
 
-src/TypedAnalysis.o: 
+src/TypedAnalysis.o:
 
-src/Validator.o: 
+src/Validator.o:
 
-src/dynaMain.o: 
+src/dynaMain.o:
 
-src/instantiation.o:  
+src/instantiation.o:
 
-src/instantiationMain.o: 
+src/instantiationMain.o:
 
-src/main.o: 
+src/main.o:
 
-src/parse.o: 
-
+src/parse.o:

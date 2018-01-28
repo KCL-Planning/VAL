@@ -1,4 +1,12 @@
+# Git ignore file
 *.o
+*.dSYM
+
+# This file is generated
+src/pddl+.cpp
+
+
+parser
 validate
 tan
-*.dSYM
+
