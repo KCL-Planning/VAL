@@ -20,7 +20,7 @@ SEARCHDIRS := -I${MYCODEDIR} -I${PARSER}
 
 # makemake variables
 
-DEPENDFLAGS := -g -Wall -Werror ${SEARCHDIRS}
+DEPENDFLAGS := -g -Wall ${SEARCHDIRS}
 
 # C preprocessor (C, C++, FORTRAN)
 
@@ -39,6 +39,16 @@ CFLAGS  = ${DEPENDFLAGS}
 CXX      ?= g++
 CXXFLAGS  = ${DEPENDFLAGS} -ansi -Wall
 
+# C/C++/Eiffel/FORTRAN linker
+
+LINKER    := $(CXX) -g
+LDFLAGS    = 
+LOADLIBES := 
+
+# LEX generator
+LEX	?= flex
+YACC	?= bison
+
 %.o : %.cc
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c $< -o $@
 
@@ -52,20 +62,7 @@ CXXFLAGS  = ${DEPENDFLAGS} -ansi -Wall
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c $< -o $@
 
 %.cpp : %.yacc
-	flex -+ src/Parser/pddl+.lex -o /src/Parser/lex.yy.cc; bison $< -o src/pddl+.cpp
-
-	
-
-# C/C++/Eiffel/FORTRAN linker
-
-LINKER    := g++ -g 
-LDFLAGS    = 
-LOADLIBES := 
-
-
-
-# This is what makemake added
-
+	${LEX} -+ src/Parser/pddl+.lex -o /src/Parser/lex.yy.cc; ${YACC} $< -o src/pddl+.cpp
 
 # validate
 
