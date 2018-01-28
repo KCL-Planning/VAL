@@ -1,4 +1,7 @@
 # Git ignore file
+*~
+#*
+
 *.o
 *.dSYM
 
