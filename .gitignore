@@ -9,6 +9,19 @@ src/pddl+.cpp
 **/parser
 **/validate
 **/tan
+**/analyse
+**/dyna
+**/dynaplan
+**/hww
+**/instantiate
+**/libInst.a
+**/pddl2lpgp
+**/pinguplan
+**/planrec
+**/relax
+**/tim
+**/tofn
+**/typestrip
 
 
 **/GPATH
