@@ -459,6 +459,9 @@ jdepend:
 	@echo src/typecheck.o >> ${JDEPEND_INPUT_FILE}
 	@${MAKEMAKE} --depend Makefile -- ${DEPENDFLAGS} -- ${JDEPEND_INPUT_FILE}
 
+.PHONY : test
+test: all
+	issue-21/run.sh
 
 # DO NOT DELETE THIS LINE -- makemake depends on it.
 
