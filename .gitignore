@@ -6,7 +6,8 @@
 src/pddl+.cpp
 
 
-parser
-validate
-tan
+**/parser
+**/validate
+**/tan
+
 
