@@ -688,7 +688,7 @@ void RobustPlanAnalyser::calculatePNERobustness(double & robustnessOfPlan,double
 
 string getPlanStepString(const plan_step * ps)
 {
-    if(ps == 0) return "";
+		if(ps == 0) return "";
 		string act = "("+ps->op_sym->getName();
 		for(typed_symbol_list<const_symbol>::const_iterator j = ps->params->begin();
 			j != ps->params->end(); ++j)
