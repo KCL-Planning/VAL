@@ -3074,7 +3074,10 @@ string Comparison::getExprnString(const expression * e,const Environment & bs) c
 		s += ")";
 
 
-      if(LaTeX) return "\\exprn{"+ s + "}";
+  	        if(LaTeX)
+		{
+			return "\\exprn{"+ s + "}";
+		}
 		return s;
 
 	};
@@ -3146,8 +3149,11 @@ string Comparison::getExprnString(const expression * e,const Environment & bs, c
 	{
 		const FuncExp * fexp = s->getValidator()->fef.buildFuncExp(dynamic_cast<const func_term*>(e),bs);
 
-      if(LaTeX) return "\\exprn{"+ toString(fexp)  + "}$[=" + toString(fexp->evaluate(s)) + "]$";
-		return toString(fexp) + "[=" + toString(fexp->evaluate(s)) + "]";
+        if(LaTeX)
+	{
+		return "\\exprn{"+ toString(fexp)  + "}$[=" + toString(fexp->evaluate(s)) + "]$";
+	}
+	return toString(fexp) + "[=" + toString(fexp->evaluate(s)) + "]";
 
 	};
 
