@@ -140,7 +140,10 @@ void Intervals::writeOffset(double t) const
 	}
 	else
 	{
-      if(LaTeX) *report << "$";
+        if(LaTeX)
+	{
+		*report << "$";
+	}
 		for(vector< pair<intervalEnd,intervalEnd> >::const_iterator i = intervals.begin(); i != intervals.end();)
 		{
 
@@ -154,7 +157,10 @@ void Intervals::writeOffset(double t) const
 			if(++i != intervals.end()) {if(LaTeX) *report << "\\cup"; else cout << " U ";};
 
 		};
-       if(LaTeX) *report << "$";
+        if(LaTeX)
+	{
+		*report << "$";
+	}
 	};
 
 
