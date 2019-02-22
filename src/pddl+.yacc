@@ -54,6 +54,7 @@ thing+             c_things          thing_list
 #include "ptree.h"
 #include "parse_error.h"
 
+#define YYMAXDEPTH 20000
 #define YYDEBUG 1
 
 int yyerror(char *);
