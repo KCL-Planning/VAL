@@ -2,6 +2,7 @@
 # Do not edit it directly!
 # Any changes you make will be silently overwritten.
 
+.PHONY : test
 
 # Edit this file to define constants and custom build targets.
 # Please refer to the makemake documentation for more information.
@@ -12,11 +13,10 @@
 # Useful directories
 
 MYCODEDIR := include
-PARSER := src/Parser
 
 # Directories to search for header files
 
-SEARCHDIRS := -I${MYCODEDIR} -I${PARSER}
+SEARCHDIRS := -I${MYCODEDIR}
 
 # makemake variables
 
@@ -62,7 +62,10 @@ YACC	?= bison
 	${CXX} ${CPPFLAGS} ${CXXFLAGS} -c $< -o $@
 
 %.cpp : %.yacc
-	${LEX} -+ src/Parser/pddl+.lex -o src/Parser/lex.yy.cc; ${YACC} $< -o src/pddl+.cpp
+	${YACC} -o $@ $<
+
+%.lcc : %.lex
+	${LEX} -+ -o $@ $<
 
 # validate
 
@@ -311,7 +314,7 @@ clean:: tidy
 
 # list of all source files
 
-MM_ALL_SOURCES := src/Action.cpp src/Analysis.cpp src/CausalGraph.cpp src/DYNA.cpp src/DYNATranslator.cpp src/DebugWriteController.cpp src/Environment.cpp src/Evaluator.cpp src/Events.cpp src/FastEnvironment.cpp src/FuncAnalysis.cpp src/FuncExp.cpp src/HowAnalyser.cpp src/HowWhatWhenMain.cpp src/InstPropLinker.cpp src/LPGP.cpp src/LPGPTranslator.cpp src/LaTeXSupport.cpp src/Ownership.cpp src/PartialPlan.cpp src/PinguPlanGenerator.cpp src/PingusTranslator.cpp src/Plan.cpp src/PlanRec.cpp src/Polynomial.cpp src/PrettyPrinter.cpp src/Proposition.cpp src/Relax.cpp src/RelaxTranslator.cpp src/RepairAdvice.cpp src/RobustAnalyse.cpp src/SASActions.cpp src/SearchSpace.cpp src/SimpleEval.cpp src/State.cpp src/TIM.cpp src/TIMMain.cpp src/TimSupport.cpp src/ToFnMain.cpp src/ToFunction.cpp src/TrajectoryConstraints.cpp src/TypeStrip.cpp src/TypeStripWC.cpp src/TypedAnalyser.cpp src/TypedAnalysis.cpp src/Utils.cpp src/Validator.cpp src/dynaMain.cpp src/graphconstruct.cpp src/instantiation.cpp src/instantiationMain.cpp src/main.cpp src/parse.cpp src/Parser/pddl+.lex src/ptree.cpp src/random.cpp src/typecheck.cpp
+MM_ALL_SOURCES := src/Action.cpp src/Analysis.cpp src/CausalGraph.cpp src/DYNA.cpp src/DYNATranslator.cpp src/DebugWriteController.cpp src/Environment.cpp src/Evaluator.cpp src/Events.cpp src/FastEnvironment.cpp src/FuncAnalysis.cpp src/FuncExp.cpp src/HowAnalyser.cpp src/HowWhatWhenMain.cpp src/InstPropLinker.cpp src/LPGP.cpp src/LPGPTranslator.cpp src/LaTeXSupport.cpp src/Ownership.cpp src/PartialPlan.cpp src/PinguPlanGenerator.cpp src/PingusTranslator.cpp src/Plan.cpp src/PlanRec.cpp src/Polynomial.cpp src/PrettyPrinter.cpp src/Proposition.cpp src/Relax.cpp src/RelaxTranslator.cpp src/RepairAdvice.cpp src/RobustAnalyse.cpp src/SASActions.cpp src/SearchSpace.cpp src/SimpleEval.cpp src/State.cpp src/TIM.cpp src/TIMMain.cpp src/TimSupport.cpp src/ToFnMain.cpp src/ToFunction.cpp src/TrajectoryConstraints.cpp src/TypeStrip.cpp src/TypeStripWC.cpp src/TypedAnalyser.cpp src/TypedAnalysis.cpp src/Utils.cpp src/Validator.cpp src/dynaMain.cpp src/graphconstruct.cpp src/instantiation.cpp src/instantiationMain.cpp src/main.cpp src/parse.cpp src/ptree.cpp src/random.cpp src/typecheck.cpp
 
 # target for checking a source file
 
@@ -449,7 +452,6 @@ jdepend:
 	@echo src/main.o >> ${JDEPEND_INPUT_FILE}
 	@echo src/parse.cpp >> ${JDEPEND_INPUT_FILE}
 	@echo src/parse.o >> ${JDEPEND_INPUT_FILE}
-	@echo src/Parser/pddl+.lex >> ${JDEPEND_INPUT_FILE}
 	@echo src/pddl+.o >> ${JDEPEND_INPUT_FILE}
 	@echo src/ptree.cpp >> ${JDEPEND_INPUT_FILE}
 	@echo src/ptree.o >> ${JDEPEND_INPUT_FILE}
@@ -459,7 +461,6 @@ jdepend:
 	@echo src/typecheck.o >> ${JDEPEND_INPUT_FILE}
 	@${MAKEMAKE} --depend Makefile -- ${DEPENDFLAGS} -- ${JDEPEND_INPUT_FILE}
 
-.PHONY : test
 test: validate
 	issue-21/run.sh
 # issue-22/run.sh
@@ -500,3 +501,5 @@ src/instantiationMain.o:
 src/main.o:
 
 src/parse.o:
+
+src/pddl+.o: src/pddl+.yacc src/pddl+.lcc

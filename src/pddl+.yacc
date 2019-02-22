@@ -1578,7 +1578,7 @@ c_float :
 #include <iostream>
 int line_no= 1;
 using std::istream;
-#include "lex.yy.cc"
+#include "pddl+.lcc"
 
 namespace VAL {
 extern yyFlexLexer* yfl;
