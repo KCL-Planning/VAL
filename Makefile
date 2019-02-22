@@ -66,7 +66,7 @@ YACC	?= bison
 
 # validate
 
-validate :: src/pddl+.o src/pddl+.o src/ptree.o src/Action.o src/Proposition.o src/FuncExp.o src/typecheck.o src/main.o src/Validator.o src/RepairAdvice.o src/LaTeXSupport.o src/State.o src/Plan.o src/Ownership.o src/Environment.o src/Polynomial.o src/DebugWriteController.o src/Utils.o src/TrajectoryConstraints.o src/RobustAnalyse.o src/random.o src/Events.o src/PrettyPrinter.o
+validate :: src/pddl+.o src/ptree.o src/Action.o src/Proposition.o src/FuncExp.o src/typecheck.o src/main.o src/Validator.o src/RepairAdvice.o src/LaTeXSupport.o src/State.o src/Plan.o src/Ownership.o src/Environment.o src/Polynomial.o src/DebugWriteController.o src/Utils.o src/TrajectoryConstraints.o src/RobustAnalyse.o src/random.o src/Events.o src/PrettyPrinter.o
   ifeq (${suffix validate}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -80,7 +80,7 @@ validate :: src/pddl+.o src/pddl+.o src/ptree.o src/Action.o src/Proposition.o s
 
 # parser
 
-parser :: src/pddl+.o src/pddl+.o src/ptree.o src/parse.o src/DebugWriteController.o
+parser :: src/pddl+.o src/ptree.o src/parse.o src/DebugWriteController.o
   ifeq (${suffix parser}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -94,7 +94,7 @@ parser :: src/pddl+.o src/pddl+.o src/ptree.o src/parse.o src/DebugWriteControll
 
 # analyse
 
-analyse :: src/pddl+.o src/pddl+.o src/ptree.o src/Analysis.o src/DebugWriteController.o
+analyse :: src/pddl+.o src/ptree.o src/Analysis.o src/DebugWriteController.o
   ifeq (${suffix analyse}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -108,7 +108,7 @@ analyse :: src/pddl+.o src/pddl+.o src/ptree.o src/Analysis.o src/DebugWriteCont
 
 # tan
 
-tan :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalysis.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/FuncAnalysis.o
+tan :: src/pddl+.o src/ptree.o src/TypedAnalysis.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/FuncAnalysis.o
   ifeq (${suffix tan}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -122,7 +122,7 @@ tan :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalysis.o src/TypedAnalyser
 
 # tim
 
-tim :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/TIMMain.o src/SimpleEval.o src/instantiation.o
+tim :: src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/TIMMain.o src/SimpleEval.o src/instantiation.o
   ifeq (${suffix tim}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -136,7 +136,7 @@ tim :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteCon
 
 # tofn
 
-tofn :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/ToFunction.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/SASActions.o src/ToFnMain.o
+tofn :: src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/ToFunction.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/SASActions.o src/ToFnMain.o
   ifeq (${suffix tofn}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -150,7 +150,7 @@ tofn :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteCo
 
 # instantiate
 
-instantiate :: src/pddl+.o src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/instantiationMain.o src/DebugWriteController.o src/typecheck.o src/TypedAnalyser.o src/FuncAnalysis.o src/TIM.o src/TimSupport.o
+instantiate :: src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/instantiationMain.o src/DebugWriteController.o src/typecheck.o src/TypedAnalyser.o src/FuncAnalysis.o src/TIM.o src/TimSupport.o
   ifeq (${suffix instantiate}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -164,7 +164,7 @@ instantiate :: src/pddl+.o src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvi
 
 # libInst.a
 
-libInst.a :: src/pddl+.o src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/DebugWriteController.o src/typecheck.o src/TypedAnalyser.o src/FuncAnalysis.o src/TIM.o src/TimSupport.o src/TypeStripWC.o src/TypeStrip.o
+libInst.a :: src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/DebugWriteController.o src/typecheck.o src/TypedAnalyser.o src/FuncAnalysis.o src/TIM.o src/TimSupport.o src/TypeStripWC.o src/TypeStrip.o
   ifeq (${suffix libInst.a}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -178,7 +178,7 @@ libInst.a :: src/pddl+.o src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnviro
 
 # typestrip
 
-typestrip :: src/pddl+.o src/pddl+.o src/ptree.o src/TypeStrip.o src/TypeStripWC.o src/typecheck.o src/DebugWriteController.o
+typestrip :: src/pddl+.o src/ptree.o src/TypeStrip.o src/TypeStripWC.o src/typecheck.o src/DebugWriteController.o
   ifeq (${suffix typestrip}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -192,7 +192,7 @@ typestrip :: src/pddl+.o src/pddl+.o src/ptree.o src/TypeStrip.o src/TypeStripWC
 
 # pddl2lpgp
 
-pddl2lpgp :: src/pddl+.o src/pddl+.o src/ptree.o src/LPGPTranslator.o src/LPGP.o src/DebugWriteController.o src/Utils.o
+pddl2lpgp :: src/pddl+.o src/ptree.o src/LPGPTranslator.o src/LPGP.o src/DebugWriteController.o src/Utils.o
   ifeq (${suffix pddl2lpgp}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -206,7 +206,7 @@ pddl2lpgp :: src/pddl+.o src/pddl+.o src/ptree.o src/LPGPTranslator.o src/LPGP.o
 
 # dyna
 
-dyna :: src/pddl+.o src/pddl+.o src/ptree.o src/DYNATranslator.o src/DYNA.o src/DebugWriteController.o src/Utils.o
+dyna :: src/pddl+.o src/ptree.o src/DYNATranslator.o src/DYNA.o src/DebugWriteController.o src/Utils.o
   ifeq (${suffix dyna}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -220,7 +220,7 @@ dyna :: src/pddl+.o src/pddl+.o src/ptree.o src/DYNATranslator.o src/DYNA.o src/
 
 # relax
 
-relax :: src/pddl+.o src/pddl+.o src/ptree.o src/RelaxTranslator.o src/Relax.o src/DebugWriteController.o src/Utils.o
+relax :: src/pddl+.o src/ptree.o src/RelaxTranslator.o src/Relax.o src/DebugWriteController.o src/Utils.o
   ifeq (${suffix relax}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -234,7 +234,7 @@ relax :: src/pddl+.o src/pddl+.o src/ptree.o src/RelaxTranslator.o src/Relax.o s
 
 # dynaplan
 
-dynaplan :: src/pddl+.o src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/dynaMain.o src/DebugWriteController.o src/typecheck.o src/TypedAnalyser.o src/FuncAnalysis.o src/TIM.o src/TimSupport.o src/graphconstruct.o src/SearchSpace.o src/PartialPlan.o src/Plan.o src/State.o src/Validator.o src/RepairAdvice.o src/LaTeXSupport.o src/Action.o src/Proposition.o src/FuncExp.o src/Ownership.o src/Environment.o src/Polynomial.o src/DebugWriteController.o src/Utils.o src/TrajectoryConstraints.o src/InstPropLinker.o src/Evaluator.o src/RobustAnalyse.o src/random.o src/Events.o src/PrettyPrinter.o
+dynaplan :: src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnvironment.o src/instantiation.o src/dynaMain.o src/DebugWriteController.o src/typecheck.o src/TypedAnalyser.o src/FuncAnalysis.o src/TIM.o src/TimSupport.o src/graphconstruct.o src/SearchSpace.o src/PartialPlan.o src/Plan.o src/State.o src/Validator.o src/RepairAdvice.o src/LaTeXSupport.o src/Action.o src/Proposition.o src/FuncExp.o src/Ownership.o src/Environment.o src/Polynomial.o src/DebugWriteController.o src/Utils.o src/TrajectoryConstraints.o src/InstPropLinker.o src/Evaluator.o src/RobustAnalyse.o src/random.o src/Events.o src/PrettyPrinter.o
   ifeq (${suffix dynaplan}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -248,7 +248,7 @@ dynaplan :: src/pddl+.o src/pddl+.o src/ptree.o src/SimpleEval.o src/FastEnviron
 
 # hww
 
-hww :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/HowWhatWhenMain.o src/HowAnalyser.o
+hww :: src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/HowWhatWhenMain.o src/HowAnalyser.o
   ifeq (${suffix hww}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -262,7 +262,7 @@ hww :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteCon
 
 # pinguplan
 
-pinguplan :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/PingusTranslator.o src/PinguPlanGenerator.o
+pinguplan :: src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWriteController.o src/typecheck.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/PingusTranslator.o src/PinguPlanGenerator.o
   ifeq (${suffix pinguplan}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
@@ -276,7 +276,7 @@ pinguplan :: src/pddl+.o src/pddl+.o src/ptree.o src/TypedAnalyser.o src/DebugWr
 
 # planrec
 
-planrec :: src/pddl+.o src/pddl+.o src/ptree.o src/Action.o src/Proposition.o src/FuncExp.o src/typecheck.o src/PlanRec.o src/Validator.o src/RepairAdvice.o src/LaTeXSupport.o src/State.o src/Plan.o src/Ownership.o src/Environment.o src/Polynomial.o src/DebugWriteController.o src/Utils.o src/TrajectoryConstraints.o src/RobustAnalyse.o src/random.o src/Events.o src/PrettyPrinter.o src/TypedAnalyser.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/SimpleEval.o src/instantiation.o src/CausalGraph.o src/ToFunction.o src/SASActions.o
+planrec :: src/pddl+.o src/ptree.o src/Action.o src/Proposition.o src/FuncExp.o src/typecheck.o src/PlanRec.o src/Validator.o src/RepairAdvice.o src/LaTeXSupport.o src/State.o src/Plan.o src/Ownership.o src/Environment.o src/Polynomial.o src/DebugWriteController.o src/Utils.o src/TrajectoryConstraints.o src/RobustAnalyse.o src/random.o src/Events.o src/PrettyPrinter.o src/TypedAnalyser.o src/TimSupport.o src/TIM.o src/FuncAnalysis.o src/SimpleEval.o src/instantiation.o src/CausalGraph.o src/ToFunction.o src/SASActions.o
   ifeq (${suffix planrec}, .a)
 	@${RM} $@
 	${AR} crs $@ ${filter-out %.a %.so, $^}
