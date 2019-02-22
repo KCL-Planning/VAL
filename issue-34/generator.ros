@@ -1,0 +1,33 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -- $0 "$@"
+|#
+(progn ;;init forms
+  (ros:ensure-asdf)
+  #+quicklisp(ql:quickload '(:alexandria :iterate) :silent t)
+  )
+
+(defpackage :ros.script.testcase.3759830013
+  (:use :cl :alexandria :iterate))
+(in-package :ros.script.testcase.3759830013)
+
+(defmethod print-object ((o (eql nil)) s)
+  (write-char #\( s)
+  (write-char #\) s))
+
+(iter (for i from 8000 to 10000)
+      (with-open-file (*standard-output* (format nil "domain~2,,,'0@a.pddl" i)
+                                         :direction :output
+                                         :if-exists :supersede
+                                         :if-does-not-exist :create)
+        (print `(define (domain latent)
+                  (:requirements :strips)
+                  (:predicates
+                   ,@(mapcar (compose #'list #'intern #'string #'gensym)
+                             (iota i)))
+                  (:action pickup :parameters ()
+                           :precondition (and (g0))
+                           :effect (and (g1)))))))
+
+;;; vim: set ft=lisp lisp:
