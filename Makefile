@@ -460,7 +460,7 @@ jdepend:
 	@${MAKEMAKE} --depend Makefile -- ${DEPENDFLAGS} -- ${JDEPEND_INPUT_FILE}
 
 .PHONY : test
-test: all
+test: validate
 	issue-21/run.sh
 # issue-22/run.sh
 	issue-34/run.sh
