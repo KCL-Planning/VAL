@@ -3213,9 +3213,11 @@ pair<const plan_step *,pair<bool,bool> > PlanRepair::repairPlanOneAction(const p
 
 
             if(planRepairValidator->getErrorLog().getConditions().size() == 0)
-	      {  if(planRepairValidator->checkGoal(theGoal)) //goalSatisfied = true;
+            {
+              if(planRepairValidator->checkGoal(theGoal)) {//goalSatisfied = true;
                     //cout << "Satisfied "<< actionName << " at time "<<actionTime<<"\n";
-               actionFixed = true; planRepaired = true; break;
+                actionFixed = true; planRepaired = true; break;
+              }
             };
 
 

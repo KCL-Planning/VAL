@@ -64,15 +64,15 @@ bool LaTeXRecord = false;
 RobustPlanAnalyser::~RobustPlanAnalyser()
 {
 
-  
+
 };
 
 double RobustPlanAnalyser::getRandomNumber()
-{          
+{
    if(robustDist == UNIFORM) return getRandomNumberUni();
    else if(robustDist == NORMAL) return getRandomNumberNorm();
    else if(robustDist == PNORM) return getRandomNumberPsuedoNorm();
-   
+
    return 0;
 };
 
@@ -101,13 +101,13 @@ double RobustPlanAnalyser::getRandomNumberUni()
 };
 
 double RobustPlanAnalyser::getRandomNumberNorm()
-{   
+{
    return (getRandomNumberNormal() + 1.0)/2.0;
 };
 
 double RobustPlanAnalyser::getRandomNumberPsuedoNorm()
 {
-  return getRandomNumberPsuedoNormal();      
+  return getRandomNumberPsuedoNormal();
 };
 
 map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestamps(plan * aplan,const plan * p,double & variation)
@@ -159,8 +159,8 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsA
   {
       randomNumber = (1 - 2*getRandomNumber())*variation;
       accumTime += randomNumber;
-      
-      
+
+
       if(((*ps)->start_time + accumTime) > 0)
       {
         (*ps)->start_time = (*ps)->start_time + accumTime;
@@ -174,7 +174,7 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsA
       if((*ps)->duration_given)
       {
           (*ps)->originalDuration = (*ps)->duration;
-         
+
          // (*ps)->duration = (*ps)->duration;
          // if((*ps)->duration < 0) (*ps)->duration = 0;
       };
@@ -198,7 +198,7 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsD
       do{
         randomNumber = (1 - 2*getRandomNumber())*variation;
       }while(randomNumber < 0);
-      
+
       accumTime += randomNumber;
 
       (*ps)->start_time = (*ps)->start_time + accumTime;
@@ -233,13 +233,13 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsB
 {
   map<const plan_step *,const plan_step *> planStepMap;
   pc_list<plan_step *>::const_iterator origPlanStep = p->begin();
-  
+
   int randomNo = 1;
   if(runNo == 2) randomNo = -1;
-  
+
   for(pc_list<plan_step *>::iterator ps = aplan->begin(); ps != aplan->end(); ++ps, ++origPlanStep)
   {
-       
+
        if(runNo < 3)
        {
          if(randomNo == 1) randomNo = -1; else randomNo = 1;
@@ -247,11 +247,11 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsB
        else
        {
          randomNo = rand()%2;
-         if(randomNo == 0) randomNo = -1;         
+         if(randomNo == 0) randomNo = -1;
        };
-         
-       
-       
+
+
+
       (*ps)->start_time = (*ps)->start_time + randomNo*variation;
       if((*ps)->start_time < 0) (*ps)->start_time = 0;
 
@@ -280,10 +280,10 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsB
   {
       int randomNo = rand()%2;
       if(randomNo == 0) randomNo = -1;
-      
+
       if(runNo == 1) randomNo = 1;
       else if(runNo == 2) randomNo = -1;
-      
+
       if(randomNo == -1) accumTime += variation;
       else accumTime -= variation;
 
@@ -318,13 +318,13 @@ map<const plan_step *,const plan_step *> RobustPlanAnalyser::varyPlanTimestampsB
   map<const plan_step *,const plan_step *> planStepMap;
   pc_list<plan_step *>::const_iterator origPlanStep = p->begin();
 //  int randomNo;
-  
+
   for(pc_list<plan_step *>::iterator ps = aplan->begin(); ps != aplan->end(); ++ps, ++origPlanStep)
   {
- /*     randomNo = rand()%2;      
-      
+ /*     randomNo = rand()%2;
+
       if(randomNo == 0 || runNo == 1) accumTime += variation;
-      else accumTime -= variation;      
+      else accumTime -= variation;
 */
 		accumTime += variation;
       (*ps)->start_time = (*ps)->start_time + accumTime;
@@ -366,27 +366,27 @@ void RobustPlanAnalyser::displayPlan()
 double getStandardDev(double noTests,double numberOfInvalidPlans,double mean)
 {
  double sum = numberOfInvalidPlans*mean*mean + (noTests - numberOfInvalidPlans)*(1.0 - mean)*(1.0 - mean);
- 
- return sqrt(sum/noTests);  
+
+ return sqrt(sum/noTests);
 };
 
 //need to look up in a table
 double getUpperCritialValueTDistribution(double alpha,int degreesFreedom)
 {
  double ans = upperCritialValueTDistribution(alpha,degreesFreedom);
- 
- return ans; 
+
+ return ans;
 };
 
 void RobustPlanAnalyser::analyseRobustness()
 {
-                           
+
  if(Verbose || LaTeX) displayPlan();
-                              
+
  bool latex = LaTeX;
  bool verbose = Verbose;
  LaTeX = false; Verbose = false;
- 
+
  int numberOfInvalidPlans = 0;
  int numberOfErrorPlans = 0;
  double actionRobustnessOfPlan = -1;
@@ -394,21 +394,21 @@ void RobustPlanAnalyser::analyseRobustness()
  double pneRobustnessOfPlan = -1;
  double pneRobustnessBound = 0;
  if(RobustPNEJudder != 0) TestingPNERobustness = true;
-  
+
  if(!calcActionRobustness && !calcPNERobustness) runAnalysis(robustMeasure,noTestPlans,true,numberOfInvalidPlans,numberOfErrorPlans,false,latex);
 
  if(calcActionRobustness || calcPNERobustness) robustDist = UNIFORM; //best to stick to uniform distribution for calculating robustnesses
- 
+
  if(calcPNERobustness) calculatePNERobustness(pneRobustnessOfPlan,pneRobustnessBound);
- 
+
  if(calcActionRobustness) calculateActionRobustness(actionRobustnessOfPlan,actionRobustnessBound);
 
- 
+
  LaTeX = latex; Verbose = verbose;
-           
+
  if(LaTeX) displayAnalysisLaTeX(noTestPlans,numberOfInvalidPlans,numberOfErrorPlans,actionRobustnessOfPlan,actionRobustnessBound,pneRobustnessOfPlan,pneRobustnessBound);
  else displayAnalysis(noTestPlans,numberOfInvalidPlans,numberOfErrorPlans,actionRobustnessOfPlan,actionRobustnessBound,pneRobustnessOfPlan,pneRobustnessBound);
- 
+
 };
 
 
@@ -418,17 +418,17 @@ void RobustPlanAnalyser::analyseRobustness()
 
 
 void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bool recordFailures,int & numberOfInvalidPlans,int & numberOfErrorPlans,bool allValid,bool latexAdvice)
-{           
+{
  ErrorReport = recordFailures;
  ContinueAnyway = false;
  int noBoundaryTests = 0; //299;
  Validator * testPlanValidator = 0;
- 
+
  bool lxr = LaTeXRecord;
  LaTeXRecord = latexAdvice;
- 
+
  for(int testNo = 1; testNo <= numberTestPlans; ++testNo)
- {        
+ {
     map<const plan_step *,const plan_step *> planStepMap; //we need to keep track of which actions fail
     plan * testPlan = newTestPlan(p);
     plan * testPlan2 = new plan(*testPlan); //we can delete the test plan now without deleting the timed initial literal actions
@@ -447,7 +447,7 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
     testPlanValidator = new Validator(derivRules,tolerance,typeC,operators,initialState,testPlan,
                           metric,stepLength,durative,current_analysis->the_domain->constraints,current_analysis->the_problem->constraints);
 
-    try{    
+    try{
       planExecuted = testPlanValidator->execute();
     }
     catch(exception & e)
@@ -467,7 +467,7 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
     {
         bool unsatGoal = false;
        //ErrorLog errorLog = testPlanValidator->getErrorLog();
-       vector<const UnsatCondition *> unSatConds = testPlanValidator->getErrorLog().getConditions(); 
+       vector<const UnsatCondition *> unSatConds = testPlanValidator->getErrorLog().getConditions();
        if(!unSatConds.empty())
        {
          const UnsatCondition * firstError = *(unSatConds.begin());
@@ -477,7 +477,7 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
             theAction = unsatpre->action;
          }
          else if(const UnsatInvariant * unsatinv = dynamic_cast<const UnsatInvariant*>(firstError))
-         {       
+         {
             theAction = unsatinv->action;
          }
          else if(const UnsatDurationCondition * unsatdur = dynamic_cast<const UnsatDurationCondition*>(firstError))
@@ -485,7 +485,7 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
             theAction = unsatdur->action;
          }
          else if(const MutexViolation * muvi = dynamic_cast<const MutexViolation*>(firstError))
-         {       
+         {
             theAction = muvi->action1; //just recond one action for now to get numbers
          }
          else if(dynamic_cast<const UnsatGoal*>(firstError))
@@ -499,18 +499,18 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
          {
             const plan_step * aPlanStep = 0;
             if(!unsatGoal) aPlanStep = theAction->getPlanStep();
-            
+
             if(aPlanStep != 0 || unsatGoal)
             {
               map<const plan_step *, InvalidActionReport>::iterator ps;
               if(!unsatGoal) ps = record.find(planStepMap[aPlanStep]);
               else ps = record.find(0);
-              
+
               if(ps != record.end())
               {
                 (ps->second.number)++;
                  bool lx = LaTeX;
-                 LaTeX = latexAdvice;                
+                 LaTeX = latexAdvice;
                  string reason = firstError->getDisplayString();
                  LaTeX = lx;
                  map<string,pair<int,string> >::iterator r = ps->second.failReasons.find(reason);
@@ -518,17 +518,17 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
                  else
                  {
                    bool lx = LaTeX;
-                   LaTeX = latexAdvice;                
+                   LaTeX = latexAdvice;
                    ps->second.failReasons[reason] =  make_pair(1,firstError->getAdviceString());
                    LaTeX = lx;
                  };
-                
+
               }
               else
               { bool lx = LaTeX;
                 LaTeX = latexAdvice;
                 record[planStepMap[aPlanStep]] = InvalidActionReport(1,firstError->getDisplayString(),firstError->getAdviceString());
-                LaTeX = lx;   
+                LaTeX = lx;
               };
             }
             else
@@ -560,11 +560,11 @@ void RobustPlanAnalyser::runAnalysis(double & variation,int & numberTestPlans,bo
        }
        else
          *report << "\nPlan failed to execute\n";
-       maxTime = testPlanValidator->getMaxTime();  
+       maxTime = testPlanValidator->getMaxTime();
        if(testPlanValidator->graphsToShow()) latex.LaTeXGraphs(testPlanValidator);
        latex.LaTeXGantt(testPlanValidator);
      };
-    
+
     deleteTestPlan(testPlan2);
     testPlan->clear(); delete testPlan;
     delete testPlanValidator;
@@ -578,7 +578,7 @@ void RobustPlanAnalyser::calculateActionRobustness(double & robustnessOfPlan,dou
 {
  double lowerBound = 0.0;
  double upperBound = getMaxTime(p);
- double testValue = (upperBound + lowerBound)/2.0; 
+ double testValue = (upperBound + lowerBound)/2.0;
  double lowerBoundLowerBound = 0.000001;
  bool robustnessFound = false;
  int numberOfTestPlans = 598;
@@ -593,8 +593,8 @@ void RobustPlanAnalyser::calculateActionRobustness(double & robustnessOfPlan,dou
       robustnessBound  = -1;
       return;
       };
-  
- 
+
+
  do{
       testValue = (upperBound + lowerBound)/2.0; noOfInvalidPlans = 0;
                //LaTeX = true;
@@ -602,13 +602,13 @@ void RobustPlanAnalyser::calculateActionRobustness(double & robustnessOfPlan,dou
            //cout << testValue << " testValue, "<< noOfInvalidPlans << " invalid plans \\\\\n";
       if(noOfInvalidPlans == 0)
       {
-        lowerBound = testValue; 
+        lowerBound = testValue;
       }
       else
       {
-        upperBound = testValue; 
+        upperBound = testValue;
       };
-  
+
     if(lowerBound == 0)
     {
       if(upperBound < lowerBoundLowerBound) robustnessFound = true;
@@ -621,7 +621,7 @@ void RobustPlanAnalyser::calculateActionRobustness(double & robustnessOfPlan,dou
  }while(!robustnessFound);
 
  robustnessOfPlan = (lowerBound + upperBound)/2.0;
- robustnessBound  = (upperBound - lowerBound)/2.0; 
+ robustnessBound  = (upperBound - lowerBound)/2.0;
 };
 
 //how much can the time stamps vary, so that we can be 95% sure that the plan will always be valid (well at least 95%)
@@ -658,7 +658,7 @@ void RobustPlanAnalyser::calculatePNERobustness(double & robustnessOfPlan,double
 
  do{
       RobustPNEJudder = (upperBound + lowerBound)/2.0; noOfInvalidPlans = 0;
-             
+
       runAnalysis(robustMeasure,numberOfTestPlans,false,noOfInvalidPlans,noOfErrorPlans,true,false);
           //cout << RobustPNEJudder << " RobustPNEJudder, "<< noOfInvalidPlans << " invalid plans \\\\\n";
       if(noOfInvalidPlans == 0)
@@ -688,8 +688,10 @@ void RobustPlanAnalyser::calculatePNERobustness(double & robustnessOfPlan,double
 
 string getPlanStepString(const plan_step * ps)
 {
-    if(ps == 0) return "";
-		string act = "("+ps->op_sym->getName();
+    if(ps == 0)
+      return "";
+
+    string act = "("+ps->op_sym->getName();
 		for(typed_symbol_list<const_symbol>::const_iterator j = ps->params->begin();
 			j != ps->params->end(); ++j)
 		{
@@ -700,7 +702,7 @@ string getPlanStepString(const plan_step * ps)
     if(LaTeX) latexString(act);
     return act;
 };
-    
+
 void RobustPlanAnalyser::displayAnalysis(int noTestPlans,int numberOfInvalidPlans,int numberOfErrorPlans,double actionRobustnessOfPlan,double actionRobustnessBound,double pneRobustnessOfPlan,double pneRobustnessBound)
 {
  int noTests = noTestPlans - numberOfErrorPlans;
@@ -724,22 +726,22 @@ void RobustPlanAnalyser::displayAnalysis(int noTestPlans,int numberOfInvalidPlan
           cout << "There is a 99% chance that the plan will be valid with probability of at least "<<100*pow(0.01,(1.0/(noTestPlans - numberOfErrorPlans)))<<"%.\n";
      else if(estProbValidPlan == 0)
           cout << "There is a 99% chance that the plan will fail with probability of at least "<<100*pow(0.01,(1.0/(noTestPlans - numberOfErrorPlans)))<<"%.\n";
-     
+
   };
 
  if(calcActionRobustness)
  {
        if(actionRobustnessOfPlan == -1)
        {
-         *report << "The plan has an action timestamp robustness greater than the length of the plan, "<<getMaxTime(p); 
+         *report << "The plan has an action timestamp robustness greater than the length of the plan, "<<getMaxTime(p);
        }
-       else       
+       else
          *report << "The plan has an action timestamp robustness in the range "<< actionRobustnessOfPlan <<" +-"<<actionRobustnessBound;
 
        if(RobustPNEJudder > 0) *report << " when PNEs may vary up to "<< RobustPNEJudder <<".\n";
        else *report <<".\n";
  };
- 
+
  if(calcPNERobustness)
  {
        *report << "The plan has a PNE robustness in the range "<< pneRobustnessOfPlan <<" +-"<<pneRobustnessBound;
@@ -749,7 +751,7 @@ void RobustPlanAnalyser::displayAnalysis(int noTestPlans,int numberOfInvalidPlan
  };
 
  *report << "\nMetric: "<<getMetricName()<<"\n";
- if(!calcActionRobustness && !calcPNERobustness) *report << "Distribution: "<<getDistName()<<"\n";  
+ if(!calcActionRobustness && !calcPNERobustness) *report << "Distribution: "<<getDistName()<<"\n";
  *report << "\n";
 
 
@@ -762,8 +764,8 @@ void RobustPlanAnalyser::displayAnalysis(int noTestPlans,int numberOfInvalidPlan
       map<const plan_step *, InvalidActionReport>::const_iterator k = record.find(*i);
       if(k != record.end()) iar.push_back(InvalidActionRecord(k->second.number,(*i)->start_time,*i));
     };
-    
-    
+
+
    cout << "Plan failures:\n\n";
 
     for(vector<InvalidActionRecord>::const_iterator d = iar.begin(); d != iar.end(); ++d)
@@ -775,21 +777,21 @@ void RobustPlanAnalyser::displayAnalysis(int noTestPlans,int numberOfInvalidPlan
 
    if(unsatisfiedGoal == 1) cout << "1 plan failed because the goal is not satisfied.\n";
    else if(unsatisfiedGoal != 0) cout << unsatisfiedGoal << " plans failed because the goal is not satisfied.\n";
-    
+
    if(unknownErrors == 1) cout << "1 other plan failure.\n";
    else if(unknownErrors != 0) cout << unknownErrors << " other plan failures.\n";
-     
+
    if(numberOfErrorPlans == 1) cout << "1 plan did not execute due errors in the validation process.\n";
    else if(numberOfErrorPlans != 0) cout << numberOfErrorPlans << " plans did not execute due errors in the validation process.\n";
-       
+
    cout << "\n";
 
     if(record.size() == 0) return;
 
    cout << "Reasons for Plan Failures:\n\n";
-  
+
    for(map<const plan_step *,InvalidActionReport>::const_iterator d = record.begin(); d != record.end(); ++d)
-   {      
+   {
      string theTime;
      if(d->first != 0) theTime = toString(d->first->start_time);
      else theTime = " the goal";
@@ -802,26 +804,26 @@ void RobustPlanAnalyser::displayAnalysis(int noTestPlans,int numberOfInvalidPlan
        if(fr->second.first == 1) *report << " 1 failure: ";
        else cout << " "<<fr->second.first <<" failures: ";
        cout <<fr->first<<". Sample plan repair advice: ";
-       cout << "  "<<fr->second.second <<"  \n";       
+       cout << "  "<<fr->second.second <<"  \n";
      };
      cout << " \n";
    };
-   
+
  };
- 
+
 };
 
 
 void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvalidPlans,int numberOfErrorPlans,double actionRobustnessOfPlan,double actionRobustnessBound,double pneRobustnessOfPlan,double pneRobustnessBound)
-{     
+{
  double zeroVary = 0.0; int oneTest = 1; int noIP; int noEP;
  double rpnej = RobustPNEJudder;
  RobustPNEJudder = 0;
  runAnalysis(zeroVary,oneTest,false,noIP,noEP,false,false);//for display purposes
  RobustPNEJudder = rpnej;
- 
-    
- *report << "\\subsection{Plan Robustness Report}\n";      
+
+
+ *report << "\\subsection{Plan Robustness Report}\n";
  int noTests = noTestPlans - numberOfErrorPlans;
  double validPlans = noTests - numberOfInvalidPlans;
  double estProbValidPlan = double(validPlans) / double(noTests);
@@ -844,10 +846,10 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
        *report << "There is a 99$\\%$ chance that the plan will be valid with probability of at least "<<100*pow(0.01,(1.0/(noTestPlans - numberOfErrorPlans)))<<"$\\%$.\\\\\n";
         else if(estProbValidPlan == 0)
        *report << "There is a 99$\\%$ chance that the plan will fail with probability of at least "<<100*pow(0.01,(1.0/(noTestPlans - numberOfErrorPlans)))<<"$\\%$.\\\\\n";
- 
+
  };
 
- 
+
  if(calcActionRobustness)
  {
        *report << "\\item ";
@@ -855,13 +857,13 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
        {
          *report << "The plan has an action timestamp robustness greater than the length of the plan, "<<getMaxTime(p);
        }
-       else 
+       else
          *report << "The plan has an action timestamp robustness in the range "<< actionRobustnessOfPlan <<"$\\pm$"<<actionRobustnessBound;
-       
+
        if(RobustPNEJudder > 0) *report << " when PNEs may vary up to "<< RobustPNEJudder <<".\\\\\n";
        else *report <<".\\\\\n";
  };
- 
+
  if(calcPNERobustness)
  {
        *report << "\\item ";
@@ -874,7 +876,7 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
  if(!calcActionRobustness && !calcPNERobustness) *report <<"\\item Distribution: "<<getDistName();
  *report <<"\\\\\n";
  *report << "\\end{itemize}\n";
- 
+
  if(numberOfInvalidPlans != 0)
  {
   map<double,int> noErrors;
@@ -896,9 +898,9 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
   {
      map<double,int>::const_iterator j = noErrors.find(maxTime);
      if(j != noErrors.end()) noErrors[maxTime] += unsatisfiedGoal;
-     else noErrors[maxTime] = unsatisfiedGoal; 
+     else noErrors[maxTime] = unsatisfiedGoal;
   };
-  
+
    *report << "\\subsubsection{Plan Failures}\n";
    string act;
    *report << "\\begin{tabbing}\n {\\bf Failures} \\= {\\bf Time} \\qquad \\= {\\bf Action}\\\\[0.8ex]\n";
@@ -908,24 +910,24 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
      if(d->number == 1) *report << "1 \\> \\atime{"<<d->time << "} \\>";
      else *report << d->number << "\\> \\atime{"<<d->time << "} \\>";
      *report << "\\listrow{\\action{"<<getPlanStepString(d->ps) << "}}\\\\\n";
-      
+
    };
-   
-   
+
+
    if(unsatisfiedGoal == 1) *report << "1 \\> \\> Plan failed because the goal is not satisfied.\\\\\n";
    else if(unsatisfiedGoal != 0) *report << unsatisfiedGoal << " \\> \\> Plans failed because the goal is not satisfied.\\\\\n";
-    
+
    if(unknownErrors == 1) *report << "1 \\> \\> other plan failure.\\\\\n";
    else if(unknownErrors != 0) *report << unknownErrors << " \\> \\> other plan failures.\\\\\n";
-       
+
    if(numberOfErrorPlans == 1) *report << "1  \\> \\> plan did not execute due errors in the validation process.\\\\\n";
    else if(numberOfErrorPlans != 0) *report << numberOfErrorPlans << "  \\> \\> plans did not execute due errors in the validation process.\\\\\n";
 
-   *report << "\\end{tabbing}\n";    
+   *report << "\\end{tabbing}\n";
 
    if(record.size() == 0) return;
-  
-   *report << "\\subsubsection{Reasons for Plan Failures}\n";   
+
+   *report << "\\subsubsection{Reasons for Plan Failures}\n";
    *report << "\\begin{enumerate}\n";
    for(map<const plan_step *,InvalidActionReport>::const_iterator d = record.begin(); d != record.end(); ++d)
    {
@@ -934,7 +936,7 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
      if(d->first != 0) theTime = "\\atime{"+toString(d->first->start_time)+"}";
      else theTime = " the goal";
      if(d->second.number == 1) *report << "1 failure for "<<theTime<<" ";
-     else *report << d->second.number << " failures for "<<theTime<<" "; 
+     else *report << d->second.number << " failures for "<<theTime<<" ";
      *report << "\\listrow{\\action{"<<getPlanStepString(d->first) << "}}\\\\\n";
      *report << "\\begin{enumerate}\n";
      for(map<string,pair<int,string> >::const_iterator fr = d->second.failReasons.begin(); fr != d->second.failReasons.end(); ++fr)
@@ -949,8 +951,8 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
      *report << "\\end{enumerate}\n";
    };
    *report << "\\end{enumerate}\n";
-  
-   
+
+
    *report << "\\subsection{Graphs of Failed Plans}\n";
 	 *report << "\\setcounter{figure}{0}\n";
    FEGraph errorGraph("Number of plans failing at these times",0,0);
@@ -962,12 +964,12 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
    FEGraph errorPerGraphL("Percentage of plans failing at these times",0.0,100.0);
    FEGraph accumPerErrorGraphL("Accumulative percentage of plans failing by these times",0.0,100.0);
    int prevValue = 0; int accPrevValue = 0;
-   double prevPerValue = 0; double accPerPrevValue = 0; 
+   double prevPerValue = 0; double accPerPrevValue = 0;
 
    //ensure these appear in the correct order!
     //for(map<const plan_step *, int>::const_iterator ps = record.begin(); ps != record.end(); ++ps)
    for(map<double,int>::const_iterator g = noErrors.begin(); g != noErrors.end(); ++g)
-   {                   
+   {
       errorGraphL.points[g->first] =  g->second;
       errorGraphL.happenings.insert(g->first);
 
@@ -979,7 +981,7 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
 
       accumPerErrorGraphL.points[g->first] =  accPerPrevValue + ((g->second)/double(noTests))*100.0;
       accumPerErrorGraphL.happenings.insert(g->first);
-     
+
       errorGraph.discons[g->first] =  make_pair(prevValue,g->second);
       prevValue = g->second;
       errorGraph.happenings.insert(g->first);
@@ -995,7 +997,7 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
       accumPerErrorGraph.discons[g->first] =  make_pair(accPerPrevValue,accPerPrevValue + ((g->second)/double(noTests))*100.0);
       accPerPrevValue = accPerPrevValue + ((g->second)/double(noTests))*100.0;
       accumPerErrorGraph.happenings.insert(g->first);
-    
+
    };
 
    errorGraph.displayLaTeXGraph(maxTime);
@@ -1006,10 +1008,9 @@ void RobustPlanAnalyser::displayAnalysisLaTeX(int noTestPlans,int numberOfInvali
    accumErrorGraphL.displayLaTeXGraph(maxTime);
    errorPerGraphL.displayLaTeXGraph(maxTime);
    accumPerErrorGraphL.displayLaTeXGraph(maxTime);
-  
+
  };
- 
-};
 
 };
 
+};
