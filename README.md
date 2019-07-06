@@ -1,35 +1,63 @@
-VAL
-===
+# VAL
 
-This repository contains the current version of the VAL plan validation code. 
+## [Applications](applications/README.md)
+## [Libraries](libraries/README.md)
 
-Compilation under Linux using g++ should be straightforward: use "make validate", "make parser" etc. The repository also contains a ".cbp" file which is a CodeBlocks project file. Using this, the code is set up to offer the targets listed below for compilation using mingw under Windows. We have a version of the VAL code that compiles with Visual Studio, but have not completed the merging with this repository. Windows executables are in bin/validate, bin/parser etc.
+## Developement
 
-The main difficulties we have experienced in the past in compiling tend to be in the flex/bison code. To avoid that, the code in this repository contains pddl+.cpp, which is the generated source, and does not require to be regenerated from the lex and yacc source files in src/Parser. 
+### Windows
 
+  * Requirements:
+    * [CMake](https://cmake.org/)
+      * Include cmake in path for all users
+    * [MinGW-w64](https://sourceforge.net/projects/mingw)
+      * Install packages: mingw32-base, mingw32-gcc-g++
+    * [Strawberry Perl](http://strawberryperl.com/) (required for GCC)
+    * [LLVM](http://releases.llvm.org)
+    * [Doxygen](http://www.doxygen.nl/download.html)
 
+  * IDE:
+    * [Visual Studio Code](https://code.visualstudio.com/)
+      * Extensions:
+        * [CMake](https://marketplace.visualstudio.com/items?itemName=twxs.cmake)
+        * [CMake tools](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools)
+        * [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+        * [C++ Intellisense](https://marketplace.visualstudio.com/items?itemName=austin.code-gnu-global)
+        * [Clang-Format](https://marketplace.visualstudio.com/items?itemName=xaver.clang-format)
+      * Warning: You may require to restart your machine to be sure cmake, and gcc tools are identified by Visual Studio Code.
+  
+  * Scripts
+    * [scripts/windows/build_win64_mingw.bat](scripts/windows/build_win64_mingw.bat): Build scripts for windows 64 bits using MinGW
+      * Binaries can be found in `build/win64/mingw/Release|Debug/bin`
+    * [scripts/windows/build_win64_eclipse_mingw.bat](scripts/windows/build_win64_eclipse_mingw.bat): Build scripts for windows 64 bits using MinGW and creating eclipse project definition.
+      * Binaries can be found in `build/win64/eclipse_mingw/Release|Debug/bin`
+      * Project can be imported in eclipse following the [instructions](https://www.mantidproject.org/Setting_up_Eclipse_projects_with_CMake).
+    * [scripts/windows/build_win64_vs.bat](scripts/windows/build_win64_vs.bat): Build scripts for windows 64 bits using Visual Studio Compiler
+      * Binaries can be found in `build/win64/vs/Release|Debug/bin`
+    * [scripts/windows/setup_dlfcn-win32.bat](scripts/windows/setup_dlfcn-win32.bat): Build scripts to build dlfcn-win32 library for windows
+      * Binaries can be found in `externals/dlfcn-win32/`
+    * [scripts/windows/format.bat](scripts/windows/format.bat): Scripts to format the code
+    * [scripts/windows/documentation.bat](scripts/windows/documentation.bat): Generate documentation
 
-There are multiple targets, but the ones intended for general use are:
+### Linux
 
-parser
-validate
-tan
+  * Requirements:
+    * Debian packages: cmake make g++ mingw-w64 flex bison
+      * mingw-w64: For cross-compiling
+      * flex, bison: For parser code regeneration
 
-These are: the PDDL parser, the VALidator and a type-analyser. The use for the first and last of these is straightforward:
-
-parser <domainfile> <?problemfile>
-
-(Problem file is optional).
-
-tan <domainfile> <problemfile>
-
-Note that the parser will find and report errors in PDDL more explicitly than VAL. The type-checking tool, tan, is reasonably robust at finding type errors in your PDDL domain/problem files.
-
-VAL has many command line options, but the most important first few are:
-
-validate -t <number> -v <domainfile> <problemfile> <planfile....>
-
-Multiple plan files can be handled together. The -t flag allows the value of epsilon to be set. The default value is 0.01, but 0.001 is a good value to use for most planners. Actions separated by epsilon or less are treated as simultaneous by VAL. -v is the verbose flag. 
-
-Another useful flag is the -l flag, which causes VAL to generate a LaTeX report, and -f <file> sets the file destination for this (the .tex extension is automatically added, so need not be placed on the command line).
+  * IDE:
+    * [Visual Studio Code](https://code.visualstudio.com/)
+  
+  * Scripts
+    * [scripts/linux/build_linux64.sh](scripts/linux/build_linux64.sh): Build scripts for linux 64 bits
+      * Binaries can be found in `build/linux64/Release|Debug/bin`
+    * [scripts/linux/build_win32.sh](scripts/linux/build_win32.sh): Build scripts for windows 32 bits
+      * Binaries can be found in `build/linux_win32/Release|Debug/bin`
+    * [scripts/linux/build_win64.sh](scripts/linux/build_win64.sh): Build scripts for windows 64 bits
+      * Binaries can be found in `build/linux_win64/Release|Debug/bin`
+    * [scripts/linux/documentation.sh](scripts/linux/documentation.sh): Generate documentation
+    * [scripts/linux/format.sh](scripts/linux/format.sh): Scripts to format the code
+    * [scripts/linux/setup_flex_bison.sh](scripts/linux/setup_flex_bison.sh): Build scripts to generate flex and bison header/implementation files from [libraries/VAL/src/Parser/pddl+.l](libraries/VAL/src/Parser/pddl+.l) and [libraries/VAL/src/Parser/pddl+.y](libraries/VAL/src/Parser/pddl+.y)
+      * Sources files can be found in [libraries/VAL/src/Parser/pddl+.cpp](libraries/VAL/src/Parser/pddl+.cpp) and [libraries/VAL/src/Parser/pddl+.lex.yy.h](libraries/VAL/src/Parser/pddl+.lex.yy.h)
 
