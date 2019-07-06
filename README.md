@@ -1,5 +1,8 @@
 # VAL
 
+## Updates
+  * July 2019: Change license from [GNU Lesser General Public License, version 3](https://opensource.org/licenses/LGPL-3.0) to [3-Clause BSD License](https://opensource.org/licenses/BSD-3-Clause)
+
 ## [Applications](applications/README.md)
 ## [Libraries](libraries/README.md)
 
