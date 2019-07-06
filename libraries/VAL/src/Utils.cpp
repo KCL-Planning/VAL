@@ -44,41 +44,32 @@
   Strathclyde Planning Group
   http://planning.cis.strath.ac.uk
  ----------------------------------------------------------------------------*/
-#include <sstream>
-#include <string>
-#include "Polynomial.h"
+#include "Utils.h"
 #include "Action.h"
 #include "FuncExp.h"
-#include "Utils.h"
+#include "Polynomial.h"
+#include <sstream>
+#include <string>
 
 namespace VAL {
-  
-void replaceSubStrings(string & s,string s1,string s2)
-{
-	size_t pos = s.find(s1);
-	size_t subPos = pos;
-	size_t size = s.size();
-	
-	
- 	for(size_t count = 1;count < size ; ++count)
- 	{
-		if(subPos != string::npos)
-			s.replace(pos,s1.size(),s2);
-		else
-			break;
 
-		subPos = (s.substr(pos + s2.size(),string::npos)).find(s1);
-		pos = pos + s2.size() + subPos;
-	};
-	
-};
+  void replaceSubStrings(string &s, string s1, string s2) {
+    size_t pos = s.find(s1);
+    size_t subPos = pos;
+    size_t size = s.size();
 
-//change any action names etc that LaTeX will not like
-void latexString(string & s)
-{
-	replaceSubStrings(s,"_","\\_");
-	
+    for (size_t count = 1; count < size; ++count) {
+      if (subPos != string::npos)
+        s.replace(pos, s1.size(), s2);
+      else
+        break;
 
-};
+      subPos = (s.substr(pos + s2.size(), string::npos)).find(s1);
+      pos = pos + s2.size() + subPos;
+    };
+  };
 
-};
+  // change any action names etc that LaTeX will not like
+  void latexString(string &s) { replaceSubStrings(s, "_", "\\_"); };
+
+};  // namespace VAL

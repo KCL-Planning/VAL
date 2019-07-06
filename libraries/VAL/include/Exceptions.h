@@ -50,152 +50,120 @@
 using std::exception;
 
 namespace VAL {
-  
-struct UndefinedPolyError : public exception {
 
-	const char * what() const throw()
-	{
-		return "Attempt to access undefined polynomial!";
-	};
+  struct UndefinedClassError : public exception {
+    const char* what() const throw() {
+      return "Function in undefined class expression!";
+    }
+  };
 
-};
+  struct UndefinedPolyError : public exception {
+    const char* what() const throw() {
+      return "Attempt to access undefined polynomial!";
+    };
+  };
 
-struct HighOrderDiffEqunError : public exception {
+  struct HighOrderDiffEqunError : public exception {
+    const char* what() const throw() {
+      return "Higher order differential equations of this nature are not "
+             "handled!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "Higher order differential equations of this nature are not handled!";
-	};
-};
+  struct DiffEqunError : public exception {
+    const char* what() const throw() {
+      return "Differential equations of this nature are not handled!";
+    };
+  };
 
-struct DiffEqunError : public exception {
+  struct NumError : public exception {
+    const char* what() const throw() {
+      return "Numerical error in calculation of Primitive Numerical Values!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "Differential equations of this nature are not handled!";
-	};
-};
+  struct InfiniteRootsError : public exception {
+    const char* what() const throw() {
+      return "Attempt to find roots of constant value zero!";
+    };
+  };
 
-struct NumError : public exception {
+  struct PolyRootError : public exception {
+    const char* what() const throw() {
+      return "The roots of this polynomial cannot be found!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "Numerical error in calculation of Primitive Numerical Values!";
-	};
-};
+  struct ApproxPolyError : public exception {
+    const char* what() const throw() {
+      return "An approximate polynomial to this continuous function cannot be "
+             "found!";
+    };
+  };
 
-struct InfiniteRootsError : public exception {
+  struct InvariantError : public exception {
+    const char* what() const throw() {
+      return "This validator cannot handle invariants of this nature!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "Attempt to find roots of constant value zero!";
-	};
-};
+  struct InvariantDisjError : public exception {
+    const char* what() const throw() {
+      return "The intervals satisfying a disjunct of an invariant cannot be "
+             "found!";
+    };
+  };
 
-struct PolyRootError : public exception {
+  struct InvalidIntervalsError : public exception {
+    const char* what() const throw() {
+      return "This collection of intervals is invalid!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "The roots of this polynomial cannot be found!";
-	};
-};
+  struct DerivedPredicateError : public exception {
+    const char* what() const throw() {
+      return "Problem with derived predicates!";
+    };
+  };
 
-struct ApproxPolyError : public exception {
+  struct TemporalDAError : public exception {
+    const char* what() const throw() {
+      return "Conditional effects cannot depend on future events!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "An approximate polynomial to this continuous function cannot be found!";
-	};
-};
+  struct BadOperator : public exception {
+    const char* what() const throw() { return "Bad operator in plan!"; };
+  };
 
-struct InvariantError : public exception {
+  struct SyntaxTooComplex : public exception {
+    const char* what() const throw() {
+      return "Syntax not handled by this validator!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "This validator cannot handle invariants of this nature!";
-	};
-};
+  struct UnrecognisedCondition : public exception {
+    const char* what() const throw() {
+      return "Unrecognised exception - unexpected situation!";
+    };
+  };
 
-struct InvariantDisjError : public exception {
+  struct BadAccessError : public exception {
+    const char* what() const throw() {
+      return "Attempt to access undefined numeric expression!";
+    };
+  };
 
-	const char * what() const throw()
-	{
-		return "The intervals satisfying a disjunct of an invariant cannot be found!";
-	};
-};
+  struct ParseFailure : public exception {
+    const char* what() const throw() {
+      return "Parser failed to read file!\n";
+    };
+  };
 
-struct InvalidIntervalsError : public exception {
+  struct TypeException : public exception {
+    const char* what() const throw() { return "Error in type-checking!\n"; };
+  };
 
-	const char * what() const throw()
-	{
-		return "This collection of intervals is invalid!";
-	};
-};
-
-struct DerivedPredicateError : public exception {
-
-	const char * what() const throw()
-	{
-		return "Problem with derived predicates!";
-	};
-};
-
-struct TemporalDAError : public exception {
-
-	const char * what() const throw()
-	{
-		return "Conditional effects cannot depend on future events!";
-	};
-};
-
-struct BadOperator : public exception {
-
-	const char * what() const throw()
-	{
-		return "Bad operator in plan!";
-	};
-};
-
-struct SyntaxTooComplex : public exception {
-
-	const char * what() const throw()
-	{
-		return "Syntax not handled by this validator!";
-	};
-};
-
-struct UnrecognisedCondition : public exception {
-
-	const char * what() const throw()
-	{
-		return "Unrecognised exception - unexpected situation!";
-	};
-};
-
-struct BadAccessError : public exception {
-
-	const char * what() const throw()
-	{
-		return "Attempt to access undefined numeric expression!";
-	};
-};
-
-struct ParseFailure : public exception {
-
-	const char * what() const throw()
-	{
-		return "Parser failed to read file!\n";
-	};
-};
-
-struct TypeException : public exception {
-
-	const char * what() const throw()
-	{
-		return "Error in type-checking!\n";
-	};
-};
-
-};
+};  // namespace VAL
 
 #endif

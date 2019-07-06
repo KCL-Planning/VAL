@@ -29,16 +29,27 @@
 
 #include "TimSupport.h"
 
-
 namespace VAL {
-extern TypeChecker * theTC;
+  extern TypeChecker *theTC;
 };
 
 namespace TIM {
-extern TIMAnalyser * TA;
+  extern TIMAnalyser *TA;
 
-void performTIMAnalysis(char * argv[]);
+  void performTIMAnalysis(char *argv[]);
 
-};
+  void TIMstage1(char *argv[]);
+  void TIMstage2();
+
+  template < class PROC >
+  void performTIMAnalysis(char *argv[], PROC proc) {
+    TIMstage1(argv);
+
+    proc();
+
+    TIMstage2();
+  }
+
+};  // namespace TIM
 
 #endif

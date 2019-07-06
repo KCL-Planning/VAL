@@ -48,12 +48,12 @@
 #include <vector>
 
 namespace VAL {
-  
-class var_symbol;
-class const_symbol;
-class Validator;
 
-};
+  class var_symbol;
+  class const_symbol;
+  class Validator;
+
+};  // namespace VAL
 
 //#undef vector
 //#undef map
@@ -64,80 +64,75 @@ using std::vector;
 #ifndef __MYENVIRONMENT
 #define __MYENVIRONMENT
 
-  
 //#define vector std::vector
 
 namespace VAL {
 
-template<class T> bool operator != (T & t1,T & t2) {return ! (t1==t2);};
+  template < class T >
+  bool operator!=(T &t1, T &t2) {
+    return !(t1 == t2);
+  };
 
-struct Environment : public map<const var_symbol*,const const_symbol*> {
-	static map<Validator*,vector<Environment *> > copies;
+  struct Environment : public map< const var_symbol *, const const_symbol * > {
+    static map< Validator *, vector< Environment * > > copies;
 
-	double duration;
-	
-	Environment * copy(Validator * v) const
-	{
-		Environment * e = new Environment(*this);
-		copies[v].push_back(e);
-		//cout << "Copy of "<<this<<" to "<<e<<"\\\\\n";
-		return e;
-	};
+    double duration;
 
-	static void collect(Validator * v)
+    Environment *copy(Validator *v) const {
+      Environment *e = new Environment(*this);
+      copies[v].push_back(e);
+      // cout << "Copy of "<<this<<" to "<<e<<"\\\\\n";
+      return e;
+    };
 
-	{
-		for(vector<Environment *>::iterator i = copies[v].begin();i != copies[v].end();++i)
-			delete *i;
-		copies[v].clear();
-		
-	  //cout << "Deleting the copies of enviroments here!\\\\\n";
-	};
-};
+    static void collect(Validator *v) {
+      for (vector< Environment * >::iterator i = copies[v].begin();
+           i != copies[v].end(); ++i)
+        delete *i;
+      copies[v].clear();
 
-template<class TI>
-struct EnvironmentParameterIterator {
-	Environment * env;
-	TI pi;
+      // cout << "Deleting the copies of enviroments here!\\\\\n";
+    };
+  };
 
-	EnvironmentParameterIterator(Environment * f,TI p) :
-		env(f), pi(p) {};
+  template < class TI >
+  struct EnvironmentParameterIterator {
+    Environment *env;
+    TI pi;
 
-// Having to cast the const is not good...currently we are forced to do it in order
-// to interact with Cascader, but should look at fixing it.
-	const_symbol * operator*()
-	{
-		if(const_symbol * s = const_cast<const_symbol *>(dynamic_cast<const const_symbol *>(*pi)))
-		{
-			return s;
-		};
-		return const_cast<const_symbol*>((*env)[dynamic_cast<const var_symbol *>(*pi)]);
-	};
+    EnvironmentParameterIterator(Environment *f, TI p) : env(f), pi(p){};
 
-	EnvironmentParameterIterator & operator++()
-	{
-		++pi;
-		return *this;
-	};
+    // Having to cast the const is not good...currently we are forced to do it
+    // in
+    // order to interact with Cascader, but should look at fixing it.
+    const_symbol *operator*() {
+      if (const_symbol *s = const_cast< const_symbol * >(
+              dynamic_cast< const const_symbol * >(*pi))) {
+        return s;
+      };
+      return const_cast< const_symbol * >(
+          (*env)[dynamic_cast< const var_symbol * >(*pi)]);
+    };
 
-	bool operator==(const EnvironmentParameterIterator<TI> & li) const
-	{
-		return pi==li.pi;
-	};
+    EnvironmentParameterIterator &operator++() {
+      ++pi;
+      return *this;
+    };
 
-	bool operator!=(const EnvironmentParameterIterator<TI> & li) const
-	{
-		return pi!=li.pi;
-	};
-};
+    bool operator==(const EnvironmentParameterIterator< TI > &li) const {
+      return pi == li.pi;
+    };
 
-template<class TI>
-EnvironmentParameterIterator<TI> makeIterator(Environment * f,TI p)
-{
-	return EnvironmentParameterIterator<TI>(f,p);
-};
+    bool operator!=(const EnvironmentParameterIterator< TI > &li) const {
+      return pi != li.pi;
+    };
+  };
 
+  template < class TI >
+  EnvironmentParameterIterator< TI > makeIterator(Environment *f, TI p) {
+    return EnvironmentParameterIterator< TI >(f, p);
+  };
 
-};
+};  // namespace VAL
 
 #endif

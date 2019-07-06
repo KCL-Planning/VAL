@@ -35,7 +35,6 @@
    $Revision: 1.2 $
 
    stephen.cresswell@cis.strath.ac.uk
-  
    Strathclyde Planning Group
    --------------------------------------------------------------------------*/
 
@@ -43,21 +42,37 @@
 // ## concatenates arg
 
 // Output NAME - used for name of class
-#define TITLE(NAME) indent(ind); cout << '(' << #NAME << ')';
+#define TITLE(NAME) \
+  indent(ind);      \
+  cout << '(' << #NAME << ')';
 
 // Display a data member that is a parse_category
-#define FIELD(NAME) indent(ind); cout << #NAME << ": "; if (NAME != NULL) NAME->display(ind+1); else cout << "(NULL)";  
+#define FIELD(NAME)         \
+  indent(ind);              \
+  cout << #NAME << ": ";    \
+  if (NAME != NULL)         \
+    NAME->display(ind + 1); \
+  else                      \
+    cout << "(NULL)";
 
 // Used for display of list element
-#define ELT(NAME) { if ((NAME) != NULL) (NAME)->display(ind+1); else cout << "(NULL)"; }
+#define ELT(NAME)               \
+  {                             \
+    if ((NAME) != NULL)         \
+      (NAME)->display(ind + 1); \
+    else                        \
+      cout << "(NULL)";         \
+  }
 
 // Display NAME only
-#define LABEL(NAME) indent(ind); cout << #NAME << ':'; 
+#define LABEL(NAME) \
+  indent(ind);      \
+  cout << #NAME << ':';
 
 // Output a data member that is not a parse_category
-#define LEAF(NAME) indent(ind); cout << #NAME << ": "; cout << NAME;
-
+#define LEAF(NAME)       \
+  indent(ind);           \
+  cout << #NAME << ": "; \
+  cout << NAME;
 
 extern void indent(int ind);
-
-

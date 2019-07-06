@@ -30,66 +30,65 @@
 #include <iostream>
 #include <iterator>
 
-
-using std::ostream;
 using std::iterator;
+using std::ostream;
 
 namespace VAL {
-class pddl_type;
+  class pddl_type;
 };
 
-template<class T>
-struct ptrwriter
-{
-	ostream & os;
-	const char * septr;
-	
-	ptrwriter(ostream & o,const char * sep) : os(o), septr(sep) {};
-	void operator()(T * p)
-	{
-		os << (*p) << septr;
-	};
+template < class T >
+struct ptrwriter {
+  ostream &os;
+  const char *septr;
+
+  ptrwriter(ostream &o, const char *sep) : os(o), septr(sep){};
+  void operator()(T *p) { os << (*p) << septr; };
 };
 
 namespace TIM {
 
-template<class TI>
-struct typeTransformer : 
-	public 
+  template < class TI >
+  struct typeTransformer
+      : public
 #ifndef OLDCOMPILER
-			std::iterator
+        std::iterator
 #endif
 #ifdef OLDCOMPILER
-			std::forward_iterator
+            std::forward_iterator
 #endif
-					<typename std::iterator_traits<TI>::iterator_category,VAL::pddl_type *>{
-	TI ti;
-	int arg;
-	const VAL::pddl_type * pt;
-	int cnt;
+        < typename std::iterator_traits< TI >::iterator_category,
+          VAL::pddl_type * > {
+    TI ti;
+    int arg;
+    const VAL::pddl_type *pt;
+    int cnt;
 
-	typeTransformer(TI t,int a,const VAL::pddl_type * p) :
-		ti(t), arg(a), pt(p), cnt(0) {};
+    typeTransformer(TI t, int a, const VAL::pddl_type *p)
+        : ti(t), arg(a), pt(p), cnt(0){};
 
-	VAL::pddl_type * operator*() 
-	{
-		if(cnt==arg) return const_cast<VAL::pddl_type *>(pt);
-		return (*ti)->type;
-	};
-	typeTransformer<TI> & operator++() {++ti; ++cnt; return *this;};
-	bool operator==(const typeTransformer<TI> & t) const {return ti == t.ti;};
-	size_t operator-(const typeTransformer<TI> & t) const
-	{
-		return ti - t.ti;
-	};
-};
+    VAL::pddl_type *operator*() {
+      if (cnt == arg) return const_cast< VAL::pddl_type * >(pt);
+      return (*ti)->type;
+    };
+    typeTransformer< TI > &operator++() {
+      ++ti;
+      ++cnt;
+      return *this;
+    };
+    bool operator==(const typeTransformer< TI > &t) const {
+      return ti == t.ti;
+    };
+    size_t operator-(const typeTransformer< TI > &t) const {
+      return ti - t.ti;
+    };
+  };
 
-template<class TI>
-typeTransformer<TI> makeTT(TI t,int a,const VAL::pddl_type * p)
-{
-	return typeTransformer<TI>(t,a,p);
-};
+  template < class TI >
+  typeTransformer< TI > makeTT(TI t, int a, const VAL::pddl_type *p) {
+    return typeTransformer< TI >(t, a, p);
+  };
 
-};
+};  // namespace TIM
 
 #endif

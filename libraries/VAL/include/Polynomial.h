@@ -45,236 +45,251 @@
   http://planning.cis.strath.ac.uk
  ----------------------------------------------------------------------------*/
 //#undef vector
-#include <map>
 #include <iostream>
-#include <vector>
+#include <map>
 #include <utility>
+#include <vector>
 //#include "Proposition.h"
 
 #ifndef __POLYNOMIAL
 #define __POLYNOMIAL
 
 using std::make_pair;
+using std::map;
+using std::ostream;
 using std::pair;
 using std::vector;
-using std::ostream;
-using std::map;
 
 //#define vector std::vector
 namespace VAL {
-  
-class Polynomial;
-class Comparison;
-class State;
 
-//typedef float CoScalar;
-typedef long double CoScalar;
+  class Polynomial;
+  class Comparison;
+  class State;
 
-typedef pair<CoScalar,bool> intervalEnd;
-	//value of interval end point, bool - true = closed, false = open
+  // typedef float CoScalar;
+  typedef long double CoScalar;
 
-struct Intervals {
+  typedef pair< CoScalar, bool > intervalEnd;
+  // value of interval end point, bool - true = closed, false = open
 
-	vector<pair<intervalEnd,intervalEnd> >  intervals;
+  struct Intervals {
+    vector< pair< intervalEnd, intervalEnd > > intervals;
 
+    Intervals(){};
+    Intervals(bool b);
+    Intervals(vector< pair< intervalEnd, intervalEnd > > ints);
+    ~Intervals();
 
-	Intervals() {};
-        Intervals(bool b);
-	Intervals(vector<pair<intervalEnd,intervalEnd> > ints);
-	~Intervals();
+    bool operator==(const Intervals& ints) const;
 
-	bool operator==(const Intervals & ints) const;
+    void write(ostream& o) const;
+    void writeOffset(double t) const;
+  };
 
+  ostream& operator<<(ostream& o, const Intervals& i);
 
-	void write(ostream & o) const;
-   void writeOffset(double t) const;
-};
+  class CtsFunction {
+   public:
+    CtsFunction(){};
 
-ostream & operator <<(ostream & o,const Intervals & i);
+    virtual ~CtsFunction(){};
 
-class CtsFunction {
+    virtual vector< CoScalar > getRoots(CoScalar t) const = 0;  // on
+                                                                // interval(0,t)
+    // within accuracy
+    virtual Polynomial getApproxPoly(CoScalar endInt) const = 0;
+    virtual pair< vector< pair< intervalEnd, intervalEnd > >,
+                  vector< CoScalar > >
+        isolateRoots(CoScalar t, CoScalar accuracy) const = 0;
+    virtual CoScalar evaluate(CoScalar t) const = 0;
+    virtual bool isLinear() const = 0;
+    virtual void write(ostream& o) const = 0;
+    virtual Intervals getIntervals(const Comparison* comp, const State* s,
+                                   CoScalar t) const = 0;
+    virtual bool checkInvariant(const Comparison* comp, const State* s,
+                                CoScalar t, bool rhsIntervalOpen) const = 0;
+  };
 
-public:
+  ostream& operator<<(ostream& o, const CtsFunction& cf);
 
-	CtsFunction() {};
+  class Polynomial : public CtsFunction {
+   private:
+    map< unsigned int, CoScalar > coeffs;
 
-	virtual ~CtsFunction() {};
+   public:
+    Polynomial(){};
+    Polynomial(map< unsigned int, CoScalar > c) : coeffs(c){};
 
-	virtual vector<CoScalar> getRoots(CoScalar t) const = 0; //on interval(0,t) within accuracy
-	virtual Polynomial getApproxPoly(CoScalar endInt) const = 0;
-    virtual pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isolateRoots(CoScalar t,CoScalar accuracy) const = 0;
-	virtual CoScalar evaluate(CoScalar t) const = 0;
-	virtual bool isLinear() const = 0;
-	virtual void write(ostream & o) const = 0;
-   virtual Intervals getIntervals(const Comparison * comp, const State* s,CoScalar t) const = 0;
-   virtual bool checkInvariant(const Comparison * comp, const State* s,CoScalar t,bool rhsIntervalOpen) const = 0;
-};
+    ~Polynomial();
 
-ostream & operator <<(ostream & o,const CtsFunction & cf);
+    static const CoScalar tooSmall;  // regarded as zero or of unknown sign if
+                                     // abs
+                                     // value less than this
+    static CoScalar accuracy;        // accuracy to calculate poly roots
 
+    CoScalar getCoeff(unsigned int pow) const;
+    void setCoeff(unsigned int pow, CoScalar value);
+    void addToCoeff(unsigned int pow, CoScalar value);
+    unsigned int getDegree() const;
 
-class Polynomial  : public CtsFunction {
+    Polynomial getApproxPoly(CoScalar endInt) const { return *this; };
+    vector< CoScalar > getRoots(CoScalar t) const;  // on interval(0,t) within
+                                                    // accuracy
+    Intervals getIntervals(const Comparison* comp, const State* s,
+                           CoScalar t) const;
+    bool checkInvariant(const Comparison* comp, const State* s, CoScalar t,
+                        bool rhsIntervalOpen) const;
 
-private:
-
-
-	map<unsigned int,CoScalar> coeffs;
-
-
-public:
-
-	Polynomial() {};
-	Polynomial(map<unsigned int,CoScalar> c) : coeffs(c) {};
-
-	~Polynomial();
-
-
-	static const CoScalar tooSmall; //regarded as zero or of unknown sign if abs value less than this
-	static CoScalar accuracy; //accuracy to calculate poly roots
-
-	CoScalar getCoeff(unsigned int pow) const;
-	void setCoeff(unsigned int pow,CoScalar value);
-	void addToCoeff(unsigned int pow,CoScalar value);
-	unsigned int getDegree() const;
-
-   Polynomial getApproxPoly(CoScalar endInt) const {return *this;};
-	vector<CoScalar> getRoots(CoScalar t) const; //on interval(0,t) within accuracy
-    Intervals getIntervals(const Comparison * comp, const State* s,CoScalar t) const;
-    bool checkInvariant(const Comparison * comp, const State* s,CoScalar t,bool rhsIntervalOpen) const;
-    
-	static void setAccuracy(CoScalar ac) {accuracy = ac/10;};
-	pair<Polynomial,Polynomial> divide(const Polynomial & d) const;
-    Polynomial getGCD(const Polynomial & p) const;
+    static void setAccuracy(CoScalar ac) { accuracy = ac / 10; };
+    pair< Polynomial, Polynomial > divide(const Polynomial& d) const;
+    Polynomial getGCD(const Polynomial& p) const;
     Polynomial removeRepeatedRoots() const;
     bool checkPolynomialCoeffs() const;
     void removeSmallCoeffs();
-    pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isolateRoots(CoScalar t,CoScalar accuracy = 0) const;
-    bool rootsExist(CoScalar t) const; //on open interval (0,t)
+    pair< vector< pair< intervalEnd, intervalEnd > >, vector< CoScalar > >
+        isolateRoots(CoScalar t, CoScalar accuracy = 0) const;
+    bool rootsExist(CoScalar t) const;  // on open interval (0,t)
 
-	Polynomial& operator+=(const Polynomial & p);
-	Polynomial& operator+=(CoScalar num);
-	Polynomial& operator-=(const Polynomial & p);
-	Polynomial& operator-=(CoScalar num);
-	Polynomial& operator*=(const Polynomial & p);
-	Polynomial& operator*=(CoScalar num);
-	bool operator==(const Polynomial & p) const;
+    Polynomial& operator+=(const Polynomial& p);
+    Polynomial& operator+=(CoScalar num);
+    Polynomial& operator-=(const Polynomial& p);
+    Polynomial& operator-=(CoScalar num);
+    Polynomial& operator*=(const Polynomial& p);
+    Polynomial& operator*=(CoScalar num);
+    bool operator==(const Polynomial& p) const;
 
-	CoScalar evaluate(CoScalar t) const;
+    CoScalar evaluate(CoScalar t) const;
 
-   bool isLinear() const;
-	Polynomial diff() const;
-	Polynomial integrate() const;
+    bool isLinear() const;
+    Polynomial diff() const;
+    Polynomial integrate() const;
 
-	void write(ostream & o) const;
-};
+    void write(ostream& o) const;
+  };
 
-ostream & operator <<(ostream & o,const Polynomial & p);
+  ostream& operator<<(ostream& o, const Polynomial& p);
 
-class Exponential : public CtsFunction {
+  class Exponential : public CtsFunction {
+   private:
+    CoScalar K, c;  // f(t) = K e^(poly) + c
+    const Polynomial* poly;
+    mutable CoScalar offSet;  // for comparisons of type y > k, where y is FE
+                              // and
+                              // k is offset
+   public:
+    Exponential() : K(1), c(0), poly(0), offSet(0){};
+    Exponential(CoScalar K0, const Polynomial* p, CoScalar c0)
+        : K(K0), c(c0), poly(p), offSet(0){};
 
-private:
+    ~Exponential() { delete poly; };
 
-	CoScalar K,c; //f(t) = K e^(poly) + c
-	const Polynomial * poly;
-  mutable CoScalar offSet; //for comparisons of type y > k, where y is FE and k is offset
-public:
+    Polynomial getApproxPoly(CoScalar endInt) const;
+    void setOffSet(double off) { offSet = off; };
+    vector< CoScalar > getRoots(CoScalar t) const;  // on interval(0,t) within
+                                                    // accuracy
+    pair< vector< pair< intervalEnd, intervalEnd > >, vector< CoScalar > >
+        isolateRoots(CoScalar t, CoScalar accuracy) const;
+    CoScalar evaluate(CoScalar t) const;
+    bool isLinear() const;
+    const Polynomial* getPolynomial() const { return poly; };
+    Intervals getIntervals(const Comparison* comp, const State* s,
+                           CoScalar t) const;
+    bool checkInvariant(const Comparison* comp, const State* s, CoScalar t,
+                        bool rhsIntervalOpen) const;
+    bool rootsExist(CoScalar t) const;  // on open interval (0,t)
+    CoScalar getK() const { return K; };
+    CoScalar getc() const { return c; };
+    unsigned int getNoTerms(CoScalar endInt) const;  // number of terms to take
+                                                     // from power series for
+                                                     // approx poly
 
-	Exponential() : K(1),  c(0), poly(0), offSet(0) {};
-	Exponential(CoScalar K0, const Polynomial * p, CoScalar c0) : K(K0),  c(c0), poly(p), offSet(0) {};
+    void write(ostream& o) const;
+  };
 
-	~Exponential() {delete poly;};
+  // only subclasses instances of this class to be actually used
+  class NumericalSolution : public CtsFunction {
+   protected:
+    map< double, CoScalar > points;  // time value maps to value of the function
+    mutable CoScalar offSet;  // for comparisons of type y > k, where y is FE
+                              // and
+                              // k is offset
+   public:
+    NumericalSolution(){};
+    NumericalSolution(map< double, CoScalar > pts, CoScalar off)
+        : points(pts), offSet(off){};
 
-	Polynomial getApproxPoly(CoScalar endInt) const;
-   void setOffSet(double off) {offSet = off;};
-	vector<CoScalar> getRoots(CoScalar t) const; //on interval(0,t) within accuracy
-    pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isolateRoots(CoScalar t,CoScalar accuracy) const;
-	CoScalar evaluate(CoScalar t) const;
-	bool isLinear() const;
-	const Polynomial * getPolynomial() const {return poly;};
-   Intervals getIntervals(const Comparison * comp, const State* s,CoScalar t) const;
-   bool checkInvariant(const Comparison * comp, const State* s,CoScalar t,bool rhsIntervalOpen) const;
-   bool rootsExist(CoScalar t) const; //on open interval (0,t)
-	CoScalar getK() const {return K;};
-   CoScalar getc() const {return c;};
-	unsigned int getNoTerms(CoScalar endInt) const; //number of terms to take from power series for approx poly
+    virtual ~NumericalSolution(){};
+    void buildPoints(CoScalar a0, CoScalar b0, CoScalar y,
+                     CoScalar accuracy);  // initial value given at time t0
+    void setOffSet(double off) { offSet = off; };
+    double getOffSet() const { return offSet; };
+    map< double, CoScalar > getPoints() const { return points; };
+    Intervals getIntervals(const Comparison* comp, const State* s,
+                           CoScalar t) const;
+    bool checkInvariant(const Comparison* comp, const State* s, CoScalar t,
+                        bool rhsIntervalOpen) const;
+    vector< CoScalar > getRoots(CoScalar t) const;  // on interval(0,t) within
+                                                    // accuracy
+    Polynomial getApproxPoly(CoScalar endInt) const;
+    pair< vector< pair< intervalEnd, intervalEnd > >, vector< CoScalar > >
+        isolateRoots(CoScalar t, CoScalar accuracy) const;
+    CoScalar evaluate(CoScalar t) const;
+    bool isLinear() const;
+    virtual CoScalar evaluateDiff(CoScalar t, CoScalar y) = 0;
+  };
 
+  class BatteryCharge : public NumericalSolution {
+    // for diff eqn:   dy/dt = p(t) (m - y) - k(t),   for some poly p(t) and
+    // some
+    // constant m and discharge k(t)
+    const Polynomial* poly;
+    CoScalar m;
+    vector< pair< const CtsFunction*, bool > > discharge;
 
-	void write(ostream & o) const;
-};
-
-//only subclasses instances of this class to be actually used
-class NumericalSolution : public CtsFunction {
-
-protected:
-
-  map<double,CoScalar> points; // time value maps to value of the function
-  mutable CoScalar offSet; //for comparisons of type y > k, where y is FE and k is offset
-public:
-
-    NumericalSolution() {};
-    NumericalSolution(map<double,CoScalar> pts, CoScalar off) : points(pts), offSet(off) {};
-    
-	virtual ~NumericalSolution() {};
-   void buildPoints(CoScalar a0,CoScalar b0,CoScalar y,CoScalar accuracy);  //initial value given at time t0
-   void setOffSet(double off) {offSet = off;};
-   double getOffSet() const {return offSet;};
-   map<double,CoScalar> getPoints() const {return points;};
-   Intervals getIntervals(const Comparison * comp, const State* s,CoScalar t) const;
-   bool checkInvariant(const Comparison * comp, const State* s,CoScalar t,bool rhsIntervalOpen) const;
-    vector<CoScalar> getRoots(CoScalar t) const; //on interval(0,t) within accuracy
-	Polynomial getApproxPoly(CoScalar endInt) const;
-    pair<vector<pair<intervalEnd,intervalEnd> >,vector<CoScalar> > isolateRoots(CoScalar t,CoScalar accuracy) const;
-	CoScalar evaluate(CoScalar t) const;
-	bool isLinear() const;
-   virtual CoScalar evaluateDiff(CoScalar t,CoScalar y) = 0;
-};
-
-class BatteryCharge : public NumericalSolution {
-   //for diff eqn:   dy/dt = p(t) (m - y) - k(t),   for some poly p(t) and some constant m and discharge k(t)
- 	const Polynomial * poly;
-   CoScalar m;
-   vector<pair<const CtsFunction *,bool> > discharge;
-
-public:
-
-    BatteryCharge() : poly(0), m(0), discharge() {};
-    BatteryCharge(const Polynomial * p,CoScalar m0,vector<pair<const CtsFunction *,bool> > d,CoScalar t0,CoScalar t1,CoScalar y0,CoScalar accuracy) :
-      poly(p), m(m0), discharge(d)
-        { offSet = 0; buildPoints(t0,t1,y0,accuracy);};
-
-    BatteryCharge(CoScalar off,map<double,CoScalar> pts, const Polynomial * p,CoScalar m0,vector<pair<const CtsFunction *,bool> > d) :
-      NumericalSolution(pts,off), poly(p), m(m0), discharge(d) {};
-        
-	~BatteryCharge()
-    {//if(poly != 0) delete poly;
-     //    for(vector<pair<const CtsFunction *,bool> >::const_iterator i = discharge.begin(); i != discharge.end(); ++i)
-     // {
-      //    delete i->first;
-     // };
+   public:
+    BatteryCharge() : poly(0), m(0), discharge(){};
+    BatteryCharge(const Polynomial* p, CoScalar m0,
+                  vector< pair< const CtsFunction*, bool > > d, CoScalar t0,
+                  CoScalar t1, CoScalar y0, CoScalar accuracy)
+        : poly(p), m(m0), discharge(d) {
+      offSet = 0;
+      buildPoints(t0, t1, y0, accuracy);
     };
-    CoScalar evaluateDiff(CoScalar t,CoScalar y);
-   
-  
-	void write(ostream & o) const;
-};
 
-Polynomial operator+(const Polynomial & p,const Polynomial & q);
-Polynomial operator+(CoScalar num,const Polynomial & p);
-Polynomial operator+(const Polynomial & p,CoScalar num);
+    BatteryCharge(CoScalar off, map< double, CoScalar > pts,
+                  const Polynomial* p, CoScalar m0,
+                  vector< pair< const CtsFunction*, bool > > d)
+        : NumericalSolution(pts, off), poly(p), m(m0), discharge(d){};
 
-Polynomial operator-(const Polynomial & p,const Polynomial & q);
-Polynomial operator-(CoScalar num,const Polynomial & p);
-Polynomial operator-(const Polynomial & p,CoScalar num);
+    ~BatteryCharge(){
+        // if(poly != 0) delete poly;
+        //    for(vector<pair<const CtsFunction *,bool> >::const_iterator i =
+        //    discharge.begin(); i != discharge.end(); ++i)
+        // {
+        //    delete i->first;
+        // };
+    };
+    CoScalar evaluateDiff(CoScalar t, CoScalar y);
 
-Polynomial operator*(const Polynomial & p,const Polynomial & q);
-Polynomial operator*(CoScalar num,const Polynomial & p);
-Polynomial operator*(const Polynomial & p,CoScalar num);
+    void write(ostream& o) const;
+  };
 
-Polynomial operator-(const Polynomial & p);
-Polynomial operator/(const Polynomial & p,CoScalar num);
+  Polynomial operator+(const Polynomial& p, const Polynomial& q);
+  Polynomial operator+(CoScalar num, const Polynomial& p);
+  Polynomial operator+(const Polynomial& p, CoScalar num);
 
-};
+  Polynomial operator-(const Polynomial& p, const Polynomial& q);
+  Polynomial operator-(CoScalar num, const Polynomial& p);
+  Polynomial operator-(const Polynomial& p, CoScalar num);
 
+  Polynomial operator*(const Polynomial& p, const Polynomial& q);
+  Polynomial operator*(CoScalar num, const Polynomial& p);
+  Polynomial operator*(const Polynomial& p, CoScalar num);
+
+  Polynomial operator-(const Polynomial& p);
+  Polynomial operator/(const Polynomial& p, CoScalar num);
+
+};  // namespace VAL
 
 #endif
-

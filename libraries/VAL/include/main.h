@@ -51,18 +51,18 @@
 using std::ostream;
 
 namespace VAL {
-  
-extern bool Verbose;
-extern bool ContinueAnyway;
-extern bool ErrorReport;
-extern bool InvariantWarnings;
-extern bool LaTeX;
-extern bool LaTeXRecord;
-extern ostream*report;
-extern int NoGraphPoints;
-extern bool makespanDefault;
-extern bool stepLengthDefault;
 
-};
+  extern bool Verbose;
+  extern bool ContinueAnyway;
+  extern bool ErrorReport;
+  extern bool InvariantWarnings;
+  extern bool LaTeX;
+  extern bool LaTeXRecord;
+  extern ostream *report;
+  extern int NoGraphPoints;
+  extern bool makespanDefault;
+  extern bool stepLengthDefault;
+
+};  // namespace VAL
 
 #endif

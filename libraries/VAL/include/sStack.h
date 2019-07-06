@@ -24,18 +24,17 @@
  *
  ************************************************************************/
 
-
-/* 
+/*
   sStack.h
 
-  Simple Stack.  
+  Simple Stack.
 
   $Date: 2009-02-05 10:50:27 $
   $Revision: 1.2 $
 
   This is an STL deque with a stack-like interface added.  This is an
   insecure stack with all the deque interface deliberately left
-  available.  
+  available.
 
 */
 
@@ -48,34 +47,26 @@ using std::deque;
 
 namespace VAL {
 
-template <class T>
-class sStack : public deque<T>
-{
-private:
-    typedef deque<T> _Base;
-public:
+  template < class T >
+  class sStack : public deque< T > {
+   private:
+    typedef deque< T > _Base;
 
+   public:
     // push elem onto stack
-    void push(const T& elem) 
-	{
-	    _Base::push_front(elem);
-	};
+    void push(const T &elem) { _Base::push_front(elem); };
 
-     // pop elem from stack and return it
-    T pop() 
-	{
-	    T elem(_Base::front());
-	    _Base::pop_front();
-	    return elem;
-	};
+    // pop elem from stack and return it
+    T pop() {
+      T elem(_Base::front());
+      _Base::pop_front();
+      return elem;
+    };
 
     // return top element, leaving it on the stack
-    T& top() 
-	{
-	    return _Base::front();
-	};
-};
+    T &top() { return _Base::front(); };
+  };
 
-};
+};  // namespace VAL
 
 #endif /* SSTACK_H */
