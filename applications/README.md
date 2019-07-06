@@ -44,8 +44,6 @@ Identify which action are achieving precondition of a later action in the plan.
 
 Scripting of multiple plan execution and extraction of final state.
 
-Require the planner POPEX to be in the same folder. 
-
 Use output of PlanToValStep output
 
 ## PlanToValStep

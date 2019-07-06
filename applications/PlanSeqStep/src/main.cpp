@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
   // void * vld = makeValidatorFromFiles(argv[1],argv[2],0.001);
   int aID = 1;
   void *vld = 0;
-  string domain, problem;
+  string domain, problem, planner;
   stringstream ss;
   stringstream out;
   stringstream theplans;
@@ -50,9 +50,9 @@ int main(int argc, char *argv[]) {
     }
 
     if (s == "plan") {
-      script >> domain >> problem;
+      script >> planner >> domain >> problem;
       ostringstream cline;
-      cline << "POPEX " << domain << " " << problem << " > plantmpfile";
+      cline << planner << " " << domain << " " << problem << " > plantmpfile";
       cout << "Planning " << domain << "/" << problem << "\n";
       system(cline.str().c_str());
       cout << "Completed planning\n";
