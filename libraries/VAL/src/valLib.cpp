@@ -808,7 +808,9 @@ LPCSTR getState(void *v) {
     for (const_symbol_list::const_iterator i =
              current_analysis->the_problem->objects->begin();
          i != current_analysis->the_problem->objects->end(); ++i) {
-      out << (*i)->getName() << " - " << (*i)->type->getName() << "\n";
+      out << (*i)->getName();
+      if ((*i)->type) out << " - " << (*i)->type->getName();
+      out << "\n";
     }
 
     out << ")\n";
