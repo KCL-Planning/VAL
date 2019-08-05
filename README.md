@@ -1,12 +1,17 @@
 # VAL
 
+## Authors
+  * Maria Fox and Derek Long - PDDL2.2 and VAL
+  * Richard Howey - PDDL2.2 and VAL and Continuous Effects, derived predicates, timed initial literals and LaTeX report in VAL
+  * Stephen Cresswell - PDDL2.2 Parser
+
 ## Updates
   * July 2019: Change license from [GNU Lesser General Public License, version 3](https://opensource.org/licenses/LGPL-3.0) to [3-Clause BSD License](https://opensource.org/licenses/BSD-3-Clause)
 
 ## [Applications](applications/README.md)
 ## [Libraries](libraries/README.md)
 
-## Developement
+## Development
 
 ### Windows
 
@@ -63,4 +68,27 @@
     * [scripts/linux/format.sh](scripts/linux/format.sh): Scripts to format the code
     * [scripts/linux/setup_flex_bison.sh](scripts/linux/setup_flex_bison.sh): Build scripts to generate flex and bison header/implementation files from [libraries/VAL/src/Parser/pddl+.l](libraries/VAL/src/Parser/pddl+.l) and [libraries/VAL/src/Parser/pddl+.y](libraries/VAL/src/Parser/pddl+.y)
       * Sources files can be found in [libraries/VAL/src/Parser/pddl+.cpp](libraries/VAL/src/Parser/pddl+.cpp) and [libraries/VAL/src/Parser/pddl+.lex.yy.h](libraries/VAL/src/Parser/pddl+.lex.yy.h)
+
+### macOS
+
+  * Requirements:
+    * Xcode packages: cmake make g++ gcc flex bison
+    * Note: easier to simply install Xcode in its entirety; necessary packages automatically downloaded
+
+  * IDE:
+    * [Visual Studio Code](https://code.visualstudio.com/)
+
+  * Scripts
+    * Note: all called (internally as well) build and clean scripts must be run through dos2unix
+    * (scripts/build_macos_dev.sh): script for native macOS build
+      * Binaries can be found in `build/macos64/Release/bin`
+    * (scripts/clean_macos_dev.sh): script for cleaning out built binaries
+
+    * (scripts/linux/setup_flex_bison.sh): build script to generate flex and bison header/implementation files from [libraries/VAL/src/Parser/pddl+.l](libraries/VAL/src/Parser/pddl+.l) and [libraries/VAL/src/Parser/pddl+.y](libraries/VAL/src/Parser/pddl+.y)
+    * Note: flex on macOS currently causing compatibility issues
+      * Do not run setup_flex_bison.sh
+      * Use current Windows-generated flex header file at [libraries/VAL/src/Parser/pddl+.lex.yy.h]
+    * Note: bison on macOS running well
+      * Edit YACC file at [libraries/VAL/src/Parser/pddl+.y] as needed
+      * Run bison command from script (bison pddl+.y -o pddl+.cpp) directly through terminal
 

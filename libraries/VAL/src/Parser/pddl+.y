@@ -1,16 +1,9 @@
- /*
-  PDDL2.1 grammar file for bison.
+// Copyright 2019 - University of Strathclyde, King's College London and Schlumberger Ltd
+// This source code is licensed under the BSD license found in the LICENSE file in the root directory of this source tree.
 
-  $Date: 2009-02-11 17:20:39 $
-  $Revision: 1.5 $
-
-  s.n.cresswell@durham.ac.uk
-  Derek Long
-
-  Srathclyde Planning Group
-  http://planning.cis.ac.uk
+/**
+ * PDDL2.1 grammar file for bison.
  */
-
 
 %start mystartsymbol
 
@@ -378,7 +371,7 @@ c_func_decl :
 |   OPEN_BRAC error CLOSE_BRAC
 	{yyerrok;
 	 log_error(E_FATAL,"Syntax error in functor declaration.");
-	 $$= (int) NULL; }
+	 $$= NULL; }
 ;
 
 c_ntype :

@@ -1,6 +1,10 @@
 #!/bin/bash
 
 BASH=`which bash`
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+BUILD_TARGET=all
+BUILD_CONFIGURATION=Release
 
 remove_image()
 {
@@ -62,7 +66,7 @@ else
 fi
 
 echo "Build using the docker image."
-COMMAND="$BASH $BUILD_SOURCESDIRECTORY/scripts/build/run-docker-image.sh $buildDockerImageTag /bin/bash ./scripts/linux/build.sh all Release"
+COMMAND="$BASH $BUILD_SOURCESDIRECTORY/scripts/build/run-docker-image.sh $buildDockerImageTag /bin/bash ./scripts/linux/build.sh $BUILD_TARGET $BUILD_CONFIGURATION"
 echo $COMMAND
 $COMMAND
 buildStatus=$?
@@ -72,6 +76,19 @@ if [ $buildStatus -ne 0 ]; then
   exit $buildStatus
 else
   echo "Build using the docker image successful."
+fi
+
+echo "Test using the docker image."
+COMMAND="$BASH $BUILD_SOURCESDIRECTORY/scripts/build/run-docker-image.sh $buildDockerImageTag /bin/bash ./scripts/linux/test.sh $BUILD_CONFIGURATION"
+echo $COMMAND
+$COMMAND
+testStatus=$?
+if [ $testStatus -ne 0 ]; then 
+  echo "Test using the docker image failed."
+  remove_image
+  exit $testStatus
+else
+  echo "Test using the docker image successful."
 fi
 
 remove_image

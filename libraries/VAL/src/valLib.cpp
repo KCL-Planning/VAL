@@ -1,3 +1,6 @@
+// Copyright 2019 - University of Strathclyde, King's College London and Schlumberger Ltd
+// This source code is licensed under the BSD license found in the LICENSE file in the root directory of this source tree.
+
 #include "valLib.h"
 #include "AccumulatedDelta.h"
 #include "Action.h"
@@ -303,7 +306,7 @@ unsigned long SimulatorValidator::getLitCode(const char *lit[]) {
       proposition *pr =
           new proposition(p, const_cast< var_symbol_list * >((*i)->getArgs()));
       // MEMORY MANAGEMENT!!!
-      int c = (int)vld->pf.buildLiteral(pr, e);
+      unsigned long c = (unsigned long)vld->pf.buildLiteral(pr, e);
       // cout << "Code " << c << "\n";
       // pr.args = 0;
       return c;
@@ -330,7 +333,7 @@ unsigned long SimulatorValidator::getFunCode(const char *fun[]) {
                  reinterpret_cast< const parameter_symbol_list * >(
                      (*i)->getArgs())));  // Check that this cast will work...
       // Memory management!!
-      int c = (int)vld->fef.buildFuncExp(pr, e);
+      unsigned long c = (unsigned long)vld->fef.buildFuncExp(pr, e);
       // cout << "Code " << c << "\n";
       // pr.setArgs(0);
       return c;

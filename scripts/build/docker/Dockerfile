@@ -14,7 +14,7 @@ RUN apt-get update -y && \
   # install mingw
   mingw-w64 \
   # install zip
-  zip \
+  zip unzip \
   && \
   apt-get clean && \
   rm /var/lib/apt/lists/*_*

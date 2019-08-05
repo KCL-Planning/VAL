@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -279,7 +279,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 79 "pddl+.y" /* yacc.c:355  */
@@ -361,6 +361,8 @@ union YYSTYPE
 
 #line 363 "pddl+.cpp" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -374,7 +376,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 378 "pddl+.cpp" /* yacc.c:358  */
+#line 380 "pddl+.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -2109,19 +2111,19 @@ yyreduce:
         case 2:
 #line 262 "pddl+.y" /* yacc.c:1646  */
     {top_thing= (yyvsp[0].t_domain); current_analysis->the_domain= (yyvsp[0].t_domain);}
-#line 2113 "pddl+.cpp" /* yacc.c:1646  */
+#line 2115 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 263 "pddl+.y" /* yacc.c:1646  */
     {top_thing= (yyvsp[0].t_problem); current_analysis->the_problem= (yyvsp[0].t_problem);}
-#line 2119 "pddl+.cpp" /* yacc.c:1646  */
+#line 2121 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 264 "pddl+.y" /* yacc.c:1646  */
     {top_thing= (yyvsp[0].t_plan); }
-#line 2125 "pddl+.cpp" /* yacc.c:1646  */
+#line 2127 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
@@ -2131,102 +2133,102 @@ yyreduce:
 		yyerrok; log_error(E_FATAL,"Syntax error in domain - no :types section, but types used in definitions.");
 	}
 	}
-#line 2135 "pddl+.cpp" /* yacc.c:1646  */
+#line 2137 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 275 "pddl+.y" /* yacc.c:1646  */
     {yyerrok; (yyval.t_domain)=static_cast<domain*>(NULL);
        	log_error(E_FATAL,"Syntax error in domain"); }
-#line 2142 "pddl+.cpp" /* yacc.c:1646  */
+#line 2144 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 281 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain)= (yyvsp[0].t_domain); (yyval.t_domain)->req= (yyvsp[-1].t_pddl_req_flag);}
-#line 2148 "pddl+.cpp" /* yacc.c:1646  */
+#line 2150 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 282 "pddl+.y" /* yacc.c:1646  */
     {types_defined = true; (yyval.t_domain)= (yyvsp[0].t_domain); (yyval.t_domain)->types= (yyvsp[-1].t_type_list);}
-#line 2154 "pddl+.cpp" /* yacc.c:1646  */
+#line 2156 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 283 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain)= (yyvsp[0].t_domain); (yyval.t_domain)->constants= (yyvsp[-1].t_const_symbol_list);}
-#line 2160 "pddl+.cpp" /* yacc.c:1646  */
+#line 2162 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 284 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain)= (yyvsp[0].t_domain);
                                        (yyval.t_domain)->predicates= (yyvsp[-1].t_pred_decl_list); }
-#line 2167 "pddl+.cpp" /* yacc.c:1646  */
+#line 2169 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 286 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain)= (yyvsp[0].t_domain);
                                        (yyval.t_domain)->functions= (yyvsp[-1].t_func_decl_list); }
-#line 2174 "pddl+.cpp" /* yacc.c:1646  */
+#line 2176 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 288 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain)= (yyvsp[0].t_domain);
    				       (yyval.t_domain)->constraints = (yyvsp[-1].t_con_goal);}
-#line 2181 "pddl+.cpp" /* yacc.c:1646  */
+#line 2183 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 290 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain) = (yyvsp[0].t_domain);}
-#line 2187 "pddl+.cpp" /* yacc.c:1646  */
+#line 2189 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 291 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_domain)= new domain((yyvsp[0].t_structure_store)); }
-#line 2193 "pddl+.cpp" /* yacc.c:1646  */
+#line 2195 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 294 "pddl+.y" /* yacc.c:1646  */
     {(yyval.cp)=(yyvsp[-1].cp);}
-#line 2199 "pddl+.cpp" /* yacc.c:1646  */
+#line 2201 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 298 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_class)=current_analysis->classes_tab.new_symbol_put((yyvsp[0].cp));
        delete [] (yyvsp[0].cp); }
-#line 2206 "pddl+.cpp" /* yacc.c:1646  */
+#line 2208 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 301 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_class) = current_analysis->classes_tab.symbol_get((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 2212 "pddl+.cpp" /* yacc.c:1646  */
+#line 2214 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 303 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_dummy) = 0;}
-#line 2218 "pddl+.cpp" /* yacc.c:1646  */
+#line 2220 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 305 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_dummy) = 0;}
-#line 2224 "pddl+.cpp" /* yacc.c:1646  */
+#line 2226 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 306 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_dummy) = 0;}
-#line 2230 "pddl+.cpp" /* yacc.c:1646  */
+#line 2232 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
@@ -2237,7 +2239,7 @@ yyreduce:
 	current_analysis->req |= (yyvsp[-1].t_pddl_req_flag);
 	(yyval.t_pddl_req_flag)=(yyvsp[-1].t_pddl_req_flag);
     }
-#line 2241 "pddl+.cpp" /* yacc.c:1646  */
+#line 2243 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
@@ -2245,38 +2247,38 @@ yyreduce:
     {yyerrok;
        log_error(E_FATAL,"Syntax error in requirements declaration.");
        (yyval.t_pddl_req_flag)= 0; }
-#line 2249 "pddl+.cpp" /* yacc.c:1646  */
+#line 2251 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 324 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_pddl_req_flag)= (yyvsp[-1].t_pddl_req_flag) | (yyvsp[0].t_pddl_req_flag); }
-#line 2255 "pddl+.cpp" /* yacc.c:1646  */
+#line 2257 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 325 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_pddl_req_flag)= 0; }
-#line 2261 "pddl+.cpp" /* yacc.c:1646  */
+#line 2263 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 331 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pred_decl_list)=(yyvsp[0].t_pred_decl_list); (yyval.t_pred_decl_list)->push_front((yyvsp[-1].t_pred_decl));}
-#line 2267 "pddl+.cpp" /* yacc.c:1646  */
+#line 2269 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
 #line 333 "pddl+.y" /* yacc.c:1646  */
     {  (yyval.t_pred_decl_list)=new pred_decl_list;
            (yyval.t_pred_decl_list)->push_front((yyvsp[0].t_pred_decl)); }
-#line 2274 "pddl+.cpp" /* yacc.c:1646  */
+#line 2276 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 338 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pred_decl)= new pred_decl((yyvsp[-2].t_pred_symbol),(yyvsp[-1].t_var_symbol_list),current_analysis->var_tab_stack.pop());}
-#line 2280 "pddl+.cpp" /* yacc.c:1646  */
+#line 2282 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
@@ -2285,7 +2287,7 @@ yyreduce:
         // hope someone makes this error someday
         log_error(E_FATAL,"Syntax error in predicate declaration.");
 	(yyval.t_pred_decl)= static_cast<pred_decl*>(NULL); }
-#line 2289 "pddl+.cpp" /* yacc.c:1646  */
+#line 2291 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -2294,64 +2296,64 @@ yyreduce:
            current_analysis->var_tab_stack.push(
            				current_analysis->buildPredTab());
            delete [] (yyvsp[0].cp); }
-#line 2298 "pddl+.cpp" /* yacc.c:1646  */
+#line 2300 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 355 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_pred_symbol)=current_analysis->pred_tab.symbol_ref("=");
 	      requires(E_EQUALITY); }
-#line 2305 "pddl+.cpp" /* yacc.c:1646  */
+#line 2307 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 357 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_pred_symbol)=current_analysis->pred_tab.symbol_get((yyvsp[0].cp)); delete [] (yyvsp[0].cp); }
-#line 2311 "pddl+.cpp" /* yacc.c:1646  */
+#line 2313 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 365 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_pred_symbol)=current_analysis->pred_tab.symbol_get((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 2317 "pddl+.cpp" /* yacc.c:1646  */
+#line 2319 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 371 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_func_decl_list)=(yyvsp[-1].t_func_decl_list); (yyval.t_func_decl_list)->push_back((yyvsp[0].t_func_decl));}
-#line 2323 "pddl+.cpp" /* yacc.c:1646  */
+#line 2325 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 372 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_decl_list)=new func_decl_list; }
-#line 2329 "pddl+.cpp" /* yacc.c:1646  */
+#line 2331 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 377 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_func_decl)= new func_decl((yyvsp[-3].t_func_symbol),(yyvsp[-2].t_var_symbol_list),current_analysis->var_tab_stack.pop());}
-#line 2335 "pddl+.cpp" /* yacc.c:1646  */
+#line 2337 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 379 "pddl+.y" /* yacc.c:1646  */
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in functor declaration.");
-	 (yyval.t_func_decl)= (int) NULL; }
-#line 2343 "pddl+.cpp" /* yacc.c:1646  */
+	 (yyval.t_func_decl)= NULL; }
+#line 2345 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 385 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_dummy) = (int) NULL;}
-#line 2349 "pddl+.cpp" /* yacc.c:1646  */
+#line 2351 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 385 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_dummy)= (int) NULL;}
-#line 2355 "pddl+.cpp" /* yacc.c:1646  */
+#line 2357 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
@@ -2360,7 +2362,7 @@ yyreduce:
            current_analysis->var_tab_stack.push(
            		current_analysis->buildFuncTab());
            delete [] (yyvsp[0].cp); }
-#line 2364 "pddl+.cpp" /* yacc.c:1646  */
+#line 2366 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
@@ -2373,7 +2375,7 @@ yyreduce:
       requires(E_TYPING);
       types_used = true;
    }
-#line 2377 "pddl+.cpp" /* yacc.c:1646  */
+#line 2379 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
@@ -2386,7 +2388,7 @@ yyreduce:
       requires(E_TYPING);
       types_used = true;
    }
-#line 2390 "pddl+.cpp" /* yacc.c:1646  */
+#line 2392 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
@@ -2394,7 +2396,7 @@ yyreduce:
     {
        (yyval.t_var_symbol_list)= (yyvsp[0].t_var_symbol_list);
    }
-#line 2398 "pddl+.cpp" /* yacc.c:1646  */
+#line 2400 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
@@ -2405,25 +2407,25 @@ yyreduce:
       (yyval.t_var_symbol_list)->splice((yyval.t_var_symbol_list)->end(),*(yyvsp[0].t_var_symbol_list));   /* Join lists */
       delete (yyvsp[0].t_var_symbol_list);                   /* Delete (now empty) list */
    }
-#line 2409 "pddl+.cpp" /* yacc.c:1646  */
+#line 2411 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 432 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_var_symbol_list) = new var_symbol_list;}
-#line 2415 "pddl+.cpp" /* yacc.c:1646  */
+#line 2417 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 440 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_var_symbol_list)=(yyvsp[0].t_var_symbol_list); (yyvsp[0].t_var_symbol_list)->push_front((yyvsp[-1].t_var_symbol)); }
-#line 2421 "pddl+.cpp" /* yacc.c:1646  */
+#line 2423 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
 #line 441 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_var_symbol_list)= new var_symbol_list; }
-#line 2427 "pddl+.cpp" /* yacc.c:1646  */
+#line 2429 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
@@ -2436,7 +2438,7 @@ yyreduce:
       requires(E_TYPING);
       types_used = true;
    }
-#line 2440 "pddl+.cpp" /* yacc.c:1646  */
+#line 2442 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
@@ -2449,37 +2451,37 @@ yyreduce:
       requires(E_TYPING);
       types_used = true;
    }
-#line 2453 "pddl+.cpp" /* yacc.c:1646  */
+#line 2455 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 466 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)= (yyvsp[0].t_const_symbol_list);}
-#line 2459 "pddl+.cpp" /* yacc.c:1646  */
+#line 2461 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 471 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)=(yyvsp[0].t_const_symbol_list); (yyvsp[0].t_const_symbol_list)->push_front((yyvsp[-1].t_const_symbol));}
-#line 2465 "pddl+.cpp" /* yacc.c:1646  */
+#line 2467 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 472 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)=new const_symbol_list;}
-#line 2471 "pddl+.cpp" /* yacc.c:1646  */
+#line 2473 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 476 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)=(yyvsp[0].t_const_symbol_list); (yyvsp[0].t_const_symbol_list)->push_front((yyvsp[-1].t_const_symbol));}
-#line 2477 "pddl+.cpp" /* yacc.c:1646  */
+#line 2479 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 477 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)=new const_symbol_list;}
-#line 2483 "pddl+.cpp" /* yacc.c:1646  */
+#line 2485 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
@@ -2490,7 +2492,7 @@ yyreduce:
        (yyval.t_type_list)->splice((yyval.t_type_list)->end(),*(yyvsp[0].t_type_list)); /* Join lists */
        delete (yyvsp[0].t_type_list);                   /* Delete (now empty) list */
    }
-#line 2494 "pddl+.cpp" /* yacc.c:1646  */
+#line 2496 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
@@ -2502,97 +2504,97 @@ yyreduce:
        (yyval.t_type_list)->splice((yyvsp[-3].t_type_list)->end(),*(yyvsp[0].t_type_list));
        delete (yyvsp[0].t_type_list);
    }
-#line 2506 "pddl+.cpp" /* yacc.c:1646  */
+#line 2508 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 502 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_type_list)= (yyvsp[0].t_type_list); }
-#line 2512 "pddl+.cpp" /* yacc.c:1646  */
+#line 2514 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 508 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_parameter_symbol_list)=(yyvsp[-1].t_parameter_symbol_list); (yyval.t_parameter_symbol_list)->push_back((yyvsp[0].t_const_symbol)); }
-#line 2518 "pddl+.cpp" /* yacc.c:1646  */
+#line 2520 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 510 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_parameter_symbol_list)=(yyvsp[-2].t_parameter_symbol_list); (yyval.t_parameter_symbol_list)->push_back((yyvsp[0].t_var_symbol)); }
-#line 2524 "pddl+.cpp" /* yacc.c:1646  */
+#line 2526 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 511 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_parameter_symbol_list)= new parameter_symbol_list;}
-#line 2530 "pddl+.cpp" /* yacc.c:1646  */
+#line 2532 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
 #line 518 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_var_symbol)= current_analysis->var_tab_stack.top()->symbol_put((yyvsp[0].cp)); delete [] (yyvsp[0].cp); }
-#line 2536 "pddl+.cpp" /* yacc.c:1646  */
+#line 2538 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
 #line 524 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_var_symbol)= current_analysis->var_tab_stack.symbol_get((yyvsp[0].cp)); delete [] (yyvsp[0].cp); }
-#line 2542 "pddl+.cpp" /* yacc.c:1646  */
+#line 2544 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
 #line 528 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_const_symbol)= current_analysis->const_tab.symbol_get((yyvsp[0].cp)); delete [] (yyvsp[0].cp); }
-#line 2548 "pddl+.cpp" /* yacc.c:1646  */
+#line 2550 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 532 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_const_symbol)= current_analysis->const_tab.new_symbol_put((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 2554 "pddl+.cpp" /* yacc.c:1646  */
+#line 2556 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
 #line 537 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_type_list)= (yyvsp[-1].t_type_list); }
-#line 2560 "pddl+.cpp" /* yacc.c:1646  */
+#line 2562 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
 #line 542 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_type)= current_analysis->pddl_type_tab.symbol_ref((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 2566 "pddl+.cpp" /* yacc.c:1646  */
+#line 2568 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
 #line 549 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_type)= current_analysis->pddl_type_tab.symbol_ref((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 2572 "pddl+.cpp" /* yacc.c:1646  */
+#line 2574 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
 #line 554 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_type_list)= (yyvsp[-1].t_type_list); (yyval.t_type_list)->push_back((yyvsp[0].t_type));}
-#line 2578 "pddl+.cpp" /* yacc.c:1646  */
+#line 2580 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
 #line 555 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_type_list)= new pddl_type_list;}
-#line 2584 "pddl+.cpp" /* yacc.c:1646  */
+#line 2586 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
 #line 560 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_type_list)= (yyvsp[-1].t_type_list); (yyval.t_type_list)->push_back((yyvsp[0].t_type));}
-#line 2590 "pddl+.cpp" /* yacc.c:1646  */
+#line 2592 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
 #line 561 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_type_list)= new pddl_type_list;}
-#line 2596 "pddl+.cpp" /* yacc.c:1646  */
+#line 2598 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
@@ -2609,181 +2611,181 @@ yyreduce:
           	requires(E_NFLUENTS);
           }
 	}
-#line 2613 "pddl+.cpp" /* yacc.c:1646  */
+#line 2615 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
 #line 579 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->add_effects.push_back((yyvsp[0].t_simple_effect)); }
-#line 2619 "pddl+.cpp" /* yacc.c:1646  */
+#line 2621 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
 #line 581 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->del_effects.push_back((yyvsp[0].t_simple_effect)); }
-#line 2625 "pddl+.cpp" /* yacc.c:1646  */
+#line 2627 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
 #line 583 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->timed_effects.push_back((yyvsp[0].t_timed_effect)); }
-#line 2631 "pddl+.cpp" /* yacc.c:1646  */
+#line 2633 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
 #line 585 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists) = (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->supplied_effects.push_back((yyvsp[0].t_supplied_effect)); }
-#line 2637 "pddl+.cpp" /* yacc.c:1646  */
+#line 2639 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
 #line 587 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)= new effect_lists;}
-#line 2643 "pddl+.cpp" /* yacc.c:1646  */
+#line 2645 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
 #line 592 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_supplied_effect) = (yyvsp[0].t_supplied_effect); (yyvsp[0].t_supplied_effect)->sup = (yyvsp[-1].t_goal); (yyvsp[0].t_supplied_effect)->name = current_analysis->op_tab.symbol_put((yyvsp[-2].cp));
 	delete [] (yyvsp[-2].cp); requires(E_SUPPLYDEMAND);}
-#line 2650 "pddl+.cpp" /* yacc.c:1646  */
+#line 2652 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
 #line 598 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_supplied_effect) = new supplied_effect(0,(yyvsp[-3].t_goal),(yyvsp[-2].t_num_expression)->double_value(),(yyvsp[-1].t_effect_lists)); delete (yyvsp[-2].t_num_expression);}
-#line 2656 "pddl+.cpp" /* yacc.c:1646  */
+#line 2658 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
 #line 600 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_supplied_effect) = new supplied_effect(0,0,(yyvsp[-2].t_num_expression)->double_value(),(yyvsp[-1].t_effect_lists)); delete (yyvsp[-2].t_num_expression);}
-#line 2662 "pddl+.cpp" /* yacc.c:1646  */
+#line 2664 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
 #line 606 "pddl+.y" /* yacc.c:1646  */
     { requires(E_TIMED_INITIAL_LITERALS);
    		(yyval.t_timed_effect)=new timed_initial_literal((yyvsp[-1].t_effect_lists),(yyvsp[-2].fval));}
-#line 2669 "pddl+.cpp" /* yacc.c:1646  */
+#line 2671 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
 #line 611 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=(yyvsp[0].t_effect_lists); (yyval.t_effect_lists)->append_effects((yyvsp[-1].t_effect_lists)); delete (yyvsp[-1].t_effect_lists);}
-#line 2675 "pddl+.cpp" /* yacc.c:1646  */
+#line 2677 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 82:
 #line 612 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=(yyvsp[0].t_effect_lists); (yyval.t_effect_lists)->cond_effects.push_front((yyvsp[-1].t_cond_effect));
                                       requires(E_COND_EFFS);}
-#line 2682 "pddl+.cpp" /* yacc.c:1646  */
+#line 2684 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 83:
 #line 614 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=(yyvsp[0].t_effect_lists); (yyval.t_effect_lists)->forall_effects.push_front((yyvsp[-1].t_forall_effect));
                                       requires(E_COND_EFFS);}
-#line 2689 "pddl+.cpp" /* yacc.c:1646  */
+#line 2691 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 84:
 #line 616 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists(); }
-#line 2695 "pddl+.cpp" /* yacc.c:1646  */
+#line 2697 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 85:
 #line 625 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[0].t_effect_lists);}
-#line 2701 "pddl+.cpp" /* yacc.c:1646  */
+#line 2703 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 86:
 #line 626 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->add_effects.push_front((yyvsp[0].t_simple_effect));}
-#line 2707 "pddl+.cpp" /* yacc.c:1646  */
+#line 2709 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 87:
 #line 627 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->del_effects.push_front((yyvsp[0].t_simple_effect));}
-#line 2713 "pddl+.cpp" /* yacc.c:1646  */
+#line 2715 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 88:
 #line 628 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->cond_effects.push_front((yyvsp[0].t_cond_effect));}
-#line 2719 "pddl+.cpp" /* yacc.c:1646  */
+#line 2721 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 89:
 #line 629 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->forall_effects.push_front((yyvsp[0].t_forall_effect));}
-#line 2725 "pddl+.cpp" /* yacc.c:1646  */
+#line 2727 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 90:
 #line 633 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists);}
-#line 2731 "pddl+.cpp" /* yacc.c:1646  */
+#line 2733 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 91:
 #line 634 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[0].t_effect_lists);}
-#line 2737 "pddl+.cpp" /* yacc.c:1646  */
+#line 2739 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 92:
 #line 639 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->del_effects.push_front((yyvsp[0].t_simple_effect));}
-#line 2743 "pddl+.cpp" /* yacc.c:1646  */
+#line 2745 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 93:
 #line 641 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->add_effects.push_front((yyvsp[0].t_simple_effect));}
-#line 2749 "pddl+.cpp" /* yacc.c:1646  */
+#line 2751 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 94:
 #line 643 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->assign_effects.push_front((yyvsp[0].t_assignment));
          requires(E_NFLUENTS);}
-#line 2756 "pddl+.cpp" /* yacc.c:1646  */
+#line 2758 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 95:
 #line 649 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->del_effects.push_back((yyvsp[0].t_simple_effect));}
-#line 2762 "pddl+.cpp" /* yacc.c:1646  */
+#line 2764 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 96:
 #line 650 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->add_effects.push_back((yyvsp[0].t_simple_effect));}
-#line 2768 "pddl+.cpp" /* yacc.c:1646  */
+#line 2770 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 97:
 #line 651 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->assign_effects.push_back((yyvsp[0].t_assignment));
                                      requires(E_NFLUENTS); }
-#line 2775 "pddl+.cpp" /* yacc.c:1646  */
+#line 2777 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 98:
 #line 653 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)= new effect_lists; }
-#line 2781 "pddl+.cpp" /* yacc.c:1646  */
+#line 2783 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 99:
 #line 658 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); }
-#line 2787 "pddl+.cpp" /* yacc.c:1646  */
+#line 2789 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 100:
@@ -2791,13 +2793,13 @@ yyreduce:
     {yyerrok; (yyval.t_effect_lists)=NULL;
 	 log_error(E_FATAL,"Syntax error in (and ...)");
 	}
-#line 2795 "pddl+.cpp" /* yacc.c:1646  */
+#line 2797 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 101:
 #line 668 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); }
-#line 2801 "pddl+.cpp" /* yacc.c:1646  */
+#line 2803 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 102:
@@ -2806,7 +2808,7 @@ yyreduce:
           (yyval.t_effect_lists)->forall_effects.push_back(
 	       new forall_effect((yyvsp[-1].t_effect_lists), (yyvsp[-3].t_var_symbol_list), current_analysis->var_tab_stack.pop()));
           requires(E_COND_EFFS);}
-#line 2810 "pddl+.cpp" /* yacc.c:1646  */
+#line 2812 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 103:
@@ -2815,7 +2817,7 @@ yyreduce:
 	  (yyval.t_effect_lists)->cond_effects.push_back(
 	       new cond_effect((yyvsp[-2].t_goal),(yyvsp[-1].t_effect_lists)));
           requires(E_COND_EFFS); }
-#line 2819 "pddl+.cpp" /* yacc.c:1646  */
+#line 2821 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 104:
@@ -2824,14 +2826,14 @@ yyreduce:
 	  (yyval.t_effect_lists)->cond_assign_effects.push_back(
 	       new cond_effect((yyvsp[-2].t_goal),(yyvsp[-1].t_effect_lists)));
           requires(E_COND_EFFS); }
-#line 2828 "pddl+.cpp" /* yacc.c:1646  */
+#line 2830 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 105:
 #line 688 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=new effect_lists;
           (yyval.t_effect_lists)->timed_effects.push_back((yyvsp[0].t_timed_effect)); }
-#line 2835 "pddl+.cpp" /* yacc.c:1646  */
+#line 2837 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 106:
@@ -2839,31 +2841,31 @@ yyreduce:
     { (yyval.t_effect_lists)= new effect_lists;
 	  (yyval.t_effect_lists)->assign_effects.push_front((yyvsp[0].t_assignment));
           requires(E_NFLUENTS); }
-#line 2843 "pddl+.cpp" /* yacc.c:1646  */
+#line 2845 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 107:
 #line 697 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); (yyvsp[-1].t_effect_lists)->append_effects((yyvsp[0].t_effect_lists)); delete (yyvsp[0].t_effect_lists); }
-#line 2849 "pddl+.cpp" /* yacc.c:1646  */
+#line 2851 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 108:
 #line 698 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)= new effect_lists; }
-#line 2855 "pddl+.cpp" /* yacc.c:1646  */
+#line 2857 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 109:
 #line 704 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_timed_effect)=new timed_effect((yyvsp[-1].t_effect_lists),E_AT_START);}
-#line 2861 "pddl+.cpp" /* yacc.c:1646  */
+#line 2863 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 110:
 #line 706 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_timed_effect)=new timed_effect((yyvsp[-1].t_effect_lists),E_AT_END);}
-#line 2867 "pddl+.cpp" /* yacc.c:1646  */
+#line 2869 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 111:
@@ -2871,7 +2873,7 @@ yyreduce:
     {(yyval.t_timed_effect)=new timed_effect(new effect_lists,E_CONTINUOUS);
          (yyval.t_timed_effect)->effs->assign_effects.push_front(
 	     new assignment((yyvsp[-2].t_func_term),E_INCREASE,(yyvsp[-1].t_expression))); }
-#line 2875 "pddl+.cpp" /* yacc.c:1646  */
+#line 2877 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 112:
@@ -2879,14 +2881,14 @@ yyreduce:
     {(yyval.t_timed_effect)=new timed_effect(new effect_lists,E_CONTINUOUS);
          (yyval.t_timed_effect)->effs->assign_effects.push_front(
 	     new assignment((yyvsp[-2].t_func_term),E_DECREASE,(yyvsp[-1].t_expression))); }
-#line 2883 "pddl+.cpp" /* yacc.c:1646  */
+#line 2885 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 113:
 #line 716 "pddl+.y" /* yacc.c:1646  */
     {yyerrok; (yyval.t_timed_effect)=NULL;
 	log_error(E_FATAL,"Syntax error in timed effect"); }
-#line 2890 "pddl+.cpp" /* yacc.c:1646  */
+#line 2892 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 114:
@@ -2894,7 +2896,7 @@ yyreduce:
     {(yyval.t_timed_effect)=new timed_effect(new effect_lists,E_CONTINUOUS);
          (yyval.t_timed_effect)->effs->assign_effects.push_front(
 	     new assignment((yyvsp[-2].t_func_term),E_INCREASE,(yyvsp[-1].t_expression))); }
-#line 2898 "pddl+.cpp" /* yacc.c:1646  */
+#line 2900 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 115:
@@ -2902,20 +2904,20 @@ yyreduce:
     {(yyval.t_timed_effect)=new timed_effect(new effect_lists,E_CONTINUOUS);
          (yyval.t_timed_effect)->effs->assign_effects.push_front(
 	     new assignment((yyvsp[-2].t_func_term),E_DECREASE,(yyvsp[-1].t_expression))); }
-#line 2906 "pddl+.cpp" /* yacc.c:1646  */
+#line 2908 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 116:
 #line 730 "pddl+.y" /* yacc.c:1646  */
     {yyerrok; (yyval.t_timed_effect)=NULL;
 	log_error(E_FATAL,"Syntax error in conditional continuous effect"); }
-#line 2913 "pddl+.cpp" /* yacc.c:1646  */
+#line 2915 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 117:
 #line 736 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); }
-#line 2919 "pddl+.cpp" /* yacc.c:1646  */
+#line 2921 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 118:
@@ -2924,7 +2926,7 @@ yyreduce:
           (yyval.t_effect_lists)->forall_effects.push_back(
 	       new forall_effect((yyvsp[-1].t_effect_lists), (yyvsp[-3].t_var_symbol_list), current_analysis->var_tab_stack.pop()));
           requires(E_COND_EFFS);}
-#line 2928 "pddl+.cpp" /* yacc.c:1646  */
+#line 2930 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 119:
@@ -2933,112 +2935,112 @@ yyreduce:
 	  (yyval.t_effect_lists)->cond_assign_effects.push_back(
 	       new cond_effect((yyvsp[-2].t_goal),(yyvsp[-1].t_effect_lists)));
           requires(E_COND_EFFS); }
-#line 2937 "pddl+.cpp" /* yacc.c:1646  */
+#line 2939 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 120:
 #line 751 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=new effect_lists;
           (yyval.t_effect_lists)->timed_effects.push_back((yyvsp[0].t_timed_effect)); }
-#line 2944 "pddl+.cpp" /* yacc.c:1646  */
+#line 2946 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 121:
 #line 756 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); (yyvsp[-1].t_effect_lists)->append_effects((yyvsp[0].t_effect_lists)); delete (yyvsp[0].t_effect_lists); }
-#line 2950 "pddl+.cpp" /* yacc.c:1646  */
+#line 2952 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 122:
 #line 757 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)= new effect_lists; }
-#line 2956 "pddl+.cpp" /* yacc.c:1646  */
+#line 2958 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 123:
 #line 761 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists);}
-#line 2962 "pddl+.cpp" /* yacc.c:1646  */
+#line 2964 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 124:
 #line 762 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[0].t_effect_lists);}
-#line 2968 "pddl+.cpp" /* yacc.c:1646  */
+#line 2970 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 125:
 #line 767 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->del_effects.push_front((yyvsp[0].t_simple_effect));}
-#line 2974 "pddl+.cpp" /* yacc.c:1646  */
+#line 2976 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 126:
 #line 769 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->add_effects.push_front((yyvsp[0].t_simple_effect));}
-#line 2980 "pddl+.cpp" /* yacc.c:1646  */
+#line 2982 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 127:
 #line 771 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=new effect_lists; (yyval.t_effect_lists)->assign_effects.push_front((yyvsp[0].t_assignment));
          requires(E_NFLUENTS);}
-#line 2987 "pddl+.cpp" /* yacc.c:1646  */
+#line 2989 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 128:
 #line 777 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->del_effects.push_back((yyvsp[0].t_simple_effect));}
-#line 2993 "pddl+.cpp" /* yacc.c:1646  */
+#line 2995 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 129:
 #line 778 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->add_effects.push_back((yyvsp[0].t_simple_effect));}
-#line 2999 "pddl+.cpp" /* yacc.c:1646  */
+#line 3001 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 130:
 #line 779 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)= (yyvsp[-1].t_effect_lists); (yyval.t_effect_lists)->assign_effects.push_back((yyvsp[0].t_assignment));
                                      requires(E_NFLUENTS); }
-#line 3006 "pddl+.cpp" /* yacc.c:1646  */
+#line 3008 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 131:
 #line 781 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)= new effect_lists; }
-#line 3012 "pddl+.cpp" /* yacc.c:1646  */
+#line 3014 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 132:
 #line 787 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_ASSIGN,(yyvsp[-1].t_expression)); }
-#line 3018 "pddl+.cpp" /* yacc.c:1646  */
+#line 3020 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 133:
 #line 789 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_INCREASE,(yyvsp[-1].t_expression)); }
-#line 3024 "pddl+.cpp" /* yacc.c:1646  */
+#line 3026 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 134:
 #line 791 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_DECREASE,(yyvsp[-1].t_expression)); }
-#line 3030 "pddl+.cpp" /* yacc.c:1646  */
+#line 3032 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 135:
 #line 793 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_SCALE_UP,(yyvsp[-1].t_expression)); }
-#line 3036 "pddl+.cpp" /* yacc.c:1646  */
+#line 3038 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 136:
 #line 795 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_SCALE_DOWN,(yyvsp[-1].t_expression)); }
-#line 3042 "pddl+.cpp" /* yacc.c:1646  */
+#line 3044 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 137:
@@ -3048,7 +3050,7 @@ yyreduce:
          (yyval.t_effect_lists)->timed_effects.push_front(te);
          te->effs->assign_effects.push_front(
 	     new assignment((yyvsp[-2].t_func_term),E_INCREASE,(yyvsp[-1].t_expression))); }
-#line 3052 "pddl+.cpp" /* yacc.c:1646  */
+#line 3054 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 138:
@@ -3058,569 +3060,569 @@ yyreduce:
          (yyval.t_effect_lists)->timed_effects.push_front(te);
          te->effs->assign_effects.push_front(
 	     new assignment((yyvsp[-2].t_func_term),E_DECREASE,(yyvsp[-1].t_expression))); }
-#line 3062 "pddl+.cpp" /* yacc.c:1646  */
+#line 3064 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 139:
 #line 812 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists) = (yyvsp[-1].t_effect_lists);}
-#line 3068 "pddl+.cpp" /* yacc.c:1646  */
+#line 3070 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 140:
 #line 816 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists); (yyvsp[-1].t_effect_lists)->append_effects((yyvsp[0].t_effect_lists)); delete (yyvsp[0].t_effect_lists); }
-#line 3074 "pddl+.cpp" /* yacc.c:1646  */
+#line 3076 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 141:
 #line 817 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_effect_lists)= new effect_lists; }
-#line 3080 "pddl+.cpp" /* yacc.c:1646  */
+#line 3082 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 142:
 #line 821 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression)= (yyvsp[0].t_expression);}
-#line 3086 "pddl+.cpp" /* yacc.c:1646  */
+#line 3088 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 143:
 #line 822 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression)= new special_val_expr(E_DURATION_VAR);
                     requires( E_DURATION_INEQUALITIES );}
-#line 3093 "pddl+.cpp" /* yacc.c:1646  */
+#line 3095 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 144:
 #line 824 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)=(yyvsp[0].t_num_expression); }
-#line 3099 "pddl+.cpp" /* yacc.c:1646  */
+#line 3101 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 145:
 #line 825 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= (yyvsp[0].t_func_term); }
-#line 3105 "pddl+.cpp" /* yacc.c:1646  */
+#line 3107 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 146:
 #line 826 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression) = current_analysis->getControlParam((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 3111 "pddl+.cpp" /* yacc.c:1646  */
+#line 3113 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 147:
 #line 831 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new plus_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); }
-#line 3117 "pddl+.cpp" /* yacc.c:1646  */
+#line 3119 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 148:
 #line 833 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new minus_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); }
-#line 3123 "pddl+.cpp" /* yacc.c:1646  */
+#line 3125 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 149:
 #line 835 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new mul_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); }
-#line 3129 "pddl+.cpp" /* yacc.c:1646  */
+#line 3131 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 150:
 #line 837 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new div_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); }
-#line 3135 "pddl+.cpp" /* yacc.c:1646  */
+#line 3137 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 151:
 #line 842 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal)= new conj_goal((yyvsp[-1].t_goal_list)); }
-#line 3141 "pddl+.cpp" /* yacc.c:1646  */
+#line 3143 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 152:
 #line 844 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal)= new timed_goal(new comparison((yyvsp[-4].t_comparison_op),
         			new special_val_expr(E_DURATION_VAR),(yyvsp[-1].t_expression)),E_AT_START); }
-#line 3148 "pddl+.cpp" /* yacc.c:1646  */
+#line 3150 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 153:
 #line 847 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal) = new timed_goal(new comparison((yyvsp[-5].t_comparison_op),
 					new special_val_expr(E_DURATION_VAR),(yyvsp[-2].t_expression)),E_AT_START);}
-#line 3155 "pddl+.cpp" /* yacc.c:1646  */
+#line 3157 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 154:
 #line 850 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal) = new timed_goal(new comparison((yyvsp[-5].t_comparison_op),
 					new special_val_expr(E_DURATION_VAR),(yyvsp[-2].t_expression)),E_AT_END);}
-#line 3162 "pddl+.cpp" /* yacc.c:1646  */
+#line 3164 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 155:
 #line 855 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_comparison_op)= E_LESSEQ; requires(E_DURATION_INEQUALITIES);}
-#line 3168 "pddl+.cpp" /* yacc.c:1646  */
+#line 3170 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 156:
 #line 856 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_comparison_op)= E_GREATEQ; requires(E_DURATION_INEQUALITIES);}
-#line 3174 "pddl+.cpp" /* yacc.c:1646  */
+#line 3176 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 157:
 #line 857 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_comparison_op)= E_EQUALS; }
-#line 3180 "pddl+.cpp" /* yacc.c:1646  */
+#line 3182 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 158:
 #line 865 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression)= (yyvsp[0].t_expression); }
-#line 3186 "pddl+.cpp" /* yacc.c:1646  */
+#line 3188 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 159:
 #line 870 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal_list)=(yyvsp[-1].t_goal_list); (yyval.t_goal_list)->push_back((yyvsp[0].t_goal)); }
-#line 3192 "pddl+.cpp" /* yacc.c:1646  */
+#line 3194 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 160:
 #line 872 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal_list)= new goal_list; }
-#line 3198 "pddl+.cpp" /* yacc.c:1646  */
+#line 3200 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 161:
 #line 877 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_simple_effect)= new simple_effect((yyvsp[-1].t_proposition)); }
-#line 3204 "pddl+.cpp" /* yacc.c:1646  */
+#line 3206 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 162:
 #line 882 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_simple_effect)= new simple_effect((yyvsp[0].t_proposition)); }
-#line 3210 "pddl+.cpp" /* yacc.c:1646  */
+#line 3212 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 163:
 #line 889 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_simple_effect)= new simple_effect((yyvsp[-1].t_proposition)); }
-#line 3216 "pddl+.cpp" /* yacc.c:1646  */
+#line 3218 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 164:
 #line 894 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_simple_effect)= new simple_effect((yyvsp[0].t_proposition)); }
-#line 3222 "pddl+.cpp" /* yacc.c:1646  */
+#line 3224 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 165:
 #line 899 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_forall_effect)= new forall_effect((yyvsp[-1].t_effect_lists), (yyvsp[-3].t_var_symbol_list), current_analysis->var_tab_stack.pop());}
-#line 3228 "pddl+.cpp" /* yacc.c:1646  */
+#line 3230 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 166:
 #line 904 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_cond_effect)= new cond_effect((yyvsp[-2].t_goal),(yyvsp[-1].t_effect_lists)); }
-#line 3234 "pddl+.cpp" /* yacc.c:1646  */
+#line 3236 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 167:
 #line 909 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_ASSIGN,(yyvsp[-1].t_expression)); }
-#line 3240 "pddl+.cpp" /* yacc.c:1646  */
+#line 3242 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 168:
 #line 911 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_INCREASE,(yyvsp[-1].t_expression)); }
-#line 3246 "pddl+.cpp" /* yacc.c:1646  */
+#line 3248 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 169:
 #line 913 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_DECREASE,(yyvsp[-1].t_expression)); }
-#line 3252 "pddl+.cpp" /* yacc.c:1646  */
+#line 3254 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 170:
 #line 915 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_SCALE_UP,(yyvsp[-1].t_expression)); }
-#line 3258 "pddl+.cpp" /* yacc.c:1646  */
+#line 3260 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 171:
 #line 917 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_assignment)= new assignment((yyvsp[-2].t_func_term),E_SCALE_DOWN,(yyvsp[-1].t_expression)); }
-#line 3264 "pddl+.cpp" /* yacc.c:1646  */
+#line 3266 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 172:
 #line 922 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new uminus_expression((yyvsp[-1].t_expression)); requires(E_NFLUENTS); }
-#line 3270 "pddl+.cpp" /* yacc.c:1646  */
+#line 3272 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 173:
 #line 924 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new plus_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); requires(E_NFLUENTS); }
-#line 3276 "pddl+.cpp" /* yacc.c:1646  */
+#line 3278 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 174:
 #line 926 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new minus_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); requires(E_NFLUENTS); }
-#line 3282 "pddl+.cpp" /* yacc.c:1646  */
+#line 3284 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 175:
 #line 928 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new mul_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); requires(E_NFLUENTS); }
-#line 3288 "pddl+.cpp" /* yacc.c:1646  */
+#line 3290 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 176:
 #line 930 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new div_expression((yyvsp[-2].t_expression),(yyvsp[-1].t_expression)); requires(E_NFLUENTS); }
-#line 3294 "pddl+.cpp" /* yacc.c:1646  */
+#line 3296 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 177:
 #line 931 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)=(yyvsp[0].t_num_expression); }
-#line 3300 "pddl+.cpp" /* yacc.c:1646  */
+#line 3302 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 178:
 #line 932 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression) = current_analysis->getControlParam((yyvsp[0].cp)); delete [] (yyvsp[0].cp);}
-#line 3306 "pddl+.cpp" /* yacc.c:1646  */
+#line 3308 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 179:
 #line 933 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= (yyvsp[0].t_func_term); requires(E_NFLUENTS); }
-#line 3312 "pddl+.cpp" /* yacc.c:1646  */
+#line 3314 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 180:
 #line 938 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new mul_expression(new special_val_expr(E_HASHT),(yyvsp[-1].t_expression)); }
-#line 3318 "pddl+.cpp" /* yacc.c:1646  */
+#line 3320 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 181:
 #line 940 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new mul_expression((yyvsp[-2].t_expression), new special_val_expr(E_HASHT)); }
-#line 3324 "pddl+.cpp" /* yacc.c:1646  */
+#line 3326 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 182:
 #line 942 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new special_val_expr(E_HASHT); }
-#line 3330 "pddl+.cpp" /* yacc.c:1646  */
+#line 3332 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 183:
 #line 947 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_num_expression)=new int_expression((yyvsp[0].ival));   }
-#line 3336 "pddl+.cpp" /* yacc.c:1646  */
+#line 3338 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 184:
 #line 948 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_num_expression)=new float_expression((yyvsp[0].fval)); }
-#line 3342 "pddl+.cpp" /* yacc.c:1646  */
+#line 3344 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 185:
 #line 952 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term)=new func_term( current_analysis->func_tab.symbol_get((yyvsp[-2].cp)), (yyvsp[-1].t_parameter_symbol_list)); delete [] (yyvsp[-2].cp); }
-#line 3348 "pddl+.cpp" /* yacc.c:1646  */
+#line 3350 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 186:
 #line 955 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term)=new func_term( current_analysis->func_tab.symbol_get((yyvsp[-2].cp)), (yyvsp[-1].t_parameter_symbol_list)); delete [] (yyvsp[-2].cp); }
-#line 3354 "pddl+.cpp" /* yacc.c:1646  */
+#line 3356 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 187:
 #line 957 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term)=new func_term( current_analysis->func_tab.symbol_get((yyvsp[0].cp)),
                             new parameter_symbol_list); delete [] (yyvsp[0].cp);}
-#line 3361 "pddl+.cpp" /* yacc.c:1646  */
+#line 3363 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 188:
 #line 960 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term) = new class_func_term( (yyvsp[-4].t_class), current_analysis->func_tab.symbol_get((yyvsp[-2].cp)), (yyvsp[-1].t_parameter_symbol_list)); delete [] (yyvsp[-2].cp);}
-#line 3367 "pddl+.cpp" /* yacc.c:1646  */
+#line 3369 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 189:
 #line 977 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term)=new func_term( current_analysis->func_tab.symbol_get((yyvsp[-2].cp)), (yyvsp[-1].t_parameter_symbol_list)); delete [] (yyvsp[-2].cp); }
-#line 3373 "pddl+.cpp" /* yacc.c:1646  */
+#line 3375 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 190:
 #line 979 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term)=new func_term( current_analysis->func_tab.symbol_get((yyvsp[-2].cp)), (yyvsp[-1].t_parameter_symbol_list)); delete [] (yyvsp[-2].cp); }
-#line 3379 "pddl+.cpp" /* yacc.c:1646  */
+#line 3381 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 191:
 #line 981 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_func_term)=new func_term( current_analysis->func_tab.symbol_get((yyvsp[0].cp)),
                             new parameter_symbol_list); delete [] (yyvsp[0].cp);}
-#line 3386 "pddl+.cpp" /* yacc.c:1646  */
+#line 3388 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 192:
 #line 986 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_comparison_op)= E_GREATER; }
-#line 3392 "pddl+.cpp" /* yacc.c:1646  */
+#line 3394 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 193:
 #line 987 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_comparison_op)= E_GREATEQ; }
-#line 3398 "pddl+.cpp" /* yacc.c:1646  */
+#line 3400 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 194:
 #line 988 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_comparison_op)= E_LESS; }
-#line 3404 "pddl+.cpp" /* yacc.c:1646  */
+#line 3406 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 195:
 #line 989 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_comparison_op)= E_LESSEQ; }
-#line 3410 "pddl+.cpp" /* yacc.c:1646  */
+#line 3412 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 196:
 #line 990 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_comparison_op)= E_EQUALS; }
-#line 3416 "pddl+.cpp" /* yacc.c:1646  */
+#line 3418 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 197:
 #line 1003 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= (yyvsp[0].t_goal);}
-#line 3422 "pddl+.cpp" /* yacc.c:1646  */
+#line 3424 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 198:
 #line 1010 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal) = new conj_goal((yyvsp[-1].t_goal_list));}
-#line 3428 "pddl+.cpp" /* yacc.c:1646  */
+#line 3430 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 199:
 #line 1013 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new qfied_goal(E_FORALL,(yyvsp[-3].t_var_symbol_list),(yyvsp[-1].t_goal),current_analysis->var_tab_stack.pop());
         requires(E_UNIV_PRECS);}
-#line 3435 "pddl+.cpp" /* yacc.c:1646  */
+#line 3437 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 200:
 #line 1015 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal) = new conj_goal(new goal_list);}
-#line 3441 "pddl+.cpp" /* yacc.c:1646  */
+#line 3443 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 201:
 #line 1016 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal) = new conj_goal(new goal_list);}
-#line 3447 "pddl+.cpp" /* yacc.c:1646  */
+#line 3449 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 202:
 #line 1021 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new preference((yyvsp[-1].t_con_goal));requires(E_PREFERENCES);}
-#line 3453 "pddl+.cpp" /* yacc.c:1646  */
+#line 3455 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 203:
 #line 1023 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new preference((yyvsp[-2].cp),(yyvsp[-1].t_con_goal));requires(E_PREFERENCES);}
-#line 3459 "pddl+.cpp" /* yacc.c:1646  */
+#line 3461 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 204:
 #line 1025 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new conj_goal((yyvsp[-1].t_goal_list));}
-#line 3465 "pddl+.cpp" /* yacc.c:1646  */
+#line 3467 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 205:
 #line 1028 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal)= new qfied_goal(E_FORALL,(yyvsp[-3].t_var_symbol_list),(yyvsp[-1].t_con_goal),current_analysis->var_tab_stack.pop());
                 requires(E_UNIV_PRECS);}
-#line 3472 "pddl+.cpp" /* yacc.c:1646  */
+#line 3474 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 206:
 #line 1031 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = (yyvsp[0].t_con_goal);}
-#line 3478 "pddl+.cpp" /* yacc.c:1646  */
+#line 3480 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 207:
 #line 1036 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new preference((yyvsp[-1].t_con_goal));requires(E_PREFERENCES);}
-#line 3484 "pddl+.cpp" /* yacc.c:1646  */
+#line 3486 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 208:
 #line 1038 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new preference((yyvsp[-2].cp),(yyvsp[-1].t_con_goal));requires(E_PREFERENCES);}
-#line 3490 "pddl+.cpp" /* yacc.c:1646  */
+#line 3492 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 209:
 #line 1040 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new conj_goal((yyvsp[-1].t_goal_list));}
-#line 3496 "pddl+.cpp" /* yacc.c:1646  */
+#line 3498 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 210:
 #line 1043 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal)= new qfied_goal(E_FORALL,(yyvsp[-3].t_var_symbol_list),(yyvsp[-1].t_con_goal),current_analysis->var_tab_stack.pop());
                 requires(E_UNIV_PRECS);}
-#line 3503 "pddl+.cpp" /* yacc.c:1646  */
+#line 3505 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 211:
 #line 1049 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list)=(yyvsp[-1].t_goal_list); if((yyvsp[0].t_con_goal)) {(yyvsp[-1].t_goal_list)->push_back((yyvsp[0].t_con_goal));};}
-#line 3509 "pddl+.cpp" /* yacc.c:1646  */
+#line 3511 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 212:
 #line 1051 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list)= new goal_list; if((yyvsp[0].t_con_goal)) {(yyval.t_goal_list)->push_back((yyvsp[0].t_con_goal));};}
-#line 3515 "pddl+.cpp" /* yacc.c:1646  */
+#line 3517 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 213:
 #line 1056 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new preference((yyvsp[-1].t_goal)); requires(E_PREFERENCES);}
-#line 3521 "pddl+.cpp" /* yacc.c:1646  */
+#line 3523 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 214:
 #line 1058 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new preference((yyvsp[-2].cp),(yyvsp[-1].t_goal)); requires(E_PREFERENCES);}
-#line 3527 "pddl+.cpp" /* yacc.c:1646  */
+#line 3529 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 215:
 #line 1062 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)=(yyvsp[0].t_goal);}
-#line 3533 "pddl+.cpp" /* yacc.c:1646  */
+#line 3535 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 216:
 #line 1067 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list) = (yyvsp[-1].t_goal_list); if((yyvsp[0].t_con_goal)) {(yyval.t_goal_list)->push_back((yyvsp[0].t_con_goal));}; }
-#line 3539 "pddl+.cpp" /* yacc.c:1646  */
+#line 3541 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 217:
 #line 1069 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list) = new goal_list; if((yyvsp[0].t_con_goal)) {(yyval.t_goal_list)->push_back((yyvsp[0].t_con_goal));}}
-#line 3545 "pddl+.cpp" /* yacc.c:1646  */
+#line 3547 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 218:
 #line 1074 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal)= new conj_goal((yyvsp[-1].t_goal_list));}
-#line 3551 "pddl+.cpp" /* yacc.c:1646  */
+#line 3553 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 219:
 #line 1076 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new qfied_goal(E_FORALL,(yyvsp[-3].t_var_symbol_list),(yyvsp[-1].t_con_goal),current_analysis->var_tab_stack.pop());
         requires(E_UNIV_PRECS);}
-#line 3558 "pddl+.cpp" /* yacc.c:1646  */
+#line 3560 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 220:
 #line 1079 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_ATEND,(yyvsp[-1].t_goal));}
-#line 3564 "pddl+.cpp" /* yacc.c:1646  */
+#line 3566 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 221:
 #line 1081 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_ALWAYS,(yyvsp[-1].t_goal));}
-#line 3570 "pddl+.cpp" /* yacc.c:1646  */
+#line 3572 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 222:
 #line 1083 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_SOMETIME,(yyvsp[-1].t_goal));}
-#line 3576 "pddl+.cpp" /* yacc.c:1646  */
+#line 3578 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 223:
 #line 1085 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_WITHIN,(yyvsp[-1].t_goal),NULL,(yyvsp[-2].t_num_expression)->double_value(),0.0);delete (yyvsp[-2].t_num_expression);}
-#line 3582 "pddl+.cpp" /* yacc.c:1646  */
+#line 3584 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 224:
 #line 1087 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_ATMOSTONCE,(yyvsp[-1].t_goal));}
-#line 3588 "pddl+.cpp" /* yacc.c:1646  */
+#line 3590 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 225:
 #line 1089 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_SOMETIMEAFTER,(yyvsp[-1].t_goal),(yyvsp[-2].t_goal));}
-#line 3594 "pddl+.cpp" /* yacc.c:1646  */
+#line 3596 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 226:
 #line 1091 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_SOMETIMEBEFORE,(yyvsp[-1].t_goal),(yyvsp[-2].t_goal));}
-#line 3600 "pddl+.cpp" /* yacc.c:1646  */
+#line 3602 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 227:
 #line 1093 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_ALWAYSWITHIN,(yyvsp[-1].t_goal),(yyvsp[-2].t_goal),(yyvsp[-3].t_num_expression)->double_value(),0.0);delete (yyvsp[-3].t_num_expression);}
-#line 3606 "pddl+.cpp" /* yacc.c:1646  */
+#line 3608 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 228:
 #line 1095 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_HOLDDURING,(yyvsp[-1].t_goal),NULL,(yyvsp[-2].t_num_expression)->double_value(),(yyvsp[-3].t_num_expression)->double_value());delete (yyvsp[-3].t_num_expression);delete (yyvsp[-2].t_num_expression);}
-#line 3612 "pddl+.cpp" /* yacc.c:1646  */
+#line 3614 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 229:
 #line 1097 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_HOLDAFTER,(yyvsp[-1].t_goal),NULL,0.0,(yyvsp[-2].t_num_expression)->double_value());delete (yyvsp[-2].t_num_expression);}
-#line 3618 "pddl+.cpp" /* yacc.c:1646  */
+#line 3620 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 230:
 #line 1099 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = new constraint_goal(E_AFTER,(yyvsp[-1].t_goal),(yyvsp[-2].t_goal));}
-#line 3624 "pddl+.cpp" /* yacc.c:1646  */
+#line 3626 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 231:
@@ -3628,25 +3630,25 @@ yyreduce:
     {(yyval.t_con_goal) = 0;
 		 current_analysis->goalnames[(yyvsp[-2].cp)] = (yyvsp[-1].t_goal);
 		 delete [] (yyvsp[-2].cp);}
-#line 3632 "pddl+.cpp" /* yacc.c:1646  */
+#line 3634 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 232:
 #line 1108 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal) = (yyvsp[0].t_goal);}
-#line 3638 "pddl+.cpp" /* yacc.c:1646  */
+#line 3640 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 233:
 #line 1110 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal) = new named_goal(current_analysis->goalnames[(yyvsp[0].cp)]); delete [] (yyvsp[0].cp);}
-#line 3644 "pddl+.cpp" /* yacc.c:1646  */
+#line 3646 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 234:
 #line 1115 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new simple_goal((yyvsp[0].t_proposition),E_POS);}
-#line 3650 "pddl+.cpp" /* yacc.c:1646  */
+#line 3652 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 235:
@@ -3654,70 +3656,70 @@ yyreduce:
     {(yyval.t_goal)= new neg_goal((yyvsp[-1].t_goal));simple_goal * s = dynamic_cast<simple_goal *>((yyvsp[-1].t_goal));
        if(s && s->getProp()->head->getName()=="=") {requires(E_EQUALITY);}
        else{requires(E_NEGATIVE_PRECONDITIONS);};}
-#line 3658 "pddl+.cpp" /* yacc.c:1646  */
+#line 3660 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 236:
 #line 1121 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new conj_goal((yyvsp[-1].t_goal_list));}
-#line 3664 "pddl+.cpp" /* yacc.c:1646  */
+#line 3666 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 237:
 #line 1123 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new disj_goal((yyvsp[-1].t_goal_list));
         requires(E_DISJUNCTIVE_PRECONDS);}
-#line 3671 "pddl+.cpp" /* yacc.c:1646  */
+#line 3673 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 238:
 #line 1126 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new imply_goal((yyvsp[-2].t_goal),(yyvsp[-1].t_goal));
         requires(E_DISJUNCTIVE_PRECONDS);}
-#line 3678 "pddl+.cpp" /* yacc.c:1646  */
+#line 3680 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 239:
 #line 1130 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new qfied_goal((yyvsp[-5].t_quantifier),(yyvsp[-3].t_var_symbol_list),(yyvsp[-1].t_goal),current_analysis->var_tab_stack.pop());}
-#line 3684 "pddl+.cpp" /* yacc.c:1646  */
+#line 3686 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 240:
 #line 1133 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new qfied_goal((yyvsp[-5].t_quantifier),(yyvsp[-3].t_var_symbol_list),(yyvsp[-1].t_goal),current_analysis->var_tab_stack.pop());}
-#line 3690 "pddl+.cpp" /* yacc.c:1646  */
+#line 3692 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 241:
 #line 1135 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new comparison((yyvsp[-3].t_comparison_op),(yyvsp[-2].t_expression),(yyvsp[-1].t_expression));
         requires(E_NFLUENTS);}
-#line 3697 "pddl+.cpp" /* yacc.c:1646  */
+#line 3699 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 242:
 #line 1141 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list)=(yyvsp[-1].t_goal_list); (yyvsp[-1].t_goal_list)->push_back((yyvsp[0].t_goal));}
-#line 3703 "pddl+.cpp" /* yacc.c:1646  */
+#line 3705 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 243:
 #line 1143 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list)= new goal_list; (yyval.t_goal_list)->push_back((yyvsp[0].t_goal));}
-#line 3709 "pddl+.cpp" /* yacc.c:1646  */
+#line 3711 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 244:
 #line 1148 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list)=(yyvsp[-1].t_goal_list); (yyvsp[-1].t_goal_list)->push_back((yyvsp[0].t_goal));}
-#line 3715 "pddl+.cpp" /* yacc.c:1646  */
+#line 3717 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 245:
 #line 1150 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal_list)= new goal_list; (yyval.t_goal_list)->push_back((yyvsp[0].t_goal));}
-#line 3721 "pddl+.cpp" /* yacc.c:1646  */
+#line 3723 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 246:
@@ -3725,7 +3727,7 @@ yyreduce:
     {(yyval.t_quantifier)=E_FORALL;
         current_analysis->var_tab_stack.push(
         		current_analysis->buildForallTab());}
-#line 3729 "pddl+.cpp" /* yacc.c:1646  */
+#line 3731 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 247:
@@ -3733,31 +3735,31 @@ yyreduce:
     {(yyval.t_quantifier)=E_EXISTS;
         current_analysis->var_tab_stack.push(
         	current_analysis->buildExistsTab());}
-#line 3737 "pddl+.cpp" /* yacc.c:1646  */
+#line 3739 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 248:
 #line 1174 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_proposition)=new proposition((yyvsp[-2].t_pred_symbol),(yyvsp[-1].t_parameter_symbol_list));}
-#line 3743 "pddl+.cpp" /* yacc.c:1646  */
+#line 3745 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 249:
 #line 1179 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_proposition) = new proposition((yyvsp[-2].t_pred_symbol),(yyvsp[-1].t_var_symbol_list));}
-#line 3749 "pddl+.cpp" /* yacc.c:1646  */
+#line 3751 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 250:
 #line 1184 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_proposition)=new proposition((yyvsp[-2].t_pred_symbol),(yyvsp[-1].t_parameter_symbol_list));}
-#line 3755 "pddl+.cpp" /* yacc.c:1646  */
+#line 3757 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 251:
 #line 1189 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pred_decl_list)= (yyvsp[-1].t_pred_decl_list);}
-#line 3761 "pddl+.cpp" /* yacc.c:1646  */
+#line 3763 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 252:
@@ -3765,13 +3767,13 @@ yyreduce:
     {yyerrok; (yyval.t_pred_decl_list)=NULL;
 	 log_error(E_FATAL,"Syntax error in (:predicates ...)");
 	}
-#line 3769 "pddl+.cpp" /* yacc.c:1646  */
+#line 3771 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 253:
 #line 1198 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_func_decl_list)= (yyvsp[-1].t_func_decl_list);}
-#line 3775 "pddl+.cpp" /* yacc.c:1646  */
+#line 3777 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 254:
@@ -3779,13 +3781,13 @@ yyreduce:
     {yyerrok; (yyval.t_func_decl_list)=NULL;
 	 log_error(E_FATAL,"Syntax error in (:functions ...)");
 	}
-#line 3783 "pddl+.cpp" /* yacc.c:1646  */
+#line 3785 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 255:
 #line 1207 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = (yyvsp[-1].t_con_goal);}
-#line 3789 "pddl+.cpp" /* yacc.c:1646  */
+#line 3791 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 256:
@@ -3793,13 +3795,13 @@ yyreduce:
     {yyerrok; (yyval.t_con_goal)=NULL;
       log_error(E_FATAL,"Syntax error in (:constraints ...)");
       }
-#line 3797 "pddl+.cpp" /* yacc.c:1646  */
+#line 3799 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 257:
 #line 1216 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_con_goal) = (yyvsp[-1].t_con_goal);}
-#line 3803 "pddl+.cpp" /* yacc.c:1646  */
+#line 3805 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 258:
@@ -3807,61 +3809,61 @@ yyreduce:
     {yyerrok; (yyval.t_con_goal)=NULL;
       log_error(E_FATAL,"Syntax error in (:constraints ...)");
       }
-#line 3811 "pddl+.cpp" /* yacc.c:1646  */
+#line 3813 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 259:
 #line 1224 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_store)=(yyvsp[-1].t_structure_store); (yyval.t_structure_store)->push_back((yyvsp[0].t_structure_def)); }
-#line 3817 "pddl+.cpp" /* yacc.c:1646  */
+#line 3819 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 260:
 #line 1225 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_store)= new structure_store; (yyval.t_structure_store)->push_back((yyvsp[0].t_structure_def)); }
-#line 3823 "pddl+.cpp" /* yacc.c:1646  */
+#line 3825 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 261:
 #line 1229 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_def)= (yyvsp[0].t_action_def); }
-#line 3829 "pddl+.cpp" /* yacc.c:1646  */
+#line 3831 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 262:
 #line 1230 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_def)= (yyvsp[0].t_event_def); requires(E_TIME); }
-#line 3835 "pddl+.cpp" /* yacc.c:1646  */
+#line 3837 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 263:
 #line 1231 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_def)= (yyvsp[0].t_process_def); requires(E_TIME); }
-#line 3841 "pddl+.cpp" /* yacc.c:1646  */
+#line 3843 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 264:
 #line 1232 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_def)= (yyvsp[0].t_durative_action_def); requires(E_DURATIVE_ACTIONS); }
-#line 3847 "pddl+.cpp" /* yacc.c:1646  */
+#line 3849 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 265:
 #line 1233 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_def)= (yyvsp[0].t_derivation_rule); requires(E_DERIVED_PREDICATES);}
-#line 3853 "pddl+.cpp" /* yacc.c:1646  */
+#line 3855 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 266:
 #line 1234 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_structure_def) = (yyvsp[0].t_class_def); requires(E_MODULES);}
-#line 3859 "pddl+.cpp" /* yacc.c:1646  */
+#line 3861 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 267:
 #line 1242 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_class_def) = new class_def((yyvsp[-2].t_class),(yyvsp[-1].t_func_decl_list));}
-#line 3865 "pddl+.cpp" /* yacc.c:1646  */
+#line 3867 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 268:
@@ -3869,13 +3871,13 @@ yyreduce:
     {(yyval.t_dummy)= 0;
     	current_analysis->var_tab_stack.push(
     					current_analysis->buildRuleTab());}
-#line 3873 "pddl+.cpp" /* yacc.c:1646  */
+#line 3875 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 269:
 #line 1257 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_derivation_rule) = new derivation_rule((yyvsp[-2].t_proposition),(yyvsp[-1].t_goal),current_analysis->var_tab_stack.pop());}
-#line 3879 "pddl+.cpp" /* yacc.c:1646  */
+#line 3881 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 270:
@@ -3883,7 +3885,7 @@ yyreduce:
     { (yyval.t_action_def)= current_analysis->buildAction(current_analysis->op_tab.new_symbol_put((yyvsp[-9].cp)),
 			(yyvsp[-6].t_var_symbol_list),(yyvsp[-3].t_goal),(yyvsp[-1].t_effect_lists),
 			current_analysis->var_tab_stack.pop()); delete [] (yyvsp[-9].cp); }
-#line 3887 "pddl+.cpp" /* yacc.c:1646  */
+#line 3889 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 271:
@@ -3891,7 +3893,7 @@ yyreduce:
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in action declaration.");
 	 (yyval.t_action_def)= NULL; }
-#line 3895 "pddl+.cpp" /* yacc.c:1646  */
+#line 3897 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 272:
@@ -3899,7 +3901,7 @@ yyreduce:
     {(yyval.t_event_def)= current_analysis->buildEvent(current_analysis->op_tab.new_symbol_put((yyvsp[-9].cp)),
 		   (yyvsp[-6].t_var_symbol_list),(yyvsp[-3].t_goal),(yyvsp[-1].t_effect_lists),
 		   current_analysis->var_tab_stack.pop()); delete [] (yyvsp[-9].cp);}
-#line 3903 "pddl+.cpp" /* yacc.c:1646  */
+#line 3905 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 273:
@@ -3907,7 +3909,7 @@ yyreduce:
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in event declaration.");
 	 (yyval.t_event_def)= NULL; }
-#line 3911 "pddl+.cpp" /* yacc.c:1646  */
+#line 3913 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 274:
@@ -3915,7 +3917,7 @@ yyreduce:
     {(yyval.t_process_def)= current_analysis->buildProcess(current_analysis->op_tab.new_symbol_put((yyvsp[-9].cp)),
 		     (yyvsp[-6].t_var_symbol_list),(yyvsp[-3].t_goal),(yyvsp[-1].t_effect_lists),
                      current_analysis->var_tab_stack.pop()); delete [] (yyvsp[-9].cp);}
-#line 3919 "pddl+.cpp" /* yacc.c:1646  */
+#line 3921 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 275:
@@ -3923,19 +3925,19 @@ yyreduce:
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in process declaration.");
 	 (yyval.t_process_def)= NULL; }
-#line 3927 "pddl+.cpp" /* yacc.c:1646  */
+#line 3929 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 276:
 #line 1313 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_var_symbol_list) = (yyvsp[-1].t_var_symbol_list); current_analysis->setControlParams((yyval.t_var_symbol_list));}
-#line 3933 "pddl+.cpp" /* yacc.c:1646  */
+#line 3935 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 277:
 #line 1314 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_var_symbol_list) = NULL; current_analysis->setControlParams((yyval.t_var_symbol_list));}
-#line 3939 "pddl+.cpp" /* yacc.c:1646  */
+#line 3941 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 278:
@@ -3949,7 +3951,7 @@ yyreduce:
       delete [] (yyvsp[-9].cp);
       delete (yyvsp[-4].t_var_symbol_list);
     }
-#line 3953 "pddl+.cpp" /* yacc.c:1646  */
+#line 3955 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 279:
@@ -3957,67 +3959,67 @@ yyreduce:
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in durative-action declaration.");
 	 (yyval.t_durative_action_def)= NULL; }
-#line 3961 "pddl+.cpp" /* yacc.c:1646  */
+#line 3963 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 280:
 #line 1343 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_durative_action_def)=(yyvsp[-2].t_durative_action_def); (yyval.t_durative_action_def)->effects=(yyvsp[0].t_effect_lists);}
-#line 3967 "pddl+.cpp" /* yacc.c:1646  */
+#line 3969 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 281:
 #line 1345 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_durative_action_def)=(yyvsp[-2].t_durative_action_def); (yyval.t_durative_action_def)->precondition=(yyvsp[0].t_goal);}
-#line 3973 "pddl+.cpp" /* yacc.c:1646  */
+#line 3975 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 282:
 #line 1346 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_durative_action_def)= current_analysis->buildDurativeAction();}
-#line 3979 "pddl+.cpp" /* yacc.c:1646  */
+#line 3981 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 283:
 #line 1351 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal)=(yyvsp[0].t_goal); }
-#line 3985 "pddl+.cpp" /* yacc.c:1646  */
+#line 3987 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 284:
 #line 1353 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal)= new conj_goal((yyvsp[-1].t_goal_list)); }
-#line 3991 "pddl+.cpp" /* yacc.c:1646  */
+#line 3993 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 285:
 #line 1358 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal_list)=(yyvsp[-1].t_goal_list); (yyval.t_goal_list)->push_back((yyvsp[0].t_goal)); }
-#line 3997 "pddl+.cpp" /* yacc.c:1646  */
+#line 3999 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 286:
 #line 1360 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_goal_list)= new goal_list; }
-#line 4003 "pddl+.cpp" /* yacc.c:1646  */
+#line 4005 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 287:
 #line 1365 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new timed_goal((yyvsp[-1].t_goal),E_AT_START);}
-#line 4009 "pddl+.cpp" /* yacc.c:1646  */
+#line 4011 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 288:
 #line 1367 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new timed_goal((yyvsp[-1].t_goal),E_AT_END);}
-#line 4015 "pddl+.cpp" /* yacc.c:1646  */
+#line 4017 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 289:
 #line 1369 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)= new timed_goal((yyvsp[-1].t_goal),E_OVER_ALL);}
-#line 4021 "pddl+.cpp" /* yacc.c:1646  */
+#line 4023 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 290:
@@ -4026,80 +4028,80 @@ yyreduce:
 		(yyval.t_goal) = new timed_goal(new preference((yyvsp[-2].cp),tg->clearGoal()),tg->getTime());
 			delete tg;
 			requires(E_PREFERENCES);}
-#line 4030 "pddl+.cpp" /* yacc.c:1646  */
+#line 4032 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 291:
 #line 1376 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal) = new preference((yyvsp[-1].t_goal));requires(E_PREFERENCES);}
-#line 4036 "pddl+.cpp" /* yacc.c:1646  */
+#line 4038 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 292:
 #line 1380 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_dummy)= 0; current_analysis->var_tab_stack.push(
     				current_analysis->buildOpTab());}
-#line 4043 "pddl+.cpp" /* yacc.c:1646  */
+#line 4045 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 293:
 #line 1385 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_EQUALITY;}
-#line 4049 "pddl+.cpp" /* yacc.c:1646  */
+#line 4051 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 294:
 #line 1386 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_STRIPS;}
-#line 4055 "pddl+.cpp" /* yacc.c:1646  */
+#line 4057 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 295:
 #line 1388 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_TYPING;}
-#line 4061 "pddl+.cpp" /* yacc.c:1646  */
+#line 4063 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 296:
 #line 1390 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_NEGATIVE_PRECONDITIONS;}
-#line 4067 "pddl+.cpp" /* yacc.c:1646  */
+#line 4069 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 297:
 #line 1392 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_DISJUNCTIVE_PRECONDS;}
-#line 4073 "pddl+.cpp" /* yacc.c:1646  */
+#line 4075 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 298:
 #line 1393 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_EXT_PRECS;}
-#line 4079 "pddl+.cpp" /* yacc.c:1646  */
+#line 4081 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 299:
 #line 1394 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_UNIV_PRECS;}
-#line 4085 "pddl+.cpp" /* yacc.c:1646  */
+#line 4087 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 300:
 #line 1395 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_COND_EFFS;}
-#line 4091 "pddl+.cpp" /* yacc.c:1646  */
+#line 4093 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 301:
 #line 1396 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_NFLUENTS | E_OFLUENTS;}
-#line 4097 "pddl+.cpp" /* yacc.c:1646  */
+#line 4099 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 302:
 #line 1398 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_DURATIVE_ACTIONS;}
-#line 4103 "pddl+.cpp" /* yacc.c:1646  */
+#line 4105 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 303:
@@ -4107,31 +4109,31 @@ yyreduce:
     {(yyval.t_pddl_req_flag)= E_TIME |
                       E_NFLUENTS |
                       E_DURATIVE_ACTIONS; }
-#line 4111 "pddl+.cpp" /* yacc.c:1646  */
+#line 4113 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 304:
 #line 1402 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)=E_ACTIONCOSTS | E_NFLUENTS;}
-#line 4117 "pddl+.cpp" /* yacc.c:1646  */
+#line 4119 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 305:
 #line 1405 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)=E_OFLUENTS;}
-#line 4123 "pddl+.cpp" /* yacc.c:1646  */
+#line 4125 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 306:
 #line 1406 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)=E_NFLUENTS;}
-#line 4129 "pddl+.cpp" /* yacc.c:1646  */
+#line 4131 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 307:
 #line 1407 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)=E_MODULES;}
-#line 4135 "pddl+.cpp" /* yacc.c:1646  */
+#line 4137 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 308:
@@ -4144,75 +4146,75 @@ yyreduce:
 		      E_EXT_PRECS |
 		      E_UNIV_PRECS |
 		      E_COND_EFFS;}
-#line 4148 "pddl+.cpp" /* yacc.c:1646  */
+#line 4150 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 309:
 #line 1418 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_EXT_PRECS |
 		      E_UNIV_PRECS;}
-#line 4155 "pddl+.cpp" /* yacc.c:1646  */
+#line 4157 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 310:
 #line 1422 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_DURATION_INEQUALITIES;}
-#line 4161 "pddl+.cpp" /* yacc.c:1646  */
+#line 4163 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 311:
 #line 1425 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag)= E_CONTINUOUS_EFFECTS;}
-#line 4167 "pddl+.cpp" /* yacc.c:1646  */
+#line 4169 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 312:
 #line 1427 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag) = E_DERIVED_PREDICATES;}
-#line 4173 "pddl+.cpp" /* yacc.c:1646  */
+#line 4175 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 313:
 #line 1429 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag) = E_TIMED_INITIAL_LITERALS;}
-#line 4179 "pddl+.cpp" /* yacc.c:1646  */
+#line 4181 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 314:
 #line 1431 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag) = E_PREFERENCES;}
-#line 4185 "pddl+.cpp" /* yacc.c:1646  */
+#line 4187 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 315:
 #line 1433 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag) = E_CONSTRAINTS;}
-#line 4191 "pddl+.cpp" /* yacc.c:1646  */
+#line 4193 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 316:
 #line 1434 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_pddl_req_flag) = E_SUPPLYDEMAND;}
-#line 4197 "pddl+.cpp" /* yacc.c:1646  */
+#line 4199 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 317:
 #line 1436 "pddl+.y" /* yacc.c:1646  */
     {log_error(E_WARNING,"Unrecognised requirements declaration ");
        (yyval.t_pddl_req_flag)= 0; delete [] (yyvsp[0].cp);}
-#line 4204 "pddl+.cpp" /* yacc.c:1646  */
+#line 4206 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 318:
 #line 1442 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)=(yyvsp[-1].t_const_symbol_list);}
-#line 4210 "pddl+.cpp" /* yacc.c:1646  */
+#line 4212 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 319:
 #line 1446 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_type_list)=(yyvsp[-1].t_type_list); requires(E_TYPING);}
-#line 4216 "pddl+.cpp" /* yacc.c:1646  */
+#line 4218 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 320:
@@ -4223,93 +4225,93 @@ yyreduce:
 		}
 
 	}
-#line 4227 "pddl+.cpp" /* yacc.c:1646  */
+#line 4229 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 321:
 #line 1463 "pddl+.y" /* yacc.c:1646  */
     {yyerrok; (yyval.t_problem)=NULL;
        	log_error(E_FATAL,"Syntax error in problem definition."); }
-#line 4234 "pddl+.cpp" /* yacc.c:1646  */
+#line 4236 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 322:
 #line 1469 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); (yyval.t_problem)->req= (yyvsp[-1].t_pddl_req_flag);}
-#line 4240 "pddl+.cpp" /* yacc.c:1646  */
+#line 4242 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 323:
 #line 1470 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); (yyval.t_problem)->objects= (yyvsp[-1].t_const_symbol_list);}
-#line 4246 "pddl+.cpp" /* yacc.c:1646  */
+#line 4248 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 324:
 #line 1471 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); (yyval.t_problem)->initial_state= (yyvsp[-1].t_effect_lists);}
-#line 4252 "pddl+.cpp" /* yacc.c:1646  */
+#line 4254 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 325:
 #line 1472 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); (yyval.t_problem)->the_goal= (yyvsp[-1].t_goal);}
-#line 4258 "pddl+.cpp" /* yacc.c:1646  */
+#line 4260 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 326:
 #line 1474 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); (yyval.t_problem)->constraints = (yyvsp[-1].t_con_goal);}
-#line 4264 "pddl+.cpp" /* yacc.c:1646  */
+#line 4266 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 327:
 #line 1475 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); if((yyval.t_problem)->metric == 0) {(yyval.t_problem)->metric= (yyvsp[-1].t_metric);}
 											else {(yyval.t_problem)->metric->add((yyvsp[-1].t_metric));}}
-#line 4271 "pddl+.cpp" /* yacc.c:1646  */
+#line 4273 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 328:
 #line 1477 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=(yyvsp[0].t_problem); (yyval.t_problem)->length= (yyvsp[-1].t_length_spec);}
-#line 4277 "pddl+.cpp" /* yacc.c:1646  */
+#line 4279 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 329:
 #line 1478 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_problem)=new problem;}
-#line 4283 "pddl+.cpp" /* yacc.c:1646  */
+#line 4285 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 330:
 #line 1481 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_const_symbol_list)=(yyvsp[-1].t_const_symbol_list);}
-#line 4289 "pddl+.cpp" /* yacc.c:1646  */
+#line 4291 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 331:
 #line 1484 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_effect_lists)=(yyvsp[-1].t_effect_lists);}
-#line 4295 "pddl+.cpp" /* yacc.c:1646  */
+#line 4297 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 332:
 #line 1487 "pddl+.y" /* yacc.c:1646  */
     {(yyval.vtab) = current_analysis->buildOpTab();}
-#line 4301 "pddl+.cpp" /* yacc.c:1646  */
+#line 4303 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 333:
 #line 1490 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_goal)=(yyvsp[-1].t_goal);delete (yyvsp[-2].vtab);}
-#line 4307 "pddl+.cpp" /* yacc.c:1646  */
+#line 4309 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 334:
 #line 1495 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_metric)= new metric_spec((yyvsp[-2].t_optimization),(yyvsp[-1].t_expression)); }
-#line 4313 "pddl+.cpp" /* yacc.c:1646  */
+#line 4315 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 335:
@@ -4317,146 +4319,146 @@ yyreduce:
     {yyerrok;
         log_error(E_FATAL,"Syntax error in metric declaration.");
         (yyval.t_metric)= NULL; }
-#line 4321 "pddl+.cpp" /* yacc.c:1646  */
+#line 4323 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 336:
 #line 1504 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_length_spec)= new length_spec(E_BOTH,(yyvsp[-3].ival),(yyvsp[-1].ival));}
-#line 4327 "pddl+.cpp" /* yacc.c:1646  */
+#line 4329 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 337:
 #line 1507 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_length_spec) = new length_spec(E_SERIAL,(yyvsp[-1].ival));}
-#line 4333 "pddl+.cpp" /* yacc.c:1646  */
+#line 4335 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 338:
 #line 1511 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_length_spec) = new length_spec(E_PARALLEL,(yyvsp[-1].ival));}
-#line 4339 "pddl+.cpp" /* yacc.c:1646  */
+#line 4341 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 339:
 #line 1517 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_optimization)= E_MINIMIZE;}
-#line 4345 "pddl+.cpp" /* yacc.c:1646  */
+#line 4347 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 340:
 #line 1518 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_optimization)= E_MAXIMIZE;}
-#line 4351 "pddl+.cpp" /* yacc.c:1646  */
+#line 4353 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 341:
 #line 1523 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression)= (yyvsp[-1].t_expression);}
-#line 4357 "pddl+.cpp" /* yacc.c:1646  */
+#line 4359 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 342:
 #line 1524 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression)= (yyvsp[0].t_func_term);}
-#line 4363 "pddl+.cpp" /* yacc.c:1646  */
+#line 4365 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 343:
 #line 1525 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression)= (yyvsp[0].t_num_expression);}
-#line 4369 "pddl+.cpp" /* yacc.c:1646  */
+#line 4371 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 344:
 #line 1526 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new special_val_expr(E_TOTAL_TIME); }
-#line 4375 "pddl+.cpp" /* yacc.c:1646  */
+#line 4377 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 345:
 #line 1528 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression) = new violation_term((yyvsp[-1].cp));}
-#line 4381 "pddl+.cpp" /* yacc.c:1646  */
+#line 4383 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 346:
 #line 1529 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new special_val_expr(E_TOTAL_TIME); }
-#line 4387 "pddl+.cpp" /* yacc.c:1646  */
+#line 4389 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 347:
 #line 1533 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new plus_expression((yyvsp[-1].t_expression),(yyvsp[0].t_expression)); }
-#line 4393 "pddl+.cpp" /* yacc.c:1646  */
+#line 4395 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 348:
 #line 1534 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new minus_expression((yyvsp[-1].t_expression),(yyvsp[0].t_expression)); }
-#line 4399 "pddl+.cpp" /* yacc.c:1646  */
+#line 4401 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 349:
 #line 1535 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new mul_expression((yyvsp[-1].t_expression),(yyvsp[0].t_expression)); }
-#line 4405 "pddl+.cpp" /* yacc.c:1646  */
+#line 4407 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 350:
 #line 1536 "pddl+.y" /* yacc.c:1646  */
     { (yyval.t_expression)= new div_expression((yyvsp[-1].t_expression),(yyvsp[0].t_expression)); }
-#line 4411 "pddl+.cpp" /* yacc.c:1646  */
+#line 4413 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 351:
 #line 1540 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression) = (yyvsp[0].t_expression);}
-#line 4417 "pddl+.cpp" /* yacc.c:1646  */
+#line 4419 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 352:
 #line 1542 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression) = new plus_expression((yyvsp[-1].t_expression),(yyvsp[0].t_expression));}
-#line 4423 "pddl+.cpp" /* yacc.c:1646  */
+#line 4425 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 353:
 #line 1546 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression) = (yyvsp[0].t_expression);}
-#line 4429 "pddl+.cpp" /* yacc.c:1646  */
+#line 4431 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 354:
 #line 1548 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_expression) = new mul_expression((yyvsp[-1].t_expression),(yyvsp[0].t_expression));}
-#line 4435 "pddl+.cpp" /* yacc.c:1646  */
+#line 4437 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 355:
 #line 1554 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_plan)= (yyvsp[0].t_plan);
          (yyval.t_plan)->push_front((yyvsp[-1].t_step)); }
-#line 4442 "pddl+.cpp" /* yacc.c:1646  */
+#line 4444 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 356:
 #line 1557 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_plan) = (yyvsp[0].t_plan);(yyval.t_plan)->insertTime((yyvsp[-1].fval));}
-#line 4448 "pddl+.cpp" /* yacc.c:1646  */
+#line 4450 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 357:
 #line 1559 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_plan) = (yyvsp[0].t_plan);(yyval.t_plan)->insertTime((yyvsp[-1].ival));}
-#line 4454 "pddl+.cpp" /* yacc.c:1646  */
+#line 4456 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 358:
 #line 1561 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_plan)= new plan;}
-#line 4460 "pddl+.cpp" /* yacc.c:1646  */
+#line 4462 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 359:
@@ -4464,14 +4466,14 @@ yyreduce:
     {(yyval.t_step)=(yyvsp[0].t_step);
          (yyval.t_step)->start_time_given=1;
          (yyval.t_step)->start_time=(yyvsp[-2].fval);}
-#line 4468 "pddl+.cpp" /* yacc.c:1646  */
+#line 4470 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 360:
 #line 1570 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_step)=(yyvsp[0].t_step);
 	 (yyval.t_step)->start_time_given=0;}
-#line 4475 "pddl+.cpp" /* yacc.c:1646  */
+#line 4477 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 361:
@@ -4479,14 +4481,14 @@ yyreduce:
     {(yyval.t_step)= (yyvsp[-3].t_step);
 	 (yyval.t_step)->duration_given=1;
          (yyval.t_step)->duration= (yyvsp[-1].fval);}
-#line 4483 "pddl+.cpp" /* yacc.c:1646  */
+#line 4485 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 362:
 #line 1580 "pddl+.y" /* yacc.c:1646  */
     {(yyval.t_step)= (yyvsp[0].t_step);
          (yyval.t_step)->duration_given=0;}
-#line 4490 "pddl+.cpp" /* yacc.c:1646  */
+#line 4492 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 363:
@@ -4495,23 +4497,23 @@ yyreduce:
               current_analysis->op_tab.symbol_get((yyvsp[-2].cp)),
 	      (yyvsp[-1].t_const_symbol_list)); delete [] (yyvsp[-2].cp);
       }
-#line 4499 "pddl+.cpp" /* yacc.c:1646  */
+#line 4501 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 364:
 #line 1593 "pddl+.y" /* yacc.c:1646  */
     {(yyval.fval)= (yyvsp[0].fval);}
-#line 4505 "pddl+.cpp" /* yacc.c:1646  */
+#line 4507 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
   case 365:
 #line 1594 "pddl+.y" /* yacc.c:1646  */
     {(yyval.fval)= (float) (yyvsp[0].ival);}
-#line 4511 "pddl+.cpp" /* yacc.c:1646  */
+#line 4513 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 4515 "pddl+.cpp" /* yacc.c:1646  */
+#line 4517 "pddl+.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

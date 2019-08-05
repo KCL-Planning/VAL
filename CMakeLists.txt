@@ -10,7 +10,13 @@ if (NOT CMAKE_VERBOSE_MAKEFILE)
 endif()
 
 # Installation configuration
-set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
+set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
+if( APPLE )
+  set(CMAKE_MACOSX_RPATH TRUE)
+  set(CMAKE_INSTALL_RPATH "@executable_path")
+else()
+  set(CMAKE_INSTALL_RPATH "$ORIGIN")
+endif()
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 project (Val)
@@ -270,7 +276,7 @@ endif()
 install(
     TARGETS VAL Analyse DomainView HowWhatWhen Instantiate Parser PinguPlan PlanRec PlanSeqStep PlanToValStep Relax TIM ToFn TypeAnalysis Validate ValStep ValueSeq
     RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
+    LIBRARY DESTINATION bin
 )
 
 install(
