@@ -4,6 +4,10 @@
 
 This repository hosts tools for AI Planning plans and planning models.
 
+If all you need is binaries, click the _Azure Pipeline_ link above, open the latest green build navigate to the _Summary_ tab and then download the artifact for your operating system. Binaries are available for Linux, Windows and MacOS.
+
+Please report problems and feature requests
+
 ## Authors
 
 * Maria Fox and Derek Long - PDDL2.2 and VAL
@@ -18,7 +22,7 @@ This repository hosts tools for AI Planning plans and planning models.
 
 ## [Libraries](libraries/README.md)
 
-## Development
+## How to compile VAL
 
 ### Windows
 
@@ -98,3 +102,12 @@ This repository hosts tools for AI Planning plans and planning models.
   * Note: bison on macOS running well
     * Edit YACC file at [libraries/VAL/src/Parser/pddl+.y] as needed
     * Run bison command from script (bison pddl+.y -o pddl+.cpp) directly through terminal
+
+## How to contribute to VAL
+
+Please submit any defects as [Issues](https://github.com/KCL-Planning/VAL/issues) via GitHub.
+If you are missing a feature, report it as an issue, but tag it as `[feature]` please.
+
+We appreciate community contributions to this open sourced code repository. By submitting a pull request you certify that the contribution is your original work, you ensure the contribution is compatible with this repository [license](LICENSE) terms, and you agree (including on behalf of your employer, if applicable) that the community is free to use your contributions.
+
+If you have a summer intern or a post-doc student and need a project for a few weeks or months, pick from the backlog of [Issues](https://github.com/KCL-Planning/VAL/issues), or just address the numerous c++ build warnings and help us modernize the codebase.
