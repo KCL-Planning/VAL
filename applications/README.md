@@ -48,7 +48,8 @@ Use output of PlanToValStep output
 
 ## PlanToValStep
 
-This utility takes a plan file as input and writes out a script in the form used by ValStep, all as one output. This allows you to then run all or part of the plan through ValStep easily. The input is not XPlan format, but standard PDDL plan output.
+This utility takes a plan file as input and writes out a script in the form used by ValStep, all as one output. 
+This allows you to then run all or part of the plan through ValStep easily.
 
 `PlanToValStep myplan.pddl > myvalstepscript`
 
@@ -73,13 +74,19 @@ Note that the PDDL parser will find and report errors in PDDL more explicitly.
 
 ## Validate
 
-You may get to situation, when you are not sure why the planning engine is not generating the plan you are expecting. You could type the plan you expect and ask the Validator what is wrong with it. It usually tells you where are missing something like a pre-condition. 
+This utility is mainly used by planning engine developers and researchers, but it may be useful to a PDDL modeler as well.
+You may get to a situation, when you are not sure why the planning engine is *not* generating the plan you are expecting.
+In that case, you could handcraft the plan you expect to get and ask the Validator whether it is valid.
+It usually tells you where you are missing a pre-condition, or where you are violating an over all constraint.
 
 Validate has many command line options, but the most important first few are:
 
 `Validate -t <number> -v <domainfile> <problemfile> <planfile....>`
 
-Multiple plan files can be handled together. The -t flag allows the value of epsilon to be set. The default value is 0.01, but 0.001 is a good value to use for most planners. Actions separated by epsilon or less are treated as simultaneous by Validate. -v is the verbose flag. 
+Multiple plan files can be handled together. The `-t` flag allows the value of epsilon to be set.
+The default value is *0.01*, but *0.001* is a good value to use for most planners.
+Actions separated by epsilon or less are treated as simultaneous by Validate. 
+The `-v` switch is the verbose mode.
 
 Syntax for validating your domain model:
 
@@ -115,89 +122,163 @@ This tool is run with command line:
 
 `ValStep <domain> <problem>`
 
-It gives a prompt (?) and at this point several options are open.
+It gives a prompt "`?`" and expects one of the valid commands:
 
-The user types commands of the following forms:
-  * start <action> @ <time>
-  * end <id> @ <time>
-  * x
-  * q
-  * w <filename>
+* `start <action> @ <time>`
+* `end <id> @ <time>`
+* `x`
+* `w <filename>`
+* `q`
 
-These commands do the following: `start <action>` queues the start of the action for execution at the given time (which should be in the future!). It reports a number which is the action id code for the remainder of the plan execution. The code can be used to specify a time for the end of the same action (`end <id> @ <time>`). The command x causes the actions at the next time step to be executed. Note that the order in which action starts and ends are added is not important – it is the time that they are specified to occur that determines when the execution will simulate them happening. Also note that x will only step forward to the next time at which something is specified to happen. So here is an example:
+These commands do the following:
+
+`start <action> @ <time>` queues an instantaneous action or a start of a durative action for execution at the given time (which should be higher/later than previous one). ValStep reports a number which is the action id code that must be used when queuing the corresponding end using `end <id> @ <time>`.
+The command `x` causes all enqueued actions to be executed. Note that the order in which action starts and ends are added is not important – it is the time that they are specified to occur that determines when the execution will simulate them happening. Also note that `x` will only step forward to the next time at which something is specified to happen. So here is an example:
+
+Consider this short temporal PDDL plan:
+
+```pddl
+0.00100: (boil-water) [64.00100]
+61.00100: (pump-boiling-water) [3.00000]
+```
 
 ```shell
-ValStep.exe maestrobgc\maestro-cementing-casing-surface.pddl MaestroBGC\maestro-cementing-casing-surface-problem-sec1_well1.pddl
-? start envelope_monitor securewellrun1_sec1_well1 @ 0
-Posted action 1
-? start key_make_up_wellhead_running_tool casingrun1_sec1_well1 sec1_well1 @ 0
-Posted action 2
-? x
-Seeing 1 changed lits
-timingstarts - now true
-? start logistics_call_for_crews_run cementingrun1_sec1_well1 cementingcrew @ 0.001
-Posted action 3
-? start logistics_call_for_crews_run casingrun1_sec1_well1 casingcrew @ 0.001
-Posted action 4
-? start logistics_call_for_crews_run securewellrun1_sec1_well1 boptester @ 0.001
-Posted action 5
-? x
-Seeing 1 changed lits
-timingstarts - now true
-? end 2 @ 2
-? x
-Seeing 2 changed lits
-timingstarts - now true
-up wellheadrunningtool - now true
-? end 3 @ 4.001
-? end 4 @ 4.001
-? end 5 @ 4.001
-? x
-Seeing 5 changed lits
-timingstarts - now true
-up wellheadrunningtool - now true
-onspotrun cementingcrew cementingrun1_sec1_well1 - now true
-onspotrun casingcrew casingrun1_sec1_well1 - now true
-onspotrun boptester securewellrun1_sec1_well1 - now true
+ValStep.exe domain.pddl problem.pddl
 ?
 ```
 
-Notice that the first two actions both start at time 0. Then we step past them (using x). We then post three more action starts and execute them. Then we end the second action (action 2) at time 2. Action 1 is still running, as are actions 3, 4 and 5.
+Queue first action start:
 
-The command `q` will quit the tool, causing it to print the current state as a PDDL problem file to the console output. If you wish to record the state before exiting, the command `w <file>` writes the current state (and goal) as a PDDL problem file into the indicated file.
+```shell
+? start boil-water @ 0.001
+```
+
+ValStep responds:
+
+```shell
+Posted action 1
+```
+
+Therefore _1_ is the ID of the `boil-water` action.
+
+Execute the action and evaluate the state delta by passing the `x` command:
+
+```shell
+? x
+```
+
+ValStep responds:
+
+```shell
+Seeing 1 changed lits
+boiling - now true
+```
+
+Predicate `boiling` is now `true`.
+
+Similarly we queue and execute the second action start:
+
+```shell
+? start pump-boiling-water @ 61.001
+Posted action 2
+? x
+Seeing 2 changed lits
+boiling - now true
+pumping - now true
+water-temperature - now 96
+```
+
+Although this action only changes 2 literals/fluents, ValStep reports all changes since the initial state, including the already establish `boiling`==`true`.
+
+Then we queue and execute the end of the `pump-boiling-water` using the ID `2`:
+
+```shell
+? end 2 @ 64.001
+? x
+Seeing 2 changed lits
+boiling - now true
+pumping - now false
+cup-level - now 30
+water-temperature - now 90
+```
+
+Last, we close the `boil-water` action:
+
+```shell
+? end 1 @ 64.002
+? x
+Seeing 2 changed lits
+boiling - now false
+pumping - now false
+cup-level - now 30
+water-temperature - now 90.001
+```
+
+The final state is therefore everything in the initial state plus
+
+```shell
+boiling - now false
+pumping - now false
+cup-level - now 30
+water-temperature - now 90.001
+```
+
+In case multiple actions start at the same time, all shall be enqueued before triggering their execution using `x`.
+
+The command `q` quits the tool, causing it to print the current state as a PDDL problem file to the console output. If you wish to record the state before exiting, use the command `w <file>` writes the current state (and goal) as a PDDL problem file into the indicated file.
+Note that the problem file written out would not replicate any _outstanding_ timed-initial effects from the original problem file. This feature is currently missing.
 
 ## ValueSeq
 
-This tool can be used to extract the values of particular functions in the state during execution of a plan. It is used as follows:
+This tool can be used to extract the values of particular numeric state values in the course of a plan. It is used as follows:
 
 `ValueSeq <domain> <problem> <plan> [<function>*] [REMOVE <tag>*]`
 
-where the function expressions are state variables and the tags are strings that appear in some of the action names. The square brackets indicate optional arguments and the * symbol indicates arguments that can appear any number of times.
+where the function expressions are state variables and the `tag`s are strings that if included in an action name, the action is removed from the output (for brevity). The square brackets indicate optional arguments and the `*` symbol indicates arguments that can appear any number of times.
 
-An example is:
+An example usage:
 
 ```shell
-ValueSeq.exe MaestroBGC\maestro-drilling.pddl MaestroBGC\maestro-drilling-problem-sec1_well1.pddl plandrill1.txt bitdepth holedepth REMOVE artifact fluid logistics envelope
-This command runs the planner with a domain and problem (in the Maestro dcomposed domain file set) with a plan (for this domain and problem) and requests the values of bitdepth and holedepth before and after each action, removing all actions from the output that contain the strings artifact, fluid, logistics or envelope. This generates the output:
-key_rig_acceptance_with_prespudequipment drilling1_sec1_well1 sec1_well1 diverter, 0, 0, 0, 0
-key_pre-spud_meeting drilling1_sec1_well1 drilling1_sec1_well1, 0, 0, 0, 0
-key_make_up_bha drilling1_sec1_well1 sec1_well1, 0, 0, 0, 0
-key_perform_operation_beforetripinbha drilling1_sec1_well1 sec1_well1 sht, 0, 0, 0, 0
-key_drill_to_marker drilling1_sec1_well1 sec1_well1 mudmarker1, 0, 0, 500, 500
-key_condition_mud_atmarker drilling1_sec1_well1 sec1_well1 conditionmud mudmarker1 duringdrilling, 500, 500, 500, 500
-key_drill_to_td drilling1_sec1_well1 sec1_well1, 500, 500, 1000, 1000
-key_pump_sweep drilling1_sec1_well1, 1000, 1000, 1000, 1000
-key_circulate drilling1_sec1_well1 sec1_well1, 1000, 1000, 1000, 1000
-key_pump_slug drilling1_sec1_well1 sec1_well1, 1000, 1000, 1000, 1000
-key_perform_single_operation_atmarker drilling1_sec1_well1 sec1_well1 flowcheck flowcheckmarker1 duringtripoutbha, 1000, 1000, 1000, 1000
-key_drop_survey_tool_atmarker drilling1_sec1_well1 sec1_well1 dropsurveytool surveymarker1 duringtripoutbha, 1000, 1000, 1000, 1000
-key_trip_out_bha_to_marker drilling1_sec1_well1 sec1_well1 flowcheckmarker2, 1000, 1000, 0, 1000
-key_perform_single_operation_atmarker drilling1_sec1_well1 sec1_well1 flowcheck flowcheckmarker2 duringtripoutbha, 0, 1000, 0, 1000
-key_laydown_bha drilling1_sec1_well1 sec1_well1, 0, 1000, 0, 1000
+ValueSeq domain.pddl problem_boil_and_pour1.pddl problem_boil_and_pour1.plan water-temperature
 ```
 
-The output shows changes in function values before and after an action execution. However, if you look up the action start time and duration in the plan file, you can reconstruct a temporal sequence and plot it. Mind the cases, where the same action appears in the plan more than once. 
+... outputs ...
 
-This can be put into an Excel page:
+```csv
+boil-water, 35, 90.001
+pump-boiling-water, 35, 90
+```
 
-![ValueSeq-Excel](ValueSeq-Excel.png)
+Using the `-t` switch:
+
+```shell
+ValueSeq.exe -t domain.pddl problem_boil_and_pour1.pddl problem_boil_and_pour1.plan water-temperature
+```
+
+... outputs ...
+
+```csv
+0.001, boil-water, 35, 90.001
+61.001, pump-boiling-water, 35, 90
+```
+
+The output shows changes in function values before and after an action execution. However, if you look up the action start time and duration in the plan file, you can reconstruct a temporal sequence and plot it. Mind the cases, where the same action appears in the plan more than once.
+
+Using the `-T` switch:
+
+```shell
+ValueSeq.exe -T domain.pddl problem_boil_and_pour1.pddl problem_boil_and_pour1.plan water-temperature
+```
+
+... outputs ...
+
+```csv
+water-temperature
+0, 35
+0.001, 35
+61.001, 96
+64.001, 90
+64.002, 90.001
+```
+
+This output may be directly pasted into a spreadsheet program e.g. Excel to render a chart.

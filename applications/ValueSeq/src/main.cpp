@@ -305,8 +305,8 @@ int main(int argc, char *argv[]) {
   }
   if (argc < 3) {
     cout
-        << "Use: ValueSeq [-t|-T] <domain> <problem> <plan - PDDL format (not "
-           "XPlan)> [function term]* [REMOVE [tag]*]\n\n\tFunction terms are "
+        << "Use: ValueSeq [-t|-T] <domain> <problem> <plan - in PDDL format> "
+           "[function term]* [REMOVE [tag]*]\n\n\tFunction terms are "
            "(quote enclosed if need spaces) grounded expressions\n\t"
         << "Tags are strings that cause actions to not be reported if they appear in the action names\n\nOutput: Sequence of actions with values of all function terms before and, for durative actions, after execution\n\
             \t-t: Print start times of the actions in first column\n\
