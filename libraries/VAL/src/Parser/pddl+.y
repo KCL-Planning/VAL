@@ -1543,9 +1543,9 @@ c_binary_ground_f_mexps :
 // Plans
 
 c_plan :
-    c_step_t_d c_plan
-        {$$= $2;
-         $$->push_front($1); }
+    c_plan c_step_t_d 
+        {$$= $1;
+         $$->push_back($2); }
 |  TIME FLOATVAL c_plan
 		{$$ = $3;$$->insertTime($2);}
 |  TIME INTVAL c_plan
