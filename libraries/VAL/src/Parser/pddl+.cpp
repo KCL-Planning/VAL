@@ -2340,7 +2340,7 @@ yyreduce:
 #line 379 "pddl+.yacc" /* yacc.c:1646  */
     {yyerrok;
 	 log_error(E_FATAL,"Syntax error in functor declaration.");
-	 (yyval.t_func_decl)= (int) NULL; }
+	 (yyval.t_func_decl)= NULL; }
 #line 2345 "pddl+.cpp" /* yacc.c:1646  */
     break;
 
