@@ -4748,7 +4748,7 @@ yyreturn:
 #include <iostream>
 int line_no= 1;
 using std::istream;
-#include "lex.yy.h"
+#include "pddl+.lex.yy.h"
 
 namespace VAL {
 extern yyFlexLexer* yfl;
