@@ -120,7 +120,7 @@ If you want to do the .pdf generation painlessly, you can just install the [LaTe
 
 This tool is run with command line:
 
-`ValStep <domain> <problem>`
+`ValStep [-i <input_file>] <domain> <problem>`
 
 It gives a prompt "`?`" and expects one of the valid commands:
 
@@ -129,6 +129,7 @@ It gives a prompt "`?`" and expects one of the valid commands:
 * `x`
 * `w <filename>`
 * `q`
+* `e <line of text to echo>`
 
 These commands do the following:
 
@@ -225,8 +226,18 @@ water-temperature - now 90.001
 
 In case multiple actions start at the same time, all shall be enqueued before triggering their execution using `x`.
 
+The command `e` echoes the remaineder of the line of input.  This allows the user to annotate the ValStep output as they wish.  For example:
+
+```shell
+? e Finished pumping boiling water.
+Finished pumping boiling water.
+```
+
 The command `q` quits the tool, causing it to print the current state as a PDDL problem file to the console output. If you wish to record the state before exiting, use the command `w <file>` writes the current state (and goal) as a PDDL problem file into the indicated file.
+
 Note that the problem file written out would not replicate any _outstanding_ timed-initial effects from the original problem file. This feature is currently missing.
+
+
 
 ## ValueSeq
 

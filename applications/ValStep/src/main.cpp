@@ -432,46 +432,19 @@ void calcPlanPDDL(int argc, char *argv[], bool wS) {
   p.runPlan(argv[1], argv[2], argv[4], wS);
 }
 
-int main(int argc, char *argv[]) {
-  /*    if(argc==5)
-      {
-          //calculatePlan(argv[1], argv[2], argv[3], argv[4]);
-
-          calcPlan(argc,argv);
-          exit(0);
-      }
-  */
-  bool withState = true;
-
-  while (argc > 1 && argv[1][0] == '-') {
-    if (argv[1][1] == 'd') {
-      withState = false;  // Just report delta
-    }
-    --argc;
-    ++argv;
-  }
-
-  if (argc == 5) {
-    calcPlanPDDL(argc, argv, withState);
-    exit(0);
-  }
-
-  if (argc < 2) {
-    cout << "please specify your domain file and problem file\n";
-    exit(0);
-  }
-  void *vld = makeValidatorFromFiles(argv[1], argv[2], 0.001);
-  int aID = 1;
-
+void runValStep(istream& in, void* vld, int aID) {
   while (true) {
     vector< string > wds;
     string s;
     cout << "? ";
-    cin >> s;
+    in >> s;
     if (s == "q") {
       break;
-    }
-    if (s == "x") {
+    } else if (s == "e") {
+      string toEcho;
+      getline(in, toEcho);
+      cout << toEcho << endl;
+    } else if (s == "x") {
       executeNext(vld);
       int n;
       unsigned long *vals = getChangedLits(vld, n);
@@ -499,7 +472,7 @@ int main(int argc, char *argv[]) {
       }
       cleanStore(vals);
     } else if (s == "w") {
-      cin >> s;
+      in >> s;
       ofstream output(s.c_str(), ofstream::out);
       LPCSTR state = getState(vld);
       output << state;
@@ -507,15 +480,15 @@ int main(int argc, char *argv[]) {
       cleanState(state);
     } else if (s == "end") {
       int a;
-      cin >> a;
-      cin >> s;
+      in >> a;
+      in >> s;
       double t;
-      cin >> t;
+      in >> t;
       post(vld, a, 0, false, t);
     } else if (s == "assert") {
       cout << "Asserting ";
       while (true) {
-        cin >> s;
+        in >> s;
         if (s == "-") {
           break;
         }
@@ -526,14 +499,14 @@ int main(int argc, char *argv[]) {
       for (unsigned int i = 0; i < wds.size(); ++i) {
         fact[i] = wds[i].c_str();
       }
-      cin >> s;
+      in >> s;
       cout << " is " << s << "\n";
       unsigned long cd = getLitCode(vld, fact);
       assertLitValue(vld, cd, (s == "true"));
       delete[] fact;
     } else {
       while (true) {
-        cin >> s;
+        in >> s;
         if (s == "@") {
           break;
         }
@@ -544,13 +517,63 @@ int main(int argc, char *argv[]) {
         act[i] = wds[i].c_str();
       }
       double t;
-      cin >> t;
+      in >> t;
       post(vld, aID, act, true, t);
       cout << "Posted action " << aID << "\n";
       delete[] act;
       ++aID;
     }
   }
+}
+
+int main(int argc, char *argv[]) {
+  /*    if(argc==5)
+      {
+          //calculatePlan(argv[1], argv[2], argv[3], argv[4]);
+
+          calcPlan(argc,argv);
+          exit(0);
+      }
+  */
+
+  bool withState = true;
+  bool fromFile  = false;
+  string inputF  = "";
+
+  while (argc > 1 && argv[1][0] == '-') {
+    if (argv[1][1] == 'd') {
+      withState = false;  // Just report delta
+    }
+    if (argv[1][1] == 'i') {
+      fromFile = true;
+      inputF = string(argv[2]);
+      --argc;
+      ++argv;
+    }
+    --argc;
+    ++argv;
+  }
+
+  if (fromFile)
+    cout << "Input File " << inputF << endl;
+
+  if (argc == 5) {
+    calcPlanPDDL(argc, argv, withState);
+    exit(0);
+  }
+
+  if (argc < 2) {
+    cout << "please specify your domain file and problem file\n";
+    exit(0);
+  }
+  void *vld = makeValidatorFromFiles(argv[1], argv[2], 0.001);
+  int aID = 1;
+
+  if (fromFile){
+    ifstream fin = ifstream(inputF);
+    runValStep(fin,vld,aID);
+  } else
+    runValStep(cin,vld,aID);
 
   LPCSTR state = getState(vld);
   cout << state;
