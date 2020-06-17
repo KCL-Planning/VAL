@@ -1628,8 +1628,8 @@ namespace VAL {
     virtual void visit(VisitController* v) const;
 
     void add(metric_spec* m) {
-      opt.push_back(m->opt.front());
-      expr->push_back(m->expr->front());
+      opt.push_front(m->opt.front());
+      expr->push_front(m->expr->front());
       m->expr->clear();
       delete m;
     }

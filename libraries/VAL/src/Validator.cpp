@@ -1172,7 +1172,7 @@ namespace VAL {
     };
 
     if (stepLengthDefault && !doneSL) {
-      value.push_back(stepcount);
+      value.insert(value.begin(),stepcount);
     }
 
     return value;
