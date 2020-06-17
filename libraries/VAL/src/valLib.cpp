@@ -77,18 +77,31 @@ class Tracker : public StateObserver {
 
 class ValuesTracker : public StateObserver {
  private:
+  Validator * vld;
   map< const FuncExp *, vector< pair< double, double > > > allValues;
+  vector<pair<double,vector<double> > > metrics; // Use this field to track the metrics - we'll do this by default
+  int numMets;
   double time;
 
  public:
-  ValuesTracker() : time(-0.1){};
+  ValuesTracker(Validator * v) : vld(v), numMets(0), time(-0.1){};
   virtual void notifyChanged(const State *s, const Happening *h) {
     // cout << "Told of change at " << s->getTime() << "\n";
     if (s->getTime() > time) {
       time = s->getTime();
     }
     set< const FuncExp * > chPNEs = s->getChangedPNEs();
+    if(!chPNEs.empty()) // Deal with metrics
+    {
+      vector<double> mets(numMets);
+      if(numMets > 0)
+      {
+        vld->computeMetric(s,mets);
 
+      }
+      metrics.push_back(make_pair(time,mets));
+
+    }
     for (map< const FuncExp *, vector< pair< double, double > > >::iterator i =
              allValues.begin();
          i != allValues.end(); ++i) {
@@ -114,6 +127,7 @@ class ValuesTracker : public StateObserver {
       // else cout << "Not found\n";
     }
   }
+  void trackMets(int n) {numMets = n;}
   void add(const FuncExp *fe) {
     allValues[fe] = vector< pair< double, double > >();
   }
@@ -130,7 +144,21 @@ class ValuesTracker : public StateObserver {
     t = -1;
     return 0;
   }
+  double getNextMetric(const unsigned int m,double & t, int & n)
+  {
+    if(n < metrics.size())
+    {
+      t = metrics[n].first;
+      double v = metrics[n].second[m];
+      if(++n >= metrics.size()) n = -1;
+      return v;
+    }
+    n = -1;
+    t = -1;
+    return 0;
+  }
 };
+
 
 class SimulatorValidator {
  private:
@@ -148,10 +176,11 @@ class SimulatorValidator {
   ValuesTracker *vtrack;
 
   vector< LPCSTR > allocated;
+  int numMetrics;
 
  public:
   SimulatorValidator(Validator *v)
-      : vld(v), ace(v), theTime(-0.1), tc(0), vtrack(0) {
+      : vld(v), ace(v), theTime(-0.1), tc(0), vtrack(0), numMetrics(0) {
     v->prepareToExecute();
     Verbose = false;
     ContinueAnyway = true;
@@ -163,6 +192,16 @@ class SimulatorValidator {
       delete[] allocated[i];
     }
   }
+  int trackMetrics() {
+      if(!vtrack) 
+      {
+          vtrack = new ValuesTracker(vld);
+          State::addObserver(vtrack);
+      }
+      numMetrics = vld->numMetrics();
+      vtrack->trackMets(numMetrics);
+      return numMetrics;
+  };
   void ownTC(TypeChecker *t) { tc = t; };
   bool executeNext();
   void reset() { ad.reset(); };
@@ -201,7 +240,7 @@ ostream &operator<<(const SimulatorValidator &sv, ostream &o) {
 
 void SimulatorValidator::trackFE(unsigned long cd) {
   if (!vtrack) {
-    vtrack = new ValuesTracker();
+    vtrack = new ValuesTracker(vld);
     State::addObserver(vtrack);
     // cout << "Added a tracker\n";
   }
@@ -209,6 +248,10 @@ void SimulatorValidator::trackFE(unsigned long cd) {
 }
 
 double SimulatorValidator::getNextValue(unsigned long cd, double &t, int &n) {
+  if(cd < numMetrics && vtrack)
+  {
+    return vtrack->getNextMetric(cd,t,n);
+  }
   // cout << "Checking for " << ((FuncExp *)cd)->getName() << "\n";
   if (vtrack) return vtrack->getNextValue((FuncExp *)cd, t, n);
   t = -1;
@@ -836,6 +879,12 @@ LPCSTR getState(void *v) {
 void trackFE(void *v, unsigned long cd) {
   SimulatorValidator *vld = (SimulatorValidator *)(v);
   vld->trackFE(cd);
+}
+
+int trackMetrics(void * v)
+{
+  SimulatorValidator *vld = (SimulatorValidator *)(v);
+  return vld->trackMetrics();
 }
 
 double getNextValue(void *v, unsigned long cd, double &t, int &n) {

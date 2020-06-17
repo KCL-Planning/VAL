@@ -82,7 +82,9 @@ VAL_EXPORT LPCSTR *finalState(LPCSTR domainContent, LPCSTR problemContent,
 
 VAL_EXPORT LPCSTR getState(void *v);
 VAL_EXPORT void trackFE(void *v, unsigned long cd);
+VAL_EXPORT int trackMetrics(void * v);
 VAL_EXPORT double getNextValue(void *v, unsigned long cd, double &t, int &n);
+
 /*
 
 Also need a function to write state... to file? to string? as a data structure?

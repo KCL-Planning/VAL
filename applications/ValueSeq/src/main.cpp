@@ -47,8 +47,12 @@ class PlanBit {
   vector< double > before;
   vector< double > after;
 
+  bool wantMetrics;
+  vector<double> metricsBefore;
+  vector<double> metricsAfter;
+
  public:
-  PlanBit(const plan_step *p1, bool c, int a) : p(p1), start(c), act(a) {}
+  PlanBit(const plan_step *p1, bool c, int a, bool wm) : p(p1), start(c), act(a), wantMetrics(wm) {}
 
   PlanBit() : p(NULL), start(false), act(0) {}
 
@@ -182,18 +186,21 @@ class PlanProcessor : public VisitController {
 
   double endTime;
 
+  bool wantMetrics;
+  int numMetrics;
+
  public:
-  PlanProcessor(void *v) : vld(v), x(0), endTime(0){};
+  PlanProcessor(void *v) : vld(v), x(0), endTime(0), wantMetrics(false), numMetrics(0) {};
 
   virtual void visit_plan_step(plan_step *p) {
     // cout << "See a step " << p->op_sym->getName() << "\n";
     ++x;
-    planbits[p->start_time].push_back(PlanBit(p, true, x));
+    planbits[p->start_time].push_back(PlanBit(p, true, x, wantMetrics));
     planStepStarts.push_back(&planbits[p->start_time].back());
     endTime = p->start_time;
 
     if (p->duration_given) {
-      planbits[p->start_time + p->duration].push_back(PlanBit(p, false, x));
+      planbits[p->start_time + p->duration].push_back(PlanBit(p, false, x, wantMetrics));
       planStepEnds.push_back(&planbits[p->start_time + p->duration].back());
       endTime = endTime > p->start_time + p->duration
                     ? endTime
@@ -226,6 +233,22 @@ class PlanProcessor : public VisitController {
   }
 
   void add(char arg[]) {
+    // First check for metric request:
+    char metrics[] = "metrics";
+    if(arg[0] == '$' && sizeof(arg) == 8)
+    {
+      for(int i = 0;i < 7;++i)
+      {
+        if(metrics[i] != arg[i+1]) 
+        {
+          
+          return;
+        }
+      }
+      wantMetrics = true;
+      numMetrics = trackMetrics(vld);
+      return;
+    }
     // We need to find the function code...
     store.push_back(arg);
     char *tok = strtok(arg, " ");
@@ -276,6 +299,25 @@ class PlanProcessor : public VisitController {
       }
       if (printt < endTime) o << endTime << ", " << val1 << "\n";
     }
+    if(wantMetrics)
+    {
+      int n = 0;
+      for(unsigned int i = 0;i < numMetrics;++i)
+      {
+        n= 0;
+        t = 0;
+        o << "metric " << i << "\n";
+        while(n >= 0)
+        {
+          val = getNextValue(vld,i,t,n);
+          if (t >= 0) {
+            printt = t;
+            o << t << ", " << val << "\n";
+            val1 = val;
+          }
+        }
+      }
+    }
   }
 };
 
@@ -307,7 +349,7 @@ int main(int argc, char *argv[]) {
     cout
         << "Use: ValueSeq [-t|-T] <domain> <problem> <plan - in PDDL format> "
            "[function term]* [REMOVE [tag]*]\n\n\tFunction terms are "
-           "(quote enclosed if need spaces) grounded expressions\n\t"
+           "(quote enclosed if need spaces) grounded expressions;\n\t\t$metrics is a special request for the metrics to be reported\n\t\tand is only useful with the -T option\n\t"
         << "Tags are strings that cause actions to not be reported if they appear in the action names\n\nOutput: Sequence of actions with values of all function terms before and, for durative actions, after execution\n\
             \t-t: Print start times of the actions in first column\n\
             \t\n-T: Generate time series data only for the function terms\n\n";

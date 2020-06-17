@@ -252,9 +252,14 @@ namespace VAL {
 
     bool step();
 
+  public:
     void computeMetric(const State *, vector< double > &) const;
-
-   public:
+    int numMetrics() const
+    {
+      if(metric && metric->expr) return metric->expr->size();
+      return 0;
+    }
+   
     Validator(const DerivationRules *dr, double tol, TypeChecker &tc,
               const operator_list *ops, const effect_lists *is, const plan *p,
               const metric_spec *m, bool lengthDefault, bool isDur,
