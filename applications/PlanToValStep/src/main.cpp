@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <sstream>
 #include <vector>
+#include <cmath>
 
 #include "VisitController.h"
 
@@ -21,6 +22,7 @@ using std::map;
 using std::ofstream;
 using std::stringstream;
 using std::vector;
+using std::nearbyint;
 
 namespace VAL {
 
@@ -70,15 +72,22 @@ class PlanProcessor : public VisitController {
   map< double, vector< PlanBit > > planbits;
   int x;
 
+  double round(double d)
+  {
+    // Be better to round according to epsilon, but here we round to nearest 10000th (which assumes differences at 1/10th standard epsilon
+    // are actually intentional - this matters for high accuracy in continuous effects.
+    return nearbyint(d*10000)/10000.0;
+  }
+  
  public:
   PlanProcessor() : x(0){};
 
   virtual void visit_plan_step(plan_step *p) {
     ++x;
-    planbits[p->start_time].push_back(PlanBit(p, true, x));
+    planbits[round(p->start_time)].push_back(PlanBit(p, true, x));
 
     if (p->duration_given) {
-      planbits[p->start_time + p->duration].push_back(PlanBit(p, false, x));
+      planbits[round(p->start_time + p->duration)].push_back(PlanBit(p, false, x));
     }
   };
 
