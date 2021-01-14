@@ -5,8 +5,10 @@
 #include "Proposition.h"
 #include "StateObserver.h"
 #include <set>
+#include <cmath>
 
 using std::set;
+using std::nan;
 
 namespace VAL {
   class Validator;
@@ -78,7 +80,16 @@ namespace VAL {
     };
     set< const FuncExp * > getChangedPNEs() const { return changedPNEs; };
     FEScalar getPriorValue(const FuncExp *fe) const {
-      if (changedPNEs.find(fe) == changedPNEs.end()) return evaluateFE(fe);
+      if (changedPNEs.find(fe) == changedPNEs.end()) 
+      {
+        try 
+        {
+          return evaluateFE(fe);
+        }
+        catch(...)
+        {
+          return nan("");
+        }
       return oldValues.find(fe)->second;
     }
     void resetChanged() {
