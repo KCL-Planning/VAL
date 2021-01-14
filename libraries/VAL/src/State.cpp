@@ -9,11 +9,13 @@
 #include "RobustAnalyse.h"
 #include "Validator.h"
 #include "main.h"
+#include <cmath>
 
 #include <sstream>
 
 using std::cerr;
 using std::stringstream;
+using std::nan;
 //#define list std::list
 //#define map std::map
 
@@ -76,7 +78,7 @@ namespace VAL {
     if (i != feValue.end()) {
       return i->second;
     } else {
-      return 17;
+      return nan("");
     }
 
     return evaluateFE(fe);
