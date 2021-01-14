@@ -570,7 +570,7 @@ int main(int argc, char *argv[]) {
   int aID = 1;
 
   if (fromFile){
-    ifstream fin = ifstream(inputF);
+    ifstream fin(inputF.c_str());
     runValStep(fin,vld,aID);
   } else
     runValStep(cin,vld,aID);
