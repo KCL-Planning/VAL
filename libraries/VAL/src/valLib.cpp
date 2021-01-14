@@ -120,7 +120,13 @@ class ValuesTracker : public StateObserver {
                 make_pair(time, i->second[i->second.size() - 1].second));
         }
 
-        i->second.push_back(make_pair(time, s->evaluate(i->first)));
+        try {
+          i->second.push_back(make_pair(time, s->evaluate(i->first)));
+        }
+        catch(...)
+        {
+          i->second.push_back(make_pair(time, nan("")));
+        }
       }
        else if(time > i->second.back().first && h->isRegularHappening())
                 i->second.push_back(make_pair(time,s->evaluate(i->first)));
@@ -301,7 +307,13 @@ LPCSTR *SimulatorValidator::requestFun(unsigned long code, int &n) {
 }
 
 double SimulatorValidator::queryValueCode(unsigned long code) {
-  return vld->getState().evaluate((FuncExp *)code);
+  try {
+    return vld->getState().evaluate((FuncExp *)code);
+  }
+  catch(...)
+  {
+    return nan("");
+  }
 }
 
 double SimulatorValidator::queryPriorValueCode(unsigned long code) {
