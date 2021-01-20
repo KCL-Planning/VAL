@@ -80,9 +80,9 @@ namespace VAL {
     };
     set< const FuncExp * > getChangedPNEs() const { return changedPNEs; };
     FEScalar getPriorValue(const FuncExp *fe) const {
-      if (changedPNEs.find(fe) == changedPNEs.end()) 
+      if (changedPNEs.find(fe) == changedPNEs.end())
       {
-        try 
+        try
         {
           return evaluateFE(fe);
         }
@@ -90,6 +90,7 @@ namespace VAL {
         {
           return nan("");
         }
+      }
       return oldValues.find(fe)->second;
     }
     void resetChanged() {
