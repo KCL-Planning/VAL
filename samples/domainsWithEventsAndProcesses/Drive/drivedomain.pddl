@@ -1,7 +1,8 @@
 (define (domain drivedomain)
 (:requirements :fluents :continuous-effects :negative-preconditions :duration-inequalities :time :typing)
-(:predicates (at ?v - vehicle ?l - location))
 (:types vehicle location)
+(:predicates (at ?v - vehicle ?l - location))
+
 (:functions (maxspeed ?v - vehicle) (speed ?v - vehicle) (traveltime ?v - vehicle) (distance ?p ?l - location))
 
 

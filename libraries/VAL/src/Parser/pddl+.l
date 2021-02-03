@@ -70,9 +70,9 @@ at_time "at"{whitespace}{float}
 ":condition" {return CONDITION;}
 ":start-precondition" {return START_PRE;}
 ":end-precondition" {return END_PRE;}
-"at start"/[{whitespace}{nl}(] {return AT_START;}
-"at end"/[{whitespace}{nl}(] {return AT_END;}
-"over all"/[{whitespace}{nl}(] {return OVER_ALL;}
+"at start"/[ \xff\t\n(] {return AT_START;}
+"at end"/[ \xff\t\n(] {return AT_END;}
+"over all"/[ \xff\t\n(] {return OVER_ALL;}
 ":effect" {return EFFECTS;}
 ":initial-effect" {return INITIAL_EFFECT;}
 ":final-effect" {return FINAL_EFFECT;}
