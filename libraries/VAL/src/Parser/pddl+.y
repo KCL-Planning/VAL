@@ -515,6 +515,7 @@ c_declaration_var_symbol :
  // The lookup is an operation on the whole stack of variable tables.
 c_var_symbol :
     NAME { $$= current_analysis->var_tab_stack.symbol_get($1); delete [] $1; }
+  | AFTER { $$ = current_analysis->var_tab_stack.symbol_get("after");} // Oddity to deal with "after" as a variable name
 ;
 
 c_const_symbol :
