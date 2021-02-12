@@ -961,7 +961,7 @@ namespace VAL {
         *report << theplan << "\n";
       else
         cout << "Plan to validate:\n\n" << theplan << "\n";
-    } catch (BadAccessError) {
+    } catch (const BadAccessError&) {
       // ok here just listing the actions....!
     }
   };
@@ -2593,7 +2593,7 @@ namespace VAL {
       anError = false;
       try {
         planRepairValidator->execute();
-      } catch (exception &e) {
+      } catch (const exception &e) {
         cout << e.what() << "\n";
         anError = true;
       };
@@ -2696,7 +2696,7 @@ namespace VAL {
       anError = false;
       try {
         planRepairValidator->execute();
-      } catch (exception &e) {
+      } catch (const exception &e) {
         cout << e.what() << "\n";
         anError = true;
       };
@@ -2857,7 +2857,7 @@ namespace VAL {
 
       try {
         planRepairValidator->execute();
-      } catch (exception &e) {
+      } catch (const exception &e) {
         cout << e.what() << "\n";
       };
 

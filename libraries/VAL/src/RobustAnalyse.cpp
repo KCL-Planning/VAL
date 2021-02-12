@@ -437,7 +437,7 @@ namespace VAL {
 
       try {
         planExecuted = testPlanValidator->execute();
-      } catch (exception &e) {
+      } catch (const exception &e) {
         cout << e.what() << "\n";
         executionError = true;
       };

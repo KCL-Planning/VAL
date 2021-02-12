@@ -639,7 +639,7 @@ namespace VAL {
       try {
         eventIntervals =
             (*e)->getPrecondition()->getIntervals(&(v->getState()));
-      } catch (BadAccessError &e) {
+      } catch (const BadAccessError &e) {
         // if a PNE is not defined, then no problem, the event is simply not
         // triggered
       };
@@ -1837,7 +1837,7 @@ namespace VAL {
             propSatisfied = prop->evaluateAtPointWithinError(&vld->getState());
           else
             propSatisfied = prop->evaluate(&vld->getState());
-        } catch (BadAccessError &e) {
+        } catch (const BadAccessError &e) {
           if (!neg)
             propSatisfied = false;
           else

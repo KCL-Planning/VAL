@@ -25,7 +25,8 @@
         {
             "name": "WSL",
             "includePath": [
-                "${workspaceRoot}"
+                "${workspaceRoot}",
+                "${workspaceFolder}/libraries/VAL/include"
             ],
             "defines": [
                 "__linux__",

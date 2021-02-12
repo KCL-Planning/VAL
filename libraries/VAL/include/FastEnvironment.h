@@ -47,10 +47,10 @@ namespace VAL {
 
   class id_var_symbol_table : public var_symbol_table {
    private:
-    IDSymbolFactory< var_symbol > *symFac;
+    std::shared_ptr<IDSymbolFactory< var_symbol >> symFac;
 
    public:
-    id_var_symbol_table() : symFac(new IDSymbolFactory< var_symbol >()) {
+    id_var_symbol_table() : symFac( std::make_shared<IDSymbolFactory< var_symbol>>()) {
       setFactory(symFac);
     };
     id_var_symbol_table(id_var_symbol_table *i)

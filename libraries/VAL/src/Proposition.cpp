@@ -724,7 +724,7 @@ namespace VAL {
             (theAns.intervals.begin()->second.first == endOfInterval))
           return true;
       };
-    } catch (InvariantDisjError ide) {
+    } catch (const InvariantDisjError &ide) {
       if (InvariantWarnings) {
         if (LaTeX)
           s->getValidator()->addInvariantWarning(
@@ -1447,7 +1447,7 @@ namespace VAL {
     // check for polys we cannot find the roots of
     try {
       roots = ctsFtn->getRoots(t);
-    } catch (PolyRootError &pre)
+    } catch (const PolyRootError &pre)
 
     {
       if (InvariantWarnings) {
@@ -1484,7 +1484,7 @@ namespace VAL {
 
     try {
       roots = ctsFtn->getRoots(t);
-    } catch (PolyRootError &pre) {
+    } catch (const PolyRootError &pre) {
       // Let's see what we can do here.
       if (LaTeX)
         *report
@@ -2670,11 +2670,9 @@ namespace VAL {
        qf->getVars()->end();++i)
             {
             */
-    auto_ptr< WriteController > w(parse_category::recoverWriteController());
-    auto_ptr< WriteController > p(new PrettyPrinter());
-    parse_category::setWriteController(p);
+    parse_category::setWriteController(std::make_unique<PrettyPrinter>());
     o << *qg << "\n";
-    parse_category::setWriteController(w);
+    parse_category::setWriteController(std::unique_ptr<WriteController>(parse_category::recoverWriteController()));
     //"(QfiedGoal)";
   };
 

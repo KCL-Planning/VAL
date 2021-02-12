@@ -207,7 +207,7 @@ namespace VAL {
 
   class parse_category {
    protected:
-    static auto_ptr< WriteController > wcntr;
+    static std::unique_ptr< WriteController > wcntr;
 
    public:
     parse_category(){};
@@ -215,7 +215,7 @@ namespace VAL {
     virtual void display(int ind) const;
     virtual void write(ostream& o) const {};
     virtual void visit(VisitController* v) const {};
-    static void setWriteController(auto_ptr< WriteController > w);
+    static void setWriteController(std::unique_ptr< WriteController > w);
     static WriteController* recoverWriteController();
   };
 
@@ -286,21 +286,18 @@ namespace VAL {
   class symbol_table : public map< string, symbol_class* > {
    private:
     typedef map< string, symbol_class* > _Base;
-    auto_ptr< SymbolFactory< symbol_class > > factory;
+    std::shared_ptr< SymbolFactory< symbol_class > > factory;
 
    public:
-    symbol_table() : factory(new SymbolFactory< symbol_class >()){};
+    symbol_table() : factory(std::make_unique<SymbolFactory<symbol_class>>()){};
 
-    void setFactory(SymbolFactory< symbol_class >* sf) {
-      auto_ptr< SymbolFactory< symbol_class > > x(sf);
-      factory = x;
+    void setFactory(std::shared_ptr<SymbolFactory<symbol_class>> sf) {
+      factory = sf;
     };
 
     template < class T >
     void replaceFactory() {
-      auto_ptr< SymbolFactory< symbol_class > > x(
-          new SpecialistSymbolFactory< symbol_class, T >());
-      factory = x;
+      factory = std::make_shared<SpecialistSymbolFactory< symbol_class, T>>();
     };
 
     typedef typename _Base::iterator iterator;
@@ -1761,8 +1758,8 @@ namespace VAL {
 
   class analysis {
    private:
-    auto_ptr< VarTabFactory > varTabFactory;
-    auto_ptr< StructureFactory > strucFactory;
+    std::shared_ptr< VarTabFactory > varTabFactory;
+    std::shared_ptr< StructureFactory > strucFactory;
 
    public:
     var_symbol_table* buildPredTab() { return varTabFactory->buildPredTab(); };
@@ -1792,14 +1789,12 @@ namespace VAL {
       return strucFactory->buildProcess(nm, ps, pre, effs, st);
     };
 
-    void setFactory(VarTabFactory* vf) {
-      auto_ptr< VarTabFactory > x(vf);
-      varTabFactory = x;
+    void setFactory(std::shared_ptr<VarTabFactory> vf) {
+      varTabFactory = vf;
     };
 
-    void setFactory(StructureFactory* sf) {
-      auto_ptr< StructureFactory > x(sf);
-      strucFactory = x;
+    void setFactory(std::shared_ptr<StructureFactory> sf) {
+      strucFactory = sf;
     };
 
     var_symbol_table_stack var_tab_stack;
