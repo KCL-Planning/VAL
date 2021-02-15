@@ -1358,9 +1358,9 @@ namespace TIM {
 
 namespace std
 {
-  template<>
-  struct iterator_traits<TIM::getConditionally<std::_Rb_tree_const_iterator<TIM::Property*> > >
+  template<class TI>
+  struct iterator_traits<TIM::getConditionally<TI> >
   {
-    typedef TIM::Property value_type;
+    typedef typename TI::value_type value_type;
   };
 }
