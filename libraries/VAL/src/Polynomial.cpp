@@ -1178,7 +1178,7 @@ namespace VAL {
 
       try {
         roots = aPoly.getRoots(t);
-      } catch (PolyRootError &pre) {
+      } catch (const PolyRootError &pre) {
         throw pre;
       };
 
@@ -1500,7 +1500,7 @@ namespace VAL {
 
       try {
         roots = aPoly.getRoots(t);
-      } catch (PolyRootError &pre) {
+      } catch (const PolyRootError &pre) {
         throw pre;
       };
 
@@ -1542,7 +1542,7 @@ namespace VAL {
 
         try {
           roots = aPoly.getRoots(t);
-        } catch (PolyRootError &pre) {
+        } catch (const PolyRootError &pre) {
           throw pre;
         };
       };

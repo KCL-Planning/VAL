@@ -101,7 +101,7 @@ namespace VAL {
 
   PropInfoFactory *PropInfoFactory::pf = 0;
 
-  auto_ptr< EPSBuilder > Associater::buildEPS(new EPSBuilder());
+  std::unique_ptr< EPSBuilder > Associater::buildEPS( std::make_unique<EPSBuilder>());
 
   // Associater associates predicates with their various type-specific versions.
   // So, if a predicate is overloaded to work with multiple types this will

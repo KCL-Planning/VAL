@@ -7,7 +7,7 @@
 
 namespace VAL {
 
-  auto_ptr< UnsatConditionFactory > ErrorLog::fac(new UnsatConditionFactory);
+  std::unique_ptr< UnsatConditionFactory > ErrorLog::fac(std::make_unique<UnsatConditionFactory>());
 
   string UnsatCondition::getAdviceString() const {
     string ans;

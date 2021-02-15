@@ -694,7 +694,7 @@ namespace VAL {
 
   class Associater {
    public:
-    static auto_ptr< EPSBuilder > buildEPS;
+    static std::unique_ptr< EPSBuilder > buildEPS;
     virtual ~Associater(){};
     virtual Associater *lookup(pddl_type *p) { return 0; };
 

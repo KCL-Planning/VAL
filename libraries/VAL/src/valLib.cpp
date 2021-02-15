@@ -879,7 +879,7 @@ LPCSTR getState(void *v) {
   out << ")\n\n(:goal\n";
   PrettyPrinter *pp = new PrettyPrinter();
   pp->setShowType(false);
-  parse_category::setWriteController(auto_ptr< WriteController >(pp));
+  parse_category::setWriteController(std::unique_ptr< WriteController >(pp));
   current_analysis->the_problem->the_goal->write(out);
   out << "))\n";
 

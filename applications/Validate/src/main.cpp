@@ -334,7 +334,7 @@ void executePlans(int &argc, char *argv[], int &argcount, TypeChecker &tc,
       };
 
       if (pr.getValidator().graphsToShow()) showGraphs = true;
-    } catch (exception &e) {
+    } catch (const exception &e) {
       if (LaTeX) {
         *report << "\\error \\\\\n";
         *report << "\\end{tabbing}\n";
@@ -827,7 +827,7 @@ int main(int argc, char *argv[]) {
     // LaTeX footer
     if (LaTeX) latex.LaTeXEnd();
 
-  } catch (exception &e) {
+  } catch (const exception &e) {
     cerr << "Error: " << e.what() << "\n";
     an_analysis.error_list.report();
     return -1;

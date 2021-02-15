@@ -13,15 +13,15 @@
 
 namespace VAL {
 
-  auto_ptr< WriteController > parse_category::wcntr =
-      auto_ptr< WriteController >(new DebugWriteController);
+  std::unique_ptr< WriteController > parse_category::wcntr =
+      std::unique_ptr< WriteController >(new DebugWriteController);
 
   WriteController *parse_category::recoverWriteController() {
     return wcntr.release();
   };
 
-  void parse_category::setWriteController(auto_ptr< WriteController > w) {
-    wcntr = w;
+  void parse_category::setWriteController(std::unique_ptr< WriteController > w) {
+    wcntr = std::move(w);
   };
 
   void parse_category::display(int ind) const { TITLE(parse_category); }

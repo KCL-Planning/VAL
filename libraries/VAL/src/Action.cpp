@@ -146,7 +146,7 @@ namespace VAL {
     try {
       vld->getErrorLog().addUnsatInvariant(t - pre->getEndOfInterval(), t,
                                            pre->getIntervals(s), this, s);
-    } catch (PolyRootError &prError) {
+    } catch (const PolyRootError &prError) {
       vld->getErrorLog().addUnsatInvariant(t - pre->getEndOfInterval(), t,
                                            Intervals(), this, s, true);
     };

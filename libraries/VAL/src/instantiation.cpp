@@ -991,7 +991,7 @@ namespace Inst {
           if (instantiatedValues.find((*p)->type) == instantiatedValues.end()) {
             try {
               instantiatedValues[(*p)->type] = tc.range(*p);
-            } catch (TypeException e) {
+            } catch (const TypeException &e) {
               cerr << "A problem has been encountered with your domain/problem "
                       "file.\n";
               cerr << "--------------------------------------------------------"
@@ -1008,7 +1008,7 @@ namespace Inst {
               Verbose = true;
               try {
                 instantiatedValues[(*p)->type] = tc.range(*p);
-              } catch (TypeException f) {
+              } catch (const TypeException &f) {
               }
               exit(1);
             }
@@ -2079,7 +2079,7 @@ namespace Inst {
       }
     }
 
-    auto_ptr< PDCIterator > options(pdc.getIterator());
+    std::unique_ptr< PDCIterator > options(pdc.getIterator());
 
     while (options->isValid()) {
       for (int x = 0; x < opParamCount; ++x) {
@@ -2187,7 +2187,7 @@ namespace Inst {
       }
     }
 
-    auto_ptr< PDCIterator > options(pdc.getIterator());
+    std::unique_ptr< PDCIterator > options(pdc.getIterator());
 
     while (options->isValid()) {
       for (int x = 0; x < opParamCount; ++x) {

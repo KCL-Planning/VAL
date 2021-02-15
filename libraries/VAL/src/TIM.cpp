@@ -45,15 +45,15 @@ namespace TIM {
 
   void TIMstage1(char *argv[]) {
     current_analysis = new analysis;
-    IDopTabFactory *fac = new IDopTabFactory;
+    std::shared_ptr<IDopTabFactory> fac = std::make_shared<IDopTabFactory>();
     current_analysis->setFactory(fac);
     current_analysis->pred_tab.replaceFactory< holding_pred_symbol >();
     current_analysis->func_tab.replaceFactory< extended_func_symbol >();
     current_analysis->const_tab.replaceFactory< TIMobjectSymbol >();
     current_analysis->op_tab.replaceFactory< TIMactionSymbol >();
-    current_analysis->setFactory(new TIMfactory());
-    auto_ptr< EPSBuilder > eps(new specEPSBuilder< TIMpredSymbol >());
-    Associater::buildEPS = eps;
+    current_analysis->setFactory(std::make_shared<TIMfactory>());
+    Associater::buildEPS =
+        std::make_unique< specEPSBuilder< TIMpredSymbol > >();
 
     istream *current_in_stream;
     yydebug = 0;  // Set to 1 to output yacc trace

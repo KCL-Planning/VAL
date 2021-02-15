@@ -47,7 +47,6 @@ int main(int argc, char *argv[]) {
   yydebug = 0;  // Set to 1 to output yacc trace
 
   cout << "Processing file: " << argv[1] << '\n';
-  RelaxTranslator *dyna = 0;
 
   if (current_in_stream.bad()) {
     cout << "Failed to open\n";
@@ -62,12 +61,7 @@ int main(int argc, char *argv[]) {
     yyparse();
 
     // Output syntax tree
-    dyna = new RelaxTranslator(current_analysis);
-    auto_ptr< WriteController > ts = auto_ptr< WriteController >(dyna);
-    // NOTE: We pass responsibility for dyna into parse_category. There
-    // is no need to garbage collect it. BUT we access dyna later through
-    // this pointer, so beware!
-    parse_category::setWriteController(ts);
+    parse_category::setWriteController(std::make_unique< RelaxTranslator >(current_analysis));
     if (top_thing) {
       string nm(argv[1]);
       nm += ".rlx";
