@@ -252,19 +252,21 @@ using namespace VAL;
 
 %%
 mystartsymbol :
-    c_domain  {top_thing= $1; current_analysis->the_domain= $1;}
-|   c_problem {top_thing= $1; current_analysis->the_problem= $1;}
-|   c_plan    {top_thing= $1; }
+     c_domain  {top_thing= $1; current_analysis->the_domain= $1;}
+ |   c_problem {top_thing= $1; current_analysis->the_problem= $1;}
+ |    c_plan {top_thing = $1;}
 ;
 
 c_domain :
-    OPEN_BRAC DEFINE c_domain_name c_preamble CLOSE_BRAC
+    OPEN_BRAC DEFINE 
+   c_domain_name c_preamble CLOSE_BRAC
        {$$= $4; $$->name= $3;delete [] $3;
 	if (types_used && !types_defined) {
 		yyerrok; log_error(E_FATAL,"Syntax error in domain - no :types section, but types used in definitions.");
 	}
 	}
-|   OPEN_BRAC DEFINE c_domain_name error
+|   OPEN_BRAC DEFINE 
+       c_domain_name error
     	{yyerrok; $$=static_cast<domain*>(NULL);
        	log_error(E_FATAL,"Syntax error in domain"); }  // Helpful?
 ;
@@ -1441,9 +1443,9 @@ c_type_names : OPEN_BRAC TYPES c_typed_types CLOSE_BRAC
 ;
 
 
-c_problem : OPEN_BRAC
-              DEFINE
-              OPEN_BRAC PROBLEM NAME CLOSE_BRAC
+c_problem : OPEN_BRAC DEFINE
+            OPEN_BRAC PROBLEM 
+             NAME CLOSE_BRAC
               OPEN_BRAC FORDOMAIN NAME CLOSE_BRAC
               c_problem_body
             CLOSE_BRAC
@@ -1453,7 +1455,8 @@ c_problem : OPEN_BRAC
 		}
 
 	}
-|   OPEN_BRAC DEFINE OPEN_BRAC PROBLEM error
+|   OPEN_BRAC DEFINE OPEN_BRAC PROBLEM 
+        error
     	{yyerrok; $$=NULL;
        	log_error(E_FATAL,"Syntax error in problem definition."); }
 
@@ -1544,9 +1547,9 @@ c_binary_ground_f_mexps :
 // Plans
 
 c_plan :
-    c_plan c_step_t_d 
-        {$$= $1;
-         $$->push_back($2); }
+    c_step_t_d c_plan 
+        {$$= $2;
+         $$->push_front($1); }
 |  TIME FLOATVAL c_plan
 		{$$ = $3;$$->insertTime($2);}
 |  TIME INTVAL c_plan
