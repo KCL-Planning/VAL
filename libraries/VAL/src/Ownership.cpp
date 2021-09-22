@@ -55,7 +55,7 @@ namespace VAL {
           };
         case E_PRE:
         case E_NPRE:
-          po->second.second = E_ADD;
+          po->second.second = E_ADDNPRE;
           return true;
         case E_DEL:
           // Action deletes and adds the same literal.
@@ -149,7 +149,7 @@ namespace VAL {
           };
         case E_PPRE:
         case E_PRE:
-          po->second.second = E_DEL;
+          po->second.second = E_DELPRE;
           return true;
         case E_DEL:
           // Action deletes the same literal twice.
