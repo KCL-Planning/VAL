@@ -221,7 +221,7 @@ namespace VAL {
             *report << " \\> \\listrow{Mutex violation: \\action{" << a
                     << "} (requires \\exprn{" << p << "})}\\\\\n";
           } else {
-            cout << "Mutex violation: " << a << " (requires " << p << ")\n";
+            cout << "Mutex violation: " << a << " (requires " << *p << ")\n";
           };
         };
         if ((po->second.first != a) && ErrorReport)
