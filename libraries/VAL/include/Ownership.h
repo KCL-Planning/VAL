@@ -19,7 +19,7 @@ namespace VAL {
   using std::map;
   using std::pair;
 
-  enum ownership { E_PRE, E_PPRE, E_NPRE, E_ADD, E_DEL, E_ASSIGNMENT };
+  enum ownership { E_PRE, E_PPRE, E_NPRE, E_ADD, E_DEL, E_ASSIGNMENT, E_DELPRE, E_ADDNPRE };
 
   class Ownership {
    private:
