@@ -152,6 +152,7 @@ namespace VAL {
           po->second.second = E_DELPRE;
           return true;
         case E_DEL:
+        case E_DELPRE:
           // Action deletes the same literal twice.
           if (Verbose) {
             if (po->second.first == a) {
@@ -177,6 +178,7 @@ namespace VAL {
           };
           return true;
         case E_ADD:
+        case E_ADDNPRE:
           // Action adds and deletes the same literal.
           if (Verbose) {
             if (LaTeX) {
