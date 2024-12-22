@@ -33,6 +33,8 @@ extern int yydebug;
 
 extern char *current_filename;
 
+static bool failOnBadPlan = 0;
+
 namespace VAL {
 
   extern parse_category *top_thing;
@@ -80,6 +82,7 @@ void usage() {
        << "    -j         -- When varying the values of PNEs also vary for "
           "event preconditions. (default = false)\n"
        << "    -v         -- Verbose reporting of plan check progress.\n"
+       << "    -x         -- Fail with non-zero exit code on validation failures.\n"
        << "    -l         -- Verbose LaTeX reporting of plan check progress.\n"
        << "    -a         -- Do not output plan repair advice when Verbose is "
           "on.\n"
@@ -125,7 +128,11 @@ plan *getPlan(int &argc, char *argv[], int &argcount, TypeChecker &tc,
     failed.push_back(name);
     *report << "Bad plan file!\n";
     the_plan = 0;
-    return the_plan;
+    if ( failOnBadPlan ) {
+      exit(1);
+    } else {
+      return the_plan;
+    }
   };
 
   yfl = new yyFlexLexer(&planFile, &cout);
@@ -141,7 +148,11 @@ plan *getPlan(int &argc, char *argv[], int &argcount, TypeChecker &tc,
     if (Silent > 1) *report << "failed\n";
     delete the_plan;
     the_plan = 0;
-    return the_plan;
+    if ( failOnBadPlan ) {
+      exit(1);
+    } else {
+      return the_plan;
+    }
   };
 
   if (the_plan->getTime() >= 0) {
@@ -708,6 +719,10 @@ int main(int argc, char *argv[]) {
           giveAdvice = false;
           ++argcount;
           break;
+        case 'x':
+          failOnBadPlan = true;
+          ++argcount;
+          break;
         case 'f': {
           LaTeX = true;
           Verbose = true;
@@ -777,6 +792,8 @@ int main(int argc, char *argv[]) {
       exit(-1);
     };
 
+    // I believe this means that there is only one argument, and it's
+    // been processed successfully.
     if (argcount >= argc) {
       return 0;
     };
