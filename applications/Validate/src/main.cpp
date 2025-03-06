@@ -137,7 +137,15 @@ plan *getPlan(int &argc, char *argv[], int &argcount, TypeChecker &tc,
   if (!the_plan || !tc.typecheckPlan(the_plan)) {
     failed.push_back(name);
 
-    if (Silent < 2) *report << "Bad plan description!\n";
+    if (Silent < 2) {
+      *report << "Bad plan description!\n";
+      if (!the_plan) {
+        *report << "Unable to read plan file.\n";
+        }
+      else {
+        *report << "Plan failed to type-check\n";
+      }
+    }
     if (Silent > 1) *report << "failed\n";
     delete the_plan;
     the_plan = 0;
