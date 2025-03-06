@@ -513,7 +513,7 @@ int main(int argc, char *argv[]) {
   try {
     if (argc < 2) {
       usage();
-      return 0;
+      return 1;
     };
 
     current_analysis = &an_analysis;
