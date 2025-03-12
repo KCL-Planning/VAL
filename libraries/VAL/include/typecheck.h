@@ -123,6 +123,7 @@ namespace VAL {
     bool typecheckAction(const operator_ *act);
     bool typecheckProblem();
     bool typecheckPlan(const plan *p);
+    std::string planTypecheckFlaw(const plan *p);
     bool typecheckGoal(const goal *g);
     bool typecheckProposition(const proposition *g);
     bool typecheckActionInstance(const plan_step *p);

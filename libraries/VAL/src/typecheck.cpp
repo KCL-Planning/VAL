@@ -7,6 +7,8 @@
 #include "ptree.h"
 #include <algorithm>
 #include <functional>
+#include <sstream>
+#include <string>
 
 namespace VAL {
 
@@ -707,6 +709,16 @@ namespace VAL {
     if (!isTyped) return true;
     return p->end() == std::find_if(p->begin(), p->end(), badchecker(this));
   };
+
+
+   std::string TypeChecker::planTypecheckFlaw(const plan *p) {
+     std::ostringstream oss;
+     oss << "Type error in:\n";
+     oss << *(std::find_if(p->begin(), p->end(), badchecker(this)));
+     oss << "\n";
+     return oss.str();
+  };
+
 
   vector< const_symbol * > TypeChecker::range(const var_symbol *v) {
     vector< const_symbol * > l;

@@ -1,4 +1,4 @@
-// Copyright 2019 - University of Strathclyde, King's College London and Schlumberger Ltd
+// Copyright 2019-2025 - University of Strathclyde, King's College London, Schlumberger Ltd and SIFT, LLC
 // This source code is licensed under the BSD license found in the LICENSE file in the root directory of this source tree.
 
 #include "Plan.h"
@@ -144,6 +144,7 @@ plan *getPlan(int &argc, char *argv[], int &argcount, TypeChecker &tc,
         }
       else {
         *report << "Plan failed to type-check\n";
+        *report << tc.planTypecheckFlaw(the_plan);
       }
     }
     if (Silent > 1) *report << "failed\n";
