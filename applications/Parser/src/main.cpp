@@ -1,4 +1,4 @@
-// Copyright 2019 - University of Strathclyde, King's College London and Schlumberger Ltd
+// Copyright 2019-2025 - University of Strathclyde, King's College London, Schlumberger Ltd and SIFT, LLC
 // This source code is licensed under the BSD license found in the LICENSE file in the root directory of this source tree.
 
 #include "FlexLexer.h"
@@ -9,6 +9,10 @@
 
 extern int yyparse();
 extern int yydebug;
+
+void usage();
+
+static bool failOnBadInput = 0;
 
 using std::ifstream;
 using std::ofstream;
@@ -39,8 +43,24 @@ int main(int argc, char *argv[]) {
 
   yfl = new yyFlexLexer;
 
+  int argcount = 1;
+
+  // Parse command line options (extensible)
+  while (argcount < argc && argv[argcount][0] == '-') {
+    switch (argv[argcount][1]) {
+    case 'x':
+      failOnBadInput = true;
+      ++argcount;
+      break;
+    default:
+      cout << "Unknown option: " << argv[argcount] << "\n";
+      usage();
+      exit(1);
+    }
+  }
+
   // Loop over given args
-  for (int a = 1; a < argc; ++a) {
+  for (int a = argcount; a < argc; ++a) {
     current_filename = argv[a];
     cout << "File: " << current_filename << '\n';
     current_in_stream = new ifstream(current_filename);
@@ -66,4 +86,20 @@ int main(int argc, char *argv[]) {
   // Output the errors from all input files
   current_analysis->error_list.report();
   delete yfl;
+  if (failOnBadInput && current_analysis->error_list.errors > 0) {
+    return 1;
+    }
+  return 0;
 }
+
+
+void usage() {
+  cout << "Parser: The PDDL+ plan parsing tool\n"
+       << "Version 4: Validates continuous effects, events and processes.\n"
+       << "\nAuthors: Derek Long, Richard Howey, Stephen Cresswell and Maria "
+          "Fox\n"
+       << "https:://github.com/KCL-Planning/VAL\n\n"
+       << "Usage: Parser [options] domainFile problemFile planFile1 ...\n"
+       << "Options:\n"
+       << "    -x         -- Fail with non-zero exit code if the input fails to parse.\n";
+};
