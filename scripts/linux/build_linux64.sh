@@ -13,7 +13,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BUILD_DIR=$DIR/../../build
 TARGET_DIR=linux64
 
-mkdir $BUILD_DIR
+mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 
 mkdir $TARGET_DIR
